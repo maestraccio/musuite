@@ -1,8 +1,29 @@
 #!/usr/bin/env python3
 import subprocess, os, sys, random
+from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
-Versie = "0.01"
+Versie = "0.02"
+#MUSUITElogo="""
+# /____    ___                        __          _\
+#||____   ___  __  __  ___  __  __ (#)____   ___ __||
+#||o____ __ _  __  __ // \| __  __ |_ __    //_\\ o||
+#||o_ ____  _  __  __ \____ __  __ |_ __    __  __o||
+#||__  __  ___  \\/|\ |\_//  \\/|\ |_  \\/| \\_// _||
+# \                                                /
+#"""
+MUSUITElogo="""
+ /____   ____                        __          _\\
+||____   ___  __  __  ___  __  __ (#)____   ___ __||
+||o____ __ _  __  __ // \\| __  __ |_ __    //_\\\\ o||
+||o_ ____  _  __  __ \\____ __  __ |_ __    __  __o||
+||__  __  ___  \\\\/|\\ |\\_//  \\\\/|\\ |_  \\\\/| \\\\_// _||
+ \\                                                /
+"""
+for i in MUSUITElogo:
+    print(i, end = "", flush = True)
+    sleep(0.005)
+print()
 pad = "/home/media/Samsung/maestraccio/Muziek/mp3/"
 stijlen = {
         "FLM":"Filmmuziek",
@@ -19,18 +40,18 @@ stijlen = {
         "SSW":"SingerSongwriter",
         "VAR":"Various",
         "WLD":"Wereldmuziek"
-    }
+        }
 gmtdict = {
         "G":"Genre, Stijl, Categorie",
         "M":"Map, Album, Verzameling",
         "T":"Track, Song, Opus"
-    }
-jalijst = ["j","ja","y","yes"]
-neelijst = ["n","no","nee"]
-janee = ["J","N"]
+        }
 gmtlijst = []
 for i in gmtdict:
     gmtlijst.append(i.lower())
+jalijst = ["j","ja","y","yes"]
+neelijst = ["n","no","nee"]
+janee = ["J","N"]
 quitlijstbasis = ["Q","X"]
 quitlijst = []
 for i in quitlijstbasis:
@@ -61,37 +82,60 @@ for i in genrelijst:
             optieslijst.append(i.lower()[:l+1])
 
 def play(tracklijst):
+    print(len(tracklijst))
+    if len(tracklijst) == 0:
+        return
+    elif len(tracklijst) > 99:
+        print("De lijst is erg lang, wil je hem toch tonen?")
+        ja,index = cFNL([janee,"A",1,2,"-#>",jalijst+neelijst+quitlijst])
+        print(ja)
+        if ja.lower() in quitlijst:
+            exit()
+        if ja.lower() in neelijst:
+            pass
+        else:
+            for i in tracklijst:
+                track = os.path.basename(i) 
+                print(str(tracklijst.index(i)+1)+" : "+track)
+    else:
+        for i in tracklijst:
+            track = os.path.basename(i) 
+            print(str(tracklijst.index(i)+1)+" : "+track)
     random = ""
-    print("Willekeurige volgorde?")
-    ja,index = cFNL([janee,"A",1,1,"-#>",quitlijst])
-    if ja.lower() in jalijst:
-        random = "Z"
+    if len(tracklijst) != 1:
+        print("Willekeurige volgorde?")
+        ja,index = cFNL([janee,"A",1,1,"-#>",jalijst+neelijst+quitlijst])
+        if ja.lower() in quitlijst:
+            exit()
+        if ja.lower() in jalijst:
+            random = "Z"
     try:
-        play = True
-        while play == True:
-            with open(os.path.join(pad,"tracklijst.m3u"),"w") as tl:
-                for tr in tracklijst:
-                    print(tr, file=tl)
-            subprocess.run(["mpg123-alsa", "-%svm" % random, "-@", os.path.join(pad,"tracklijst.m3u")])
-        os.rm(os.path.join(pad,"tracklijst.m3u"))
+        with open(os.path.join(pad,"tracklijst.m3u"),"w") as tl:
+            for tr in tracklijst:
+                print(tr, file=tl)
+        subprocess.run(["mpg123-alsa", "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
+        os.remove(os.path.join(pad,"tracklijst.m3u"))
     except:
         pass
 
 loop = True
 while loop == True:
     v,k = cFD([gmtdict,0,"G","-#>",gmtlijst+quitlijst])
-    print(v,k)
     if k.upper() in quitlijst:
         exit()
-    elif k.upper() == "T":
+    if k.upper() == "T":
         tracklijstkort = []
-        zoekterm = input("Voer een zoekterm in:\n")
+        zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\"):\n")
+        if zoekterm in quitlijst:
+            exit()
         for dirpath, dirnames, filenames in os.walk(pad):
             for track in filenames:
                 if zoekterm in track:
                     tracklijstkort.append(track)
         tracklijstkort = sorted(tracklijstkort)
         tracksel,index = cFNL([tracklijstkort,"A",1,1,"-#>",True,quitlijst])
+        if tracksel in quitlijst:
+            exit()
         tracklijst = []
         for i in tracksel:
             for dirpath, dirnames, filenames in os.walk(pad):
