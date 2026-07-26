@@ -3,7 +3,7 @@ import subprocess, os, sys, random
 from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
-Versie = "0.02"
+Versie = "0.03"
 #MUSUITElogo="""
 # /____    ___                        __          _\
 #||____   ___  __  __  ___  __  __ (#)____   ___ __||
@@ -41,6 +41,24 @@ stijlen = {
         "VAR":"Various",
         "WLD":"Wereldmuziek"
         }
+slijst = [
+        "https://stream10.xdevel.com/audio1s977004-1749/stream/icecast.audio",
+        "https://icstream.rds.radio/rdsrelax",
+        "http://edge.radiomontecarlo.net/RMC.mp3",
+        "http://stream15.top-ix.org/radioitaliauno",
+        "https://kisskiss.fluidstream.eu/KissKiss.mp3",
+        "https://22663.live.streamtheworld.com/SUBLIME.mp3",
+        "http://smoothjazz.cdnstream1.com/2585_320.mp3",
+        "https://laut.fm/soulradioclassics",
+        "http://stream.otherside.network:8904/listen.mp3"
+        ]
+mosdict = {
+        "M":"MP3-file(s) uit eigen collectie",
+        "S":"online Stream"
+        }
+moslijst = []
+for i in mosdict:
+    moslijst.append(i.lower())
 gmtdict = {
         "G":"Genre, Stijl, Categorie",
         "M":"Map, Album, Verzameling",
@@ -81,6 +99,16 @@ for i in genrelijst:
             optieslijst.append(i[:l+1])
             optieslijst.append(i.lower()[:l+1])
 
+def defgpad():
+    optie,index = cFNL([genrelijstlang,"A",1,2,"-#>",quitlijst])
+    if optie in quitlijst:
+        exit()
+    if optie in genrelijstlang:
+        optie = genrelijst[genrelijstlang.index(optie)]
+    tracklijst = []
+    gpad = os.path.join(pad,optie)
+    return gpad
+
 def play(tracklijst):
     print(len(tracklijst))
     if len(tracklijst) == 0:
@@ -101,14 +129,14 @@ def play(tracklijst):
         for i in tracklijst:
             track = os.path.basename(i) 
             print(str(tracklijst.index(i)+1)+" : "+track)
-    random = ""
+    random = "Z"
     if len(tracklijst) != 1:
         print("Willekeurige volgorde?")
         ja,index = cFNL([janee,"A",1,1,"-#>",jalijst+neelijst+quitlijst])
         if ja.lower() in quitlijst:
             exit()
-        if ja.lower() in jalijst:
-            random = "Z"
+        if ja.lower() in neelijst:
+            random = ""
     try:
         with open(os.path.join(pad,"tracklijst.m3u"),"w") as tl:
             for tr in tracklijst:
@@ -120,119 +148,120 @@ def play(tracklijst):
 
 loop = True
 while loop == True:
-    v,k = cFD([gmtdict,0,"G","-#>",gmtlijst+quitlijst])
+    v,k = cFD([mosdict,0,"M","-#>",moslijst+quitlijst])
     if k.upper() in quitlijst:
         exit()
-    if k.upper() == "T":
-        tracklijstkort = []
-        zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\"):\n")
-        if zoekterm in quitlijst:
+    if k.upper() == "S":
+        s,index = cFNL([slijst,"A",1,6,"-#>",quitlijst])
+        subprocess.run(["mpg123-alsa", s])
+    else:
+        v,k = cFD([gmtdict,0,"G","-#>",gmtlijst+quitlijst])
+        if k.upper() in quitlijst:
             exit()
-        for dirpath, dirnames, filenames in os.walk(pad):
-            for track in filenames:
-                if zoekterm in track:
-                    tracklijstkort.append(track)
-        tracklijstkort = sorted(tracklijstkort)
-        tracksel,index = cFNL([tracklijstkort,"A",1,1,"-#>",True,quitlijst])
-        if tracksel in quitlijst:
-            exit()
-        tracklijst = []
-        for i in tracksel:
+        if k.upper() == "T":
+            tracklijstkort = []
+            zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\"):\n")
+            if zoekterm in quitlijst:
+                exit()
             for dirpath, dirnames, filenames in os.walk(pad):
                 for track in filenames:
-                    if i in track:
-                        tracklijst.append(os.path.join(dirpath, track))
-        tracklijst = sorted(tracklijst)
-        play(tracklijst)
-    elif k.upper() == "M":
-        optie,index = cFNL([genrelijstlang,"A",1,2,"-#>",quitlijst])
-        if optie in quitlijst:
-            exit()
-        if optie in genrelijstlang:
-            optie = genrelijst[genrelijstlang.index(optie)]
-        tracklijst = []
-        gpad = os.path.join(pad,optie)
-        mappenlijst = []
-        for m in os.listdir(gpad):
-            if os.path.isdir(os.path.join(gpad,m)):
-                mpad = os.path.join(gpad,m)
-                mappenlijst.append(mpad)
-        mappenlijst = sorted(mappenlijst)
-        mappenlijstkort = []
-        optielijst = []
-        for i in mappenlijst:
-            mappenlijstkort.append(i[len(gpad)+1:])
-        optie,index = cFNL([mappenlijstkort,"A",1,1,"-#>",True,optieslijst+quitlijst])
-        if optie in quitlijst:
-            exit()
-        if type(optie) == str:
-            optie = optie.upper()
-            for i in genrelijst:
-                if optie in [i[:1],i[:2],i]:
-                    if i not in optielijst:
-                        optielijst.append(i)
-            optie = optielijst
-        tracklijst = []
-        for o in optie:
-            if o in mappenlijstkort:
-                mmap = mappenlijst[mappenlijstkort.index(o)]
-                mpad = os.path.join(gpad,mmap)
-                for track in os.listdir(mpad):
-                    if track.endswith(".mp3"):
-                        tpad = os.path.join(mpad,track)
-                        tracklijst.append(tpad)
-        tracklijst = sorted(tracklijst)
-        play(tracklijst)
-    else:
-        optielijst = []
-        optie,index = cFNL([genrelijstlang,"A",1,2,"-#>",True,optieslijst+quitlijst])
-        if optie in quitlijst:
-            exit()
-        if type(optie) == str:
-            optie = optie.upper()
-            for i in genrelijst:
-                if optie in [i[:1],i[:2],i]:
-                    if i not in optielijst:
-                        optielijst.append(i)
-            optie = optielijst
-        for g in optie:
-            if g in genrelijstlang:
-                optie[optie.index(g)] = genrelijst[genrelijstlang.index(g)]
-        if "*" in optie:
-           tracklijst = []
-           for g in genrelijst:
-               gpad = os.path.join(pad,g)
-               mappenlijst = []
-               for m in os.listdir(gpad):
-                   if os.path.isdir(os.path.join(gpad,m)):
-                       mpad = os.path.join(pad,g,m)
-                       mappenlijst.append(mpad)
-               mappenlijst = sorted(mappenlijst)
-               for m in mappenlijst:
-                   mpad = os.path.join(gpad,m)
-                   for track in os.listdir(mpad):
-                       if track.endswith(".mp3"):
-                           tpad = os.path.join(mpad,track)
-                           tracklijst.append(tpad)
-           tracklijst = sorted(tracklijst)
-           play(tracklijst)
-        elif len(optie) < 1:
-            pass
+                    if zoekterm in track:
+                        tracklijstkort.append(track)
+            tracklijstkort = sorted(tracklijstkort)
+            tracksel,index = cFNL([tracklijstkort,"A",1,1,"-#>",True,quitlijst])
+            if tracksel in quitlijst:
+                exit()
+            tracklijst = []
+            for i in tracksel:
+                for dirpath, dirnames, filenames in os.walk(pad):
+                    for track in filenames:
+                        if i in track:
+                            tracklijst.append(os.path.join(dirpath, track))
+            tracklijst = sorted(tracklijst)
+            play(tracklijst)
+        elif k.upper() == "M":
+            gpad = defgpad()
+            mappenlijst = []
+            for m in os.listdir(gpad):
+                if os.path.isdir(os.path.join(gpad,m)):
+                    mpad = os.path.join(gpad,m)
+                    mappenlijst.append(mpad)
+            mappenlijst = sorted(mappenlijst)
+            mappenlijstkort = []
+            optielijst = []
+            for i in mappenlijst:
+                mappenlijstkort.append(i[len(gpad)+1:])
+            optie,index = cFNL([mappenlijstkort,"A",1,1,"-#>",True,optieslijst+quitlijst])
+            if optie in quitlijst:
+                exit()
+            if type(optie) == str:
+                optie = optie.upper()
+                for i in genrelijst:
+                    if optie in [i[:1],i[:2],i]:
+                        if i not in optielijst:
+                            optielijst.append(i)
+                optie = optielijst
+            tracklijst = []
+            for o in optie:
+                if o in mappenlijstkort:
+                    mmap = mappenlijst[mappenlijstkort.index(o)]
+                    mpad = os.path.join(gpad,mmap)
+                    for track in os.listdir(mpad):
+                        if track.endswith(".mp3"):
+                            tpad = os.path.join(mpad,track)
+                            tracklijst.append(tpad)
+            tracklijst = sorted(tracklijst)
+            play(tracklijst)
         else:
-           tracklijst = []
-           for g in optie:
-               gpad = os.path.join(pad,g)
-               mappenlijst = []
-               for m in os.listdir(gpad):
-                   if os.path.isdir(os.path.join(gpad,m)):
-                       mpad = os.path.join(pad,g,m)
-                       mappenlijst.append(mpad)
-               mappenlijst = sorted(mappenlijst)
-               for m in mappenlijst:
-                   mpad = os.path.join(gpad,m)
-                   for track in os.listdir(mpad):
-                       if track.endswith(".mp3"):
-                           tpad = os.path.join(mpad,track)
-                           tracklijst.append(tpad)
-           tracklijst = sorted(tracklijst)
-           play(tracklijst)
+            optielijst = []
+            optie,index = cFNL([genrelijstlang,"A",1,2,"-#>",True,optieslijst+quitlijst])
+            if optie in quitlijst:
+                exit()
+            if type(optie) == str:
+                optie = optie.upper()
+                for i in genrelijst:
+                    if optie in [i[:1],i[:2],i]:
+                        if i not in optielijst:
+                            optielijst.append(i)
+                optie = optielijst
+            for g in optie:
+                if g in genrelijstlang:
+                    optie[optie.index(g)] = genrelijst[genrelijstlang.index(g)]
+            if "*" in optie:
+               tracklijst = []
+               for g in genrelijst:
+                   gpad = os.path.join(pad,g)
+                   mappenlijst = []
+                   for m in os.listdir(gpad):
+                       if os.path.isdir(os.path.join(gpad,m)):
+                           mpad = os.path.join(pad,g,m)
+                           mappenlijst.append(mpad)
+                   mappenlijst = sorted(mappenlijst)
+                   for m in mappenlijst:
+                       mpad = os.path.join(gpad,m)
+                       for track in os.listdir(mpad):
+                           if track.endswith(".mp3"):
+                               tpad = os.path.join(mpad,track)
+                               tracklijst.append(tpad)
+               tracklijst = sorted(tracklijst)
+               play(tracklijst)
+            elif len(optie) < 1:
+                pass
+            else:
+               tracklijst = []
+               for g in optie:
+                   gpad = os.path.join(pad,g)
+                   mappenlijst = []
+                   for m in os.listdir(gpad):
+                       if os.path.isdir(os.path.join(gpad,m)):
+                           mpad = os.path.join(pad,g,m)
+                           mappenlijst.append(mpad)
+                   mappenlijst = sorted(mappenlijst)
+                   for m in mappenlijst:
+                       mpad = os.path.join(gpad,m)
+                       for track in os.listdir(mpad):
+                           if track.endswith(".mp3"):
+                               tpad = os.path.join(mpad,track)
+                               tracklijst.append(tpad)
+               tracklijst = sorted(tracklijst)
+               play(tracklijst)
