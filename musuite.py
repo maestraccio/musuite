@@ -3,7 +3,9 @@ import subprocess, os, sys, random
 from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
-Versie = "0.03"
+from adjustables import pad,genredict,streamsdict
+Versie = "0.04"
+Date = "2026-07-27"
 #MUSUITElogo="""
 # /____    ___                        __          _\
 #||____   ___  __  __  ___  __  __ (#)____   ___ __||
@@ -24,34 +26,9 @@ for i in MUSUITElogo:
     print(i, end = "", flush = True)
     sleep(0.005)
 print()
-pad = "/home/media/Samsung/maestraccio/Muziek/mp3/"
-stijlen = {
-        "FLM":"Filmmuziek",
-        "FSR":"Funk, Soul, R&B",
-        "JZF":"Jazz - Fusion",
-        "JZP":"Jazz - Piano",
-        "JZV":"Jazz - Vocaal",
-        "JZZ":"Jazz",
-        "KLB":"Klassiek - Barok",
-        "KLM":"Klassiek - Modern",
-        "KLS":"Klassiek",
-        "LAM":"Latijns-Amerikaans",
-        "PPR":"Pop, Rock",
-        "SSW":"SingerSongwriter",
-        "VAR":"Various",
-        "WLD":"Wereldmuziek"
-        }
-slijst = [
-        "https://stream10.xdevel.com/audio1s977004-1749/stream/icecast.audio",
-        "https://icstream.rds.radio/rdsrelax",
-        "http://edge.radiomontecarlo.net/RMC.mp3",
-        "http://stream15.top-ix.org/radioitaliauno",
-        "https://kisskiss.fluidstream.eu/KissKiss.mp3",
-        "https://22663.live.streamtheworld.com/SUBLIME.mp3",
-        "http://smoothjazz.cdnstream1.com/2585_320.mp3",
-        "https://laut.fm/soulradioclassics",
-        "http://stream.otherside.network:8904/listen.mp3"
-        ]
+streamslijst = []
+for i in streamsdict:
+    streamslijst.append(i)
 mosdict = {
         "M":"MP3-file(s) uit eigen collectie",
         "S":"online Stream"
@@ -86,8 +63,8 @@ for i in os.listdir(pad):
 genrelijst = sorted(genrelijst)
 genrelijstlang = []
 for g in genrelijst:
-    if g in stijlen:
-        genrelijstlang.append(g+" : "+stijlen[g])
+    if g in genredict:
+        genrelijstlang.append(g+" : "+genredict[g])
     else:
         genrelijstlang.append(g)
 genrelijstlang = sorted(genrelijstlang)
@@ -152,8 +129,11 @@ while loop == True:
     if k.upper() in quitlijst:
         exit()
     if k.upper() == "S":
-        s,index = cFNL([slijst,"A",1,6,"-#>",quitlijst])
-        subprocess.run(["mpg123-alsa", s])
+        s,index = cFNL([streamslijst,"A",1,1,"-#>",quitlijst])
+        if s in quitlijst:
+            exit()
+        su = streamsdict[s]
+        subprocess.run(["mpg123-alsa", "-vm",  su])
     else:
         v,k = cFD([gmtdict,0,"G","-#>",gmtlijst+quitlijst])
         if k.upper() in quitlijst:
