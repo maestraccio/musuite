@@ -107,7 +107,6 @@ def defgpad():
     return gpad
 
 def printtracklijst(tracklijst):
-    print(len(tracklijst))
     wraptext = "De tracklijst is erg lang en past mogelijk niet op je scherm. De lijst wordt eerst in meerdere delen getoond zodat je de nummers van de track(s) die je in je selectie wilt een keer hebt kunnen zien. Daarna krijg je de optie om je definitieve keuze in te geven."
     print()
     for i in textwrap.wrap(wraptext,80):
@@ -126,7 +125,7 @@ def printtracklijst(tracklijst):
             elif go in backlijst:
                 break
     print()
-    wraptext = "Het einde van de lijst is bereikt en de optie om je keuze in te voeren volgt hierna. Onthoud de nummers van de mappen die je wilt selecteren. Druk nu eerst op \"Enter\""
+    wraptext = "Het einde van de lijst is bereikt en de optie om je keuze in te voeren volgt hierna. Onthoud de/het nummer(s) van de track(s) die je wilt selecteren. Druk nu eerst op \"Enter\""
     for i in textwrap.wrap(wraptext,80):
         print(i)
     go = input()
@@ -152,7 +151,7 @@ def printmappenlijst(mappenlijst):
             elif go in backlijst:
                 break
     print()
-    wraptext = "Het einde van de lijst is bereikt en de optie om je keuze in te voeren volgt hierna. Onthoud de nummers van de mappen die je wilt selecteren. Druk nu eerst op \"Enter\""
+    wraptext = "Het einde van de lijst is bereikt en de optie om je keuze in te voeren volgt hierna. Onthoud de/het nummer(s) van de mapp(en) die je wilt selecteren. Druk nu eerst op \"Enter\""
     for i in textwrap.wrap(wraptext,80):
         print(i)
     go = input()
