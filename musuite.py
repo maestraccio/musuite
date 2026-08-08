@@ -4,7 +4,7 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "0.06"
+Versie = "0.07"
 Date = "2026-08-08"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
@@ -387,16 +387,19 @@ def printmappenlijstmetsel(mappenlijst):
 def play(tracklijst):
     if lang == "EN":
         willekeurig = "Random order?"
+        mpg123 = "Starting playback with mpg123\n"
         neelijst = neelijstEN
         jalijst = jalijstEN
         neeja = neejaEN
     elif lang == "IT":
         willekeurig = "Ordine casuale?"
+        mpg123 = "Avvio della riproduzione con mpg123\n"
         neelijst = neelijstIT
         jalijst = jalijstIT
         neeja = neejaIT
     else:
         willekeurig = "Willekeurige volgorde?"
+        mpg123 = "Start afspelen met mpg123\n"
         neelijst = neelijstNL
         jalijst = jalijstNL
         neeja = neejaNL
@@ -420,6 +423,7 @@ def play(tracklijst):
         with open(os.path.join(pad,"tracklijst.m3u"),"w") as tl:
             for tr in tracklijst:
                 print(tr, file=tl)
+        print(mpg123)
         subprocess.run(["mpg123-alsa", "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
         os.remove(os.path.join(pad,"tracklijst.m3u"))
     except:
@@ -429,6 +433,7 @@ def hellup():
     if lang == "EN":
         helpteksten = [
             "With musuite, you can play your organized music collection and saved online streams. Press \"Enter\" to proceed with your choice, \"B\" to interrupt the current function, or \"Q\" to quit. To change the language, you can select \"L\" in the main menu.",
+            "musuite uses mpg123, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
             "It is important, no, ESSENTIAL, that your organized music collection looks like this:",
             """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK
  {\\    ...\\path}\\
@@ -470,6 +475,7 @@ def hellup():
     elif lang == "IT":
         helpteksten = [
             "Con musuite puoi riprodurre la tua collezione musicale organizzata e gli stream online salvati. Premi \"Invio\" per procedere con la tua scelta, \"B\" per interrompere la funzione corrente o \"Q\" per uscire. Per cambiare la lingua, puoi selezionare \"L\" nel menu principale.",
+            "musuite utilizza mpg123, disponibile nella maggior parte dei repository, e \"chooseFromNumberedList.py\", che puoi scaricare da https://github.com/maestraccio/chooseFromNumberedList. Posizionalo nella stessa cartella di \"musuite.py\" e \"adjustables.py\".",
             "È importante, anzi ESSENZIALE, che la tua collezione musicale organizzata sia strutturata così:",
             """\\CARTELLA_PRINCIPALE \\GENERE\\ALBUM              \\TRACCIA
           {\\...\\percorso}\\
@@ -511,6 +517,7 @@ def hellup():
     else:
         helpteksten = [
             "Met musuite kun je je georganiseerde muziekverzameling en verzamelde online streams afspelen. Druk op \"Enter\" om na je keuze door te gaan, \"B\" om de huidige functie te onderbreken of \"Q\" om te stoppen. Om de taal te wijzigen kun je in het hoofdmenu \"L\" kiezen.",
+            "musuite maakt gebruik van mpg123, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
             "Het is belangrijk, nee ESSENTIEEL dat je georganiseerde muziekverzameling er zo uitziet:",
             """\\HOOFDMAP \\GENRE\\ALBUM              \\TRACK
 {\\.    ..\\pad}\\
@@ -589,6 +596,8 @@ def hellup():
 if showhelp == "Y":
     hellup()
 
+############################################
+
 loop = True
 while loop == True:
     if lang == "EN":
@@ -607,6 +616,8 @@ while loop == True:
                 "T":"Track, Song, Opus"
                 }
         man = manEN
+        willekeurig = "Random order?"
+        mpg123 = "Starting playback with mpg123\n"
     elif lang == "IT":
         hoofdmenu = " - - MENU PRINCIPALE - -"
         mosdict = {
@@ -623,6 +634,8 @@ while loop == True:
                 "T":"Traccia, Canzone, Numero"
                 }
         man = manIT
+        willekeurig = "Ordine casuale?"
+        mpg123 = "Avvio della riproduzione con mpg123\n"
     else:
         hoofdmenu = " - - HOOFDMENU - -"
         mosdict = {
@@ -639,6 +652,8 @@ while loop == True:
                 "T":"Track, Lied, Opus"
                 }
         man = manNL
+        willekeurig = "Willekeurige volgorde?"
+        mpg123 = "Start afspelen met mpg123\n"
     moslijst = []
     for i in mosdict:
         moslijst.append(i.lower())
@@ -673,6 +688,7 @@ while loop == True:
             hellup()
         else:
             su = streamsdict[s]
+            print(mpg123)
             subprocess.run(["mpg123-alsa", "-vm",  su])
     else:
         v,k = cFD([gmtdict,0,"G","> ",helplijst+man+gmtlijst+backlijst+quitlijst])
