@@ -35,7 +35,7 @@ streamsdict = {
         "* - Chill Out Zone":"https://chilloutzone.stream.laut.fm/chilloutzone",
         "Disco":"https://disco.stream.laut.fm/disco",
         "Electrolounge":"https://electrolounge.stream.laut.fm/electrolounge",
-        "Funk":"https://funk.stream.laut.fm/funk",
+        "* - Funk":"https://funk.stream.laut.fm/funk",
         "Funk2Disco":"https://funk2disco.stream.laut.fm/funk2disco",
         "Italia 1":"https://italia1.stream.laut.fm/italia1",
         "Italo-Disco":"https://italo-disco.stream.laut.fm/italo-disco",
@@ -53,3 +53,12 @@ streamsdict = {
         "Soulradioclassics":"https://soulradioclassics.stream.laut.fm/soulradioclassics",
         "The Bugcast":"http://stream.otherside.network:8904/listen.mp3"
         }
+# Here, the language is set. The best way is to set this with  the setlang
+# function in the program. Valid options are currently "NL", "EN" and "IT".
+lang = "NL"
+# Set to "N" if you don't want to see the language selection  at startup, or to
+# "Y" if you do This is also done from the setlang function in the program
+picklang = "N"
+# Set to "N" if you don't want to see the help at startup, or to "Y" if you do
+# This is also done from the showhelp function in the program
+showhelp = "N"
