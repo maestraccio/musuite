@@ -4,8 +4,8 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "0.07"
-Date = "2026-08-08"
+Versie = "1.01"
+Date = "2026-08-09"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
 #MUSUITElogo="""
@@ -102,45 +102,6 @@ def setlang(oldlang):
     return newlang
 if picklang == "Y":
     lang = setlang(lang)
-extensielijst = [".mp1",".mp2",".mp3",".mpeg",".mpg",".mpga"]
-streamslijst = []
-for i in streamsdict:
-    streamslijst.append(i)
-genrelijst = []
-for i in os.listdir(pad):
-    if os.path.isdir(pad+i):
-        genrelijst.append(i)
-genrelijst = sorted(genrelijst)
-genrelijstlang = []
-for g in genrelijst:
-    if g in genredict:
-        genrelijstlang.append(g+" : "+genredict[g])
-    else:
-        genrelijstlang.append(g)
-genrelijstlang = sorted(genrelijstlang)
-allemappenlijst = []
-for g in genrelijst:
-    for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g)):
-        for mapp in dirnames:
-            allemappenlijst.append(mapp)
-alletrackslijst = []
-for g in genrelijst:
-    for m in allemappenlijst:
-        for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
-            for track in filenames:
-                for e in extensielijst:
-                    if track.endswith(e):
-                        alletrackslijst.append(track)
-maxlen = len(str(len(alletrackslijst)))
-#minleng = len(min(genrelijst, key=len))
-optieslijst = ["*"]
-for i in genrelijst:
-    if i[:1] not in optieslijst:
-        optieslijst.append(i[:1].lower())
-        optieslijst.append(i[:2].lower())
-        optieslijst.append(i.lower())
-        optieslijst.append(i[:1].upper())
-        optieslijst.append(i[:2].upper())
 
 def defgpad():
     if lang == "EN":
@@ -424,7 +385,7 @@ def play(tracklijst):
             for tr in tracklijst:
                 print(tr, file=tl)
         print(mpg123)
-        subprocess.run(["mpg123-alsa", "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
+        subprocess.run(["mpg123", "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
         os.remove(os.path.join(pad,"tracklijst.m3u"))
     except:
         pass
@@ -601,6 +562,62 @@ if showhelp == "Y":
 
 ############################################
 
+if lang == "EN":
+    padtekst = "The path used as the MAIN_FOLDER for your music collection is:"
+    gener = "Your music collection is being gathered, this may take a moment..."
+elif lang == "IT":
+    padtekst = "Il percorso utilizzato come CARTELLA_PRINCIPALE della tua raccolta musicale è:"
+    gener = "Sto raccogliendo la tua collezione musicale, potrebbe richiedere un momento..."
+else:
+    padtekst = "Het pad dat gebruikt wordt als HOOFDMAP van je muziekcollectie is:"
+    gener = "Je muziekcollectie wordt verzameld, dit kan even duren..."
+for w in textwrap.wrap(padtekst,80):
+    print(w)
+print(pad)
+print()
+for w in textwrap.wrap(gener,80):
+    print(w)
+genrelijst = []
+for i in os.listdir(pad):
+    if os.path.isdir(pad+i):
+        genrelijst.append(i)
+genrelijst = sorted(genrelijst)
+genrelijstlang = []
+for g in genrelijst:
+    if g in genredict:
+        genrelijstlang.append(g+" : "+genredict[g])
+    else:
+        genrelijstlang.append(g)
+genrelijstlang = sorted(genrelijstlang)
+allemappenlijst = []
+for g in genrelijst:
+    for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g)):
+        for mapp in dirnames:
+            allemappenlijst.append(mapp)
+extensielijst = [".mp1",".mp2",".mp3",".mpeg",".mpg",".mpga"]
+alletrackslijst = []
+for g in genrelijst:
+    for m in allemappenlijst:
+        for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
+            for track in filenames:
+                for e in extensielijst:
+                    if track.endswith(e):
+                        alletrackslijst.append(track)
+maxlen = len(str(len(alletrackslijst)))
+streamslijst = []
+for i in streamsdict:
+    streamslijst.append(i)
+optieslijst = ["*"]
+for i in genrelijst:
+    if i[:1] not in optieslijst:
+        optieslijst.append(i[:1].lower())
+        optieslijst.append(i[:2].lower())
+        optieslijst.append(i.lower())
+        optieslijst.append(i[:1].upper())
+        optieslijst.append(i[:2].upper())
+
+############################################
+
 loop = True
 while loop == True:
     if lang == "EN":
@@ -679,116 +696,39 @@ while loop == True:
         hellup()
     elif k in langlijst:
         lang = setlang(lang)
-    elif k.upper() == "S":
-        s,index = cFNL([streamslijst,"A",1,1,"> ",helplijst+man+backlijst+quitlijst])
-        if s in quitlijst:
-            exit()
-        elif s in backlijst:
-            pass
-        elif s in man:
-            subprocess.run(["man", "mpg123"])
-        elif s in helplijst:
-            hellup()
-        else:
-            su = streamsdict[s]
-            print(mpg123)
-            subprocess.run(["mpg123-alsa", "-vm",  su])
-    else:
-        v,k = cFD([gmtdict,0,"G","> ",helplijst+man+gmtlijst+backlijst+quitlijst])
-        if k.upper() in quitlijst:
-            exit()
-        elif k.upper() in backlijst:
-            pass
-        elif k in man:
-            subprocess.run(["man", "mpg123"])
-        elif k in helplijst:
-            hellup()
-        elif k.upper() == "T":
-            tracklijstkort = []
-            tracklijst = []
-            if lang == "EN":
-                zoekterm = input("Enter a search term (no exit command like \"Q\"):\n")
-            elif lang == "IT":
-                zoekterm = input("Inserisci un termine di ricerca (nessun comando di uscita come \"Q\"):\n")
-            else:
-                zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\"):\n")
-            if zoekterm in quitlijst:
+    elif k.upper() == moslijst[1].upper():
+        loopS = True
+        while loopS == True:
+            s,index = cFNL([streamslijst,"A",1,1,"> ",helplijst+man+backlijst+quitlijst])
+            if s in quitlijst:
                 exit()
-            elif zoekterm in backlijst:
-                pass
-            elif zoekterm in man:
+            elif s in backlijst:
+                break
+            elif s in man:
                 subprocess.run(["man", "mpg123"])
+            elif s in helplijst:
+                hellup()
             else:
-                for dirpath, dirnames, filenames in os.walk(pad):
-                    for track in filenames:
-                        if zoekterm in track:
-                            for e in extensielijst:
-                                if track.endswith(e):
-                                    tracklijst.append(track)
-                                    tracklijstkort.append(track)
-                tracklijstkort = sorted(tracklijstkort)
-                if len(tracklijstkort) < 1:
-                    print()
-                    if lang == "EN":
-                        wraptext = "Your search did not return any results. Remember that the search is case-sensitive."
-                    elif lang == "IT":
-                        wraptext = "La tua ricerca non ha restituito risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
-                    else:
-                        wraptext = "Je zoekopdracht leverde geen resultaten op. Denk eraan dat de zoekopdracht hoofdlettergevoelig is."
-                    for i in textwrap.wrap(wraptext,80):
-                        print(i)
-                    print()
-                else:
-                    tracklijstverkort = printtracklijstmetsel(tracklijstkort)
-                    lentl = len(str(len(tracklijstverkort)))
-                    tracklijstnogkorter = []
-                    for track in tracklijstverkort:
-                        if len(track) > 80-3-maxlen-lentl:
-                            tracklijstnogkorter.append(track[:40-maxlen-lentl]+"**"+track[len(track)-36:])
-                        else:
-                            tracklijstnogkorter.append(track)
-                    tracksel,index = cFNL([tracklijstnogkorter,"A",1,1,"> ",True,helplijst+man+backlijst+quitlijst])
-                    if tracksel in quitlijst:
-                        exit()
-                    elif tracksel in backlijst:
-                        pass
-                    elif tracksel in man:
-                        subprocess.run(["man", "mpg123"])
-                    elif tracksel in helplijst:
-                        hellup()
-                    else:
-                        tracklijstdef = []
-                        for i in tracksel:
-                            for dirpath, dirnames, filenames in os.walk(pad):
-                                for track in filenames:
-                                    if tracklijstkort[tracklijstnogkorter.index(i)] in track:
-                                        tracklijstdef.append(os.path.join(dirpath, track))
-                        tracklijst = sorted(tracklijstdef)
-                        printtracklijst(tracklijst)
-                        play(tracklijst)
-        elif k.upper() == "M":
-            if lang == "EN":
-                wraptext = "Do you want to search using a search term or browse through the collection?"
-            elif lang == "IT":
-                wraptext = "Vuoi effettuare una ricerca con un termine specifico o scorrere la collezione?"
-            else:
-                wraptext = "Wil je zoeken met een zoekopdracht of scrollen door de verzameling?"
-            v,k = cFD([zosdict,0,"S","> ",helplijst+man+zoslijst+backlijst+quitlijst])
-            print(k)
-            if k in quitlijst:
+                su = streamsdict[s]
+                print(mpg123)
+                subprocess.run(["mpg123", "-vm",  su])
+    else:
+        loopM = True
+        while loopM == True:
+            v,k = cFD([gmtdict,0,"G","> ",helplijst+man+gmtlijst+backlijst+quitlijst])
+            if k.upper() in quitlijst:
                 exit()
-            elif k in backlijst:
-                pass
+            elif k.upper() in backlijst:
+                break
             elif k in man:
                 subprocess.run(["man", "mpg123"])
             elif k in helplijst:
                 hellup()
-            else:
-                if k.upper() == "Z":
-                    mappenlijstkort = []
-                    mappenlijst = []
+            elif k.upper() == gmtlijst[2].upper():
+                loopMT = True
+                while loopMT == True:
                     tracklijstkort = []
-                    tracklijstverkort = []
+                    tracklijst = []
                     if lang == "EN":
                         zoekterm = input("Enter a search term (no exit command like \"Q\"):\n")
                     elif lang == "IT":
@@ -798,172 +738,263 @@ while loop == True:
                     if zoekterm in quitlijst:
                         exit()
                     elif zoekterm in backlijst:
-                        pass
+                        break
                     elif zoekterm in man:
                         subprocess.run(["man", "mpg123"])
                     else:
                         for dirpath, dirnames, filenames in os.walk(pad):
-                            for mapp in dirnames:
-                                if zoekterm in mapp:
-                                    mappenlijst.append(mapp)
-                                    mappenlijstkort.append(mapp)
-                        mappenlijstkort = sorted(mappenlijstkort)
-                        if len(mappenlijstkort) < 1:
+                            for track in filenames:
+                                if zoekterm in track:
+                                    for e in extensielijst:
+                                        if track.endswith(e):
+                                            tracklijst.append(track)
+                                            tracklijstkort.append(track)
+                        tracklijstkort = sorted(tracklijstkort)
+                        if len(tracklijstkort) < 1:
                             print()
                             if lang == "EN":
                                 wraptext = "Your search did not return any results. Remember that the search is case-sensitive."
                             elif lang == "IT":
-                                wraptext = "La tua ricerca non ha prodotto risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
+                                wraptext = "La tua ricerca non ha restituito risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
                             else:
                                 wraptext = "Je zoekopdracht leverde geen resultaten op. Denk eraan dat de zoekopdracht hoofdlettergevoelig is."
                             for i in textwrap.wrap(wraptext,80):
                                 print(i)
                             print()
                         else:
-                            mappenlijstverkort = printmappenlijstmetsel(mappenlijstkort)
-                            lenml = len(str(len(mappenlijstverkort)))
-                            mappenlijstnogkorter = []
-                            for mapp in mappenlijstverkort:
-                                if len(mapp) > 80-3-maxlen-lenml:
-                                    mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
+                            tracklijstverkort = printtracklijstmetsel(tracklijstkort)
+                            lentl = len(str(len(tracklijstverkort)))
+                            tracklijstnogkorter = []
+                            for track in tracklijstverkort:
+                                if len(track) > 80-3-maxlen-lentl:
+                                    tracklijstnogkorter.append(track[:40-maxlen-lentl]+"**"+track[len(track)-36:])
                                 else:
-                                    mappenlijstnogkorter.append(mapp)
-                            mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
-                            print("mappsel = ",mappsel)
-                            if mappsel in quitlijst:
+                                    tracklijstnogkorter.append(track)
+                            tracksel,index = cFNL([tracklijstnogkorter,"A",1,1,"> ",True,helplijst+man+backlijst+quitlijst])
+                            if tracksel in quitlijst:
                                 exit()
-                            elif mappsel in backlijst:
-                                pass
-                            elif mappsel in man:
+                            elif tracksel in backlijst:
+                                break
+                            elif tracksel in man:
                                 subprocess.run(["man", "mpg123"])
-                            elif mappsel in helplijst:
+                            elif tracksel in helplijst:
                                 hellup()
                             else:
-                                if mappsel == "*":
-                                    mappsel = []
-                                    for m in mappenlijstnogkorter:
-                                        mappsel.append(m)
                                 tracklijstdef = []
-                                for m in mappsel:
-                                    m = mappenlijstkort[mappenlijstnogkorter.index(m)]
-                                    for g in genrelijst:
-                                        for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
-                                            for track in filenames:
-                                                for e in extensielijst:
-                                                    if track.endswith(e):
-                                                        tracklijstdef.append(os.path.join(pad,g,m,track))
+                                for i in tracksel:
+                                    for dirpath, dirnames, filenames in os.walk(pad):
+                                        for track in filenames:
+                                            if tracklijstkort[tracklijstnogkorter.index(i)] in track:
+                                                tracklijstdef.append(os.path.join(dirpath, track))
                                 tracklijst = sorted(tracklijstdef)
                                 printtracklijst(tracklijst)
                                 play(tracklijst)
-                else:
-                    gpad = defgpad()
-                    if gpad in backlijst:
-                        pass
-                    mappenlijst = []
-                    for m in os.listdir(gpad):
-                        if os.path.isdir(os.path.join(gpad,m)):
-                            mpad = os.path.join(gpad,m)
-                            mappenlijst.append(mpad)
-                    mappenlijst = sorted(mappenlijst)
-                    mappenlijstkort = []
-                    optielijst = []
-                    for i in mappenlijst:
-                        mappenlijstkort.append(i[len(gpad)+1:])
-                    mappenlijstverkort = printmappenlijstmetsel(mappenlijstkort)
-                    lenml = len(str(len(mappenlijstverkort)))
-                    mappenlijstnogkorter = []
-                    for mapp in mappenlijstverkort:
-                        if len(mapp) > 80-3-maxlen-lenml:
-                            mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
-                        else:
-                            mappenlijstnogkorter.append(mapp)
-                    mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
-                    if mappsel in quitlijst:
+            elif k.upper() == gmtlijst[1].upper():
+                loopMM = True
+                while loopMM == True:
+                    if lang == "EN":
+                        wraptext = "Do you want to search using a search term or browse through the collection?"
+                    elif lang == "IT":
+                        wraptext = "Vuoi effettuare una ricerca con un termine specifico o scorrere la collezione?"
+                    else:
+                        wraptext = "Wil je zoeken met een zoekopdracht of scrollen door de verzameling?"
+                    v,k = cFD([zosdict,0,"S","> ",helplijst+man+zoslijst+backlijst+quitlijst])
+                    print(k)
+                    if k in quitlijst:
                         exit()
-                    elif mappsel in backlijst:
-                        pass
-                    elif mappsel in man:
+                    elif k in backlijst:
+                        break
+                    elif k in man:
                         subprocess.run(["man", "mpg123"])
-                    elif mappsel in helplijst:
+                    elif k in helplijst:
                         hellup()
                     else:
-                        if mappsel == "*":
-                            mappsel = []
-                            for m in mappenlijstnogkorter:
-                                mappsel.append(m)
-                        tracklijstdef = []
-                        for m in mappsel:
-                            m = mappenlijstkort[mappenlijstnogkorter.index(m)]
-                            for g in genrelijst:
-                                for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
-                                    for track in filenames:
-                                        for e in extensielijst:
-                                            if track.endswith(e):
-                                                tracklijstdef.append(os.path.join(pad,g,m,track))
-                        tracklijst = sorted(tracklijstdef)
+                        if k.upper() == zoslijst[0].upper():
+                            loopMMZ = True
+                            while loopMMZ == True:
+                                mappenlijstkort = []
+                                mappenlijst = []
+                                tracklijstkort = []
+                                tracklijstverkort = []
+                                if lang == "EN":
+                                    zoekterm = input("Enter a search term (no exit command like \"Q\"):\n")
+                                elif lang == "IT":
+                                    zoekterm = input("Inserisci un termine di ricerca (nessun comando di uscita come \"Q\"):\n")
+                                else:
+                                    zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\"):\n")
+                                if zoekterm in quitlijst:
+                                    exit()
+                                elif zoekterm in backlijst:
+                                    break
+                                elif zoekterm in man:
+                                    subprocess.run(["man", "mpg123"])
+                                else:
+                                    for dirpath, dirnames, filenames in os.walk(pad):
+                                        for mapp in dirnames:
+                                            if zoekterm in mapp:
+                                                mappenlijst.append(mapp)
+                                                mappenlijstkort.append(mapp)
+                                    mappenlijstkort = sorted(mappenlijstkort)
+                                    if len(mappenlijstkort) < 1:
+                                        print()
+                                        if lang == "EN":
+                                            wraptext = "Your search did not return any results. Remember that the search is case-sensitive."
+                                        elif lang == "IT":
+                                            wraptext = "La tua ricerca non ha prodotto risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
+                                        else:
+                                            wraptext = "Je zoekopdracht leverde geen resultaten op. Denk eraan dat de zoekopdracht hoofdlettergevoelig is."
+                                        for i in textwrap.wrap(wraptext,80):
+                                            print(i)
+                                        print()
+                                    else:
+                                        mappenlijstverkort = printmappenlijstmetsel(mappenlijstkort)
+                                        lenml = len(str(len(mappenlijstverkort)))
+                                        mappenlijstnogkorter = []
+                                        for mapp in mappenlijstverkort:
+                                            if len(mapp) > 80-3-maxlen-lenml:
+                                                mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
+                                            else:
+                                                mappenlijstnogkorter.append(mapp)
+                                        mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
+                                        print("mappsel = ",mappsel)
+                                        if mappsel in quitlijst:
+                                            exit()
+                                        elif mappsel in backlijst:
+                                            break
+                                        elif mappsel in man:
+                                            subprocess.run(["man", "mpg123"])
+                                        elif mappsel in helplijst:
+                                            hellup()
+                                        else:
+                                            if mappsel == "*":
+                                                mappsel = []
+                                                for m in mappenlijstnogkorter:
+                                                    mappsel.append(m)
+                                            tracklijstdef = []
+                                            for m in mappsel:
+                                                m = mappenlijstkort[mappenlijstnogkorter.index(m)]
+                                                for g in genrelijst:
+                                                    for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
+                                                        for track in filenames:
+                                                            for e in extensielijst:
+                                                                if track.endswith(e):
+                                                                    tracklijstdef.append(os.path.join(pad,g,m,track))
+                                            tracklijst = sorted(tracklijstdef)
+                                            printtracklijst(tracklijst)
+                                            play(tracklijst)
+                        else:
+                            loopMMS = True
+                            while loopMMS == True:
+                                gpad = defgpad()
+                                if gpad in backlijst:
+                                    break
+                                mappenlijst = []
+                                for m in os.listdir(gpad):
+                                    if os.path.isdir(os.path.join(gpad,m)):
+                                        mpad = os.path.join(gpad,m)
+                                        mappenlijst.append(mpad)
+                                mappenlijst = sorted(mappenlijst)
+                                mappenlijstkort = []
+                                optielijst = []
+                                for i in mappenlijst:
+                                    mappenlijstkort.append(i[len(gpad)+1:])
+                                mappenlijstverkort = printmappenlijstmetsel(mappenlijstkort)
+                                lenml = len(str(len(mappenlijstverkort)))
+                                mappenlijstnogkorter = []
+                                for mapp in mappenlijstverkort:
+                                    if len(mapp) > 80-3-maxlen-lenml:
+                                        mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
+                                    else:
+                                        mappenlijstnogkorter.append(mapp)
+                                mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
+                                if mappsel in quitlijst:
+                                    exit()
+                                elif mappsel in backlijst:
+                                    break
+                                elif mappsel in man:
+                                    subprocess.run(["man", "mpg123"])
+                                elif mappsel in helplijst:
+                                    hellup()
+                                else:
+                                    if mappsel == "*":
+                                        mappsel = []
+                                        for m in mappenlijstnogkorter:
+                                            mappsel.append(m)
+                                    tracklijstdef = []
+                                    for m in mappsel:
+                                        m = mappenlijstkort[mappenlijstnogkorter.index(m)]
+                                        for g in genrelijst:
+                                            for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
+                                                for track in filenames:
+                                                    for e in extensielijst:
+                                                        if track.endswith(e):
+                                                            tracklijstdef.append(os.path.join(pad,g,m,track))
+                                    tracklijst = sorted(tracklijstdef)
+                                    printtracklijst(tracklijst)
+                                    play(tracklijst)
+            else:
+                loopMT = True
+                while loopMT == True:
+                    optie,index = cFNL([genrelijstlang,"A",1,1,"> ",True,helplijst+man+optieslijst+backlijst+quitlijst])
+                    if optie in quitlijst:
+                        exit()
+                    elif optie in backlijst:
+                        break
+                    elif optie in man:
+                        subprocess.run(["man", "mpg123"])
+                    elif optie in helplijst:
+                        hellup()
+                    elif type(optie) == str:
+                        if "*" in optie:
+                           tracklijst = []
+                           for g in genrelijst:
+                               gpad = os.path.join(pad,g)
+                               mappenlijst = []
+                               for m in os.listdir(gpad):
+                                   if os.path.isdir(os.path.join(gpad,m)):
+                                       mpad = os.path.join(pad,g,m)
+                                       mappenlijst.append(mpad)
+                               mappenlijst = sorted(mappenlijst)
+                               for m in mappenlijst:
+                                   mpad = os.path.join(gpad,m)
+                                   for track in os.listdir(mpad):
+                                       for e in extensielijst:
+                                           if track.endswith(e):
+                                               tpad = os.path.join(mpad,track)
+                                               tracklijst.append(tpad)
+                        else:
+                            optie = optie.upper()
+                            for i in genrelijst:
+                                if optie in [i[:1],i[:2],i]:
+                                    if i not in optielijst:
+                                        optielijst.append(i)
+                            optie = optielijst
+                            for g in optie:
+                                if g in genrelijstlang:
+                                    optie[optie.index(g)] = genrelijst[genrelijstlang.index(g)]
+                        tracklijst = sorted(tracklijst)
                         printtracklijst(tracklijst)
                         play(tracklijst)
-        else:
-            optie,index = cFNL([genrelijstlang,"A",1,1,"> ",True,helplijst+man+optieslijst+backlijst+quitlijst])
-            if optie in quitlijst:
-                exit()
-            elif optie in backlijst:
-                pass
-            elif optie in man:
-                subprocess.run(["man", "mpg123"])
-            elif optie in helplijst:
-                hellup()
-            elif type(optie) == str and optie not in man+backlijst+quitlijst:
-                if "*" in optie:
-                   tracklijst = []
-                   for g in genrelijst:
-                       gpad = os.path.join(pad,g)
-                       mappenlijst = []
-                       for m in os.listdir(gpad):
-                           if os.path.isdir(os.path.join(gpad,m)):
-                               mpad = os.path.join(pad,g,m)
-                               mappenlijst.append(mpad)
-                       mappenlijst = sorted(mappenlijst)
-                       for m in mappenlijst:
-                           mpad = os.path.join(gpad,m)
-                           for track in os.listdir(mpad):
-                               for e in extensielijst:
-                                   if track.endswith(e):
-                                       tpad = os.path.join(mpad,track)
-                                       tracklijst.append(tpad)
-                else:
-                    optie = optie.upper()
-                    for i in genrelijst:
-                        if optie in [i[:1],i[:2],i]:
-                            if i not in optielijst:
-                                optielijst.append(i)
-                    optie = optielijst
-                    for g in optie:
-                        if g in genrelijstlang:
-                            optie[optie.index(g)] = genrelijst[genrelijstlang.index(g)]
-                tracklijst = sorted(tracklijst)
-                printtracklijst(tracklijst)
-                play(tracklijst)
-            elif type(optie) == list: 
-                if len(optie) < 1:
-                    pass
-                else:
-                   tracklijst = []
-                   for g in optie:
-                       g = genrelijst[genrelijstlang.index(g)]
-                       gpad = os.path.join(pad,g)
-                       mappenlijst = []
-                       for m in os.listdir(gpad):
-                           if os.path.isdir(os.path.join(gpad,m)):
-                               mpad = os.path.join(pad,g,m)
-                               mappenlijst.append(mpad)
-                       mappenlijst = sorted(mappenlijst)
-                       for m in mappenlijst:
-                           mpad = os.path.join(gpad,m)
-                           for track in os.listdir(mpad):
-                               if track.endswith(".mp3"):
-                                   tpad = os.path.join(mpad,track)
-                                   tracklijst.append(tpad)
-                   tracklijst = sorted(tracklijst)
-                   printtracklijst(tracklijst)
-                   play(tracklijst)
+                    elif type(optie) == list: 
+                        if len(optie) < 1:
+                            pass
+                        else:
+                           tracklijst = []
+                           for g in optie:
+                               g = genrelijst[genrelijstlang.index(g)]
+                               gpad = os.path.join(pad,g)
+                               mappenlijst = []
+                               for m in os.listdir(gpad):
+                                   if os.path.isdir(os.path.join(gpad,m)):
+                                       mpad = os.path.join(pad,g,m)
+                                       mappenlijst.append(mpad)
+                               mappenlijst = sorted(mappenlijst)
+                               for m in mappenlijst:
+                                   mpad = os.path.join(gpad,m)
+                                   for track in os.listdir(mpad):
+                                       if track.endswith(".mp3"):
+                                           tpad = os.path.join(mpad,track)
+                                           tracklijst.append(tpad)
+                           tracklijst = sorted(tracklijst)
+                           printtracklijst(tracklijst)
+                           play(tracklijst)
