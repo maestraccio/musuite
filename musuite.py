@@ -4,7 +4,7 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "1.01"
+Versie = "1.02"
 Date = "2026-08-09"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
@@ -36,6 +36,9 @@ langlijstbasis = ["L"]
 langlijst = ["L","l"]
 quitlijstbasis = ["Q"]
 quitlijst = ["Q","q"]
+neelijstCJ = ["I","i","li","Li"]
+jalijstCJ = ["A","a","la","La"]
+neejaCJ = ["I","A"]
 neelijstEN = ["N","n","no"]
 jalijstEN = ["Y","y","yes","Yes"]
 neejaEN = ["N","Y"]
@@ -45,14 +48,19 @@ neejaIT = ["N","S"]
 neelijstNL = ["N","n","nee","Nee"]
 jalijstNL = ["J","j","ja","Ja"]
 neejaNL = ["N","J"]
+manCJ = ["man mpg123","woman mpg123","hufu mpg123"]
 manEN = ["man mpg123","woman mpg123"]
 manIT = ["man mpg123","woman mpg123","uomo mpg123","donna mpg123"]
 manNL = ["man mpg123","woman mpg123","vrouw mpg123"]
 def setlang(oldlang):
+    # Informatie over hucoji vind je op www.hucoji.org
+    # You can find information about hucoji at www.hucoji.org
+    # Puoi trovare informazioni su hucoji al sito www.hucoji.org
     pickdict = {
-            "NL":"Nederlands",
+            "CJ":"hucoji",
             "EN":"English",
-            "IT":"Italiano"
+            "IT":"Italiano",
+            "NL":"Nederlands"
             }
     picklijst = []
     for l in pickdict:
@@ -68,8 +76,54 @@ def setlang(oldlang):
             if r[:4] == "lang":
                 r = "lang = \"%s\"\n" % (newlang)
             print(r, end = "", file = a)
-    if newlang == "EN":
-        wraptext = "Do you want to see this language choice again the next time you start the program? You can call up this choice text with \"L\" from the main meinu:"
+    if newlang == "CJ":
+#ZTI:Voorwaardelijk(                                             mo
+#)
+#WTI:WW(                                                         ha
+#        zti:Keuze(                                              me
+#                Waarheid:Waar(                                  la
+#)       )       )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#        Registratie:Zien(                                       ca
+#)       )
+#WTI:ZNW(                                                        hu
+#        zti:Keuze(                                              me
+#                Afstand:Hier(                                   ʒi
+#)       )       )
+#WTI:WW(                                                         ha
+#        Progressi:Start(                                        zi
+#                Activiteit:Actief(                              ʃa
+#                        Afstand:Hier(                           ʒi
+#))))
+#mo hamela m haca humeʒi haziʃaʒi
+#ZTI:Voorwaardelijk(                                             mo
+#)
+#WTI:BNW(                                                        ho
+#        Afstand:Hier(                                           ʒi
+#                Progressie:Beginfase(                           ze
+#)       )
+#WTI:WW(                                                         ha
+#        zti:Keuze(                                              me
+#                "L"(                                            "L"
+#)       )       )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#        Registratie:Zien(                                       ca
+#)       )
+#WTI:ZNW(                                                        hu
+#        zti:Keuze(                                              me
+#                Afstand:Hier(                                   ʒi
+#)       )       )
+#mo hoʒize hame"L" m haca humeʒi
+        wraptext = "mo hamela m haca humeʒi haziʃaʒi. mo hoʒize hame\"L\" m haca humeʒi:"
+        neelijst = neelijstCJ
+        jalijst = jalijstCJ
+        neeja = neejaCJ
+    elif newlang == "EN":
+        wraptext = "Do you want to see this language choice again the next time you start the program? You can call up this choice text with \"L\" from the main menu:"
         neelijst = neelijstEN
         jalijst = jalijstEN
         neeja = neejaEN
@@ -620,7 +674,25 @@ for i in genrelijst:
 
 loop = True
 while loop == True:
-    if lang == "EN":
+    if lang == "CJ":
+        hoofdmenu = " - - huʒize - -"
+        mosdict = {
+                "M":"MP3-bestand(en) uit eigen collectie",
+                "S":"online Stream"
+                }
+        zosdict = {
+                "Z":"Zoeken op zoekterm",
+                "S":"Scrollen door de genrecollectie"
+                }
+        gmtdict = {
+                "G":"Genre, Stijl, Categorie",
+                "M":"Map, Album, Verzameling",
+                "T":"Track, Lied, Opus"
+                }
+        man = manCJ
+        willekeurig = "Willekeurige volgorde?"
+        mpg123 = "Start afspelen met mpg123\n"
+    elif lang == "EN":
         hoofdmenu = " - - MAIN MENU - -"
         mosdict = {
                 "M":"MP3 file(s) from own collection",
