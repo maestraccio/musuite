@@ -55,7 +55,7 @@ streamsdict = {
         }
 # Here, the language is set. The best way is to set this with  the setlang
 # function in the program. Valid options are currently "NL", "EN" and "IT".
-lang = "IT"
+lang = "EN"
 # Set to "N" if you don't want to see the language selection  at startup, or to
 # "Y" if you do This is also done from the setlang function in the program
 picklang = "Y"

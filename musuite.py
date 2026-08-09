@@ -435,6 +435,7 @@ def hellup():
             "With musuite, you can play your organized music collection and saved online streams. Press \"Enter\" to proceed with your choice, \"B\" to interrupt the current function, or \"Q\" to quit. To change the language, you can select \"L\" in the main menu.",
             "musuite uses mpg123, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
             "It is important, no, ESSENTIAL, that your organized music collection looks like this:",
+            # print as-is [3]
             """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK
  {\\    ...\\path}\\
                  {ABC}\\
@@ -477,6 +478,7 @@ def hellup():
             "Con musuite puoi riprodurre la tua collezione musicale organizzata e gli stream online salvati. Premi \"Invio\" per procedere con la tua scelta, \"B\" per interrompere la funzione corrente o \"Q\" per uscire. Per cambiare la lingua, puoi selezionare \"L\" nel menu principale.",
             "musuite utilizza mpg123, disponibile nella maggior parte dei repository, e \"chooseFromNumberedList.py\", che puoi scaricare da https://github.com/maestraccio/chooseFromNumberedList. Posizionalo nella stessa cartella di \"musuite.py\" e \"adjustables.py\".",
             "È importante, anzi ESSENZIALE, che la tua collezione musicale organizzata sia strutturata così:",
+            # print as-is [3]
             """\\CARTELLA_PRINCIPALE \\GENERE\\ALBUM              \\TRACCIA
           {\\...\\percorso}\\
                            {ABC}\\
@@ -519,6 +521,7 @@ def hellup():
             "Met musuite kun je je georganiseerde muziekverzameling en verzamelde online streams afspelen. Druk op \"Enter\" om na je keuze door te gaan, \"B\" om de huidige functie te onderbreken of \"Q\" om te stoppen. Om de taal te wijzigen kun je in het hoofdmenu \"L\" kiezen.",
             "musuite maakt gebruik van mpg123, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
             "Het is belangrijk, nee ESSENTIEEL dat je georganiseerde muziekverzameling er zo uitziet:",
+            # print as-is [3]
             """\\HOOFDMAP \\GENRE\\ALBUM              \\TRACK
 {\\.    ..\\pad}\\
                {ABC}\\
@@ -557,7 +560,7 @@ def hellup():
         neeja = neejaNL
         man = manNL
     for i in helpteksten:
-        if "ALBUM" in i:
+        if i == helpteksten[3]:
             print(i)
         else:
             for w in textwrap.wrap(i,80):
@@ -818,7 +821,15 @@ while loop == True:
                             print()
                         else:
                             mappenlijstverkort = printmappenlijstmetsel(mappenlijstkort)
-                            mappsel,index = cFNL([mappenlijstverkort,"A",1,1,"> ",True,helplijst+man+backlijst+quitlijst])
+                            lenml = len(str(len(mappenlijstverkort)))
+                            mappenlijstnogkorter = []
+                            for mapp in mappenlijstverkort:
+                                if len(mapp) > 80-3-maxlen-lenml:
+                                    mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
+                                else:
+                                    mappenlijstnogkorter.append(mapp)
+                            mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
+                            print("mappsel = ",mappsel)
                             if mappsel in quitlijst:
                                 exit()
                             elif mappsel in backlijst:
@@ -828,8 +839,13 @@ while loop == True:
                             elif mappsel in helplijst:
                                 hellup()
                             else:
+                                if mappsel == "*":
+                                    mappsel = []
+                                    for m in mappenlijstnogkorter:
+                                        mappsel.append(m)
                                 tracklijstdef = []
                                 for m in mappsel:
+                                    m = mappenlijstkort[mappenlijstnogkorter.index(m)]
                                     for g in genrelijst:
                                         for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
                                             for track in filenames:
@@ -853,37 +869,40 @@ while loop == True:
                     optielijst = []
                     for i in mappenlijst:
                         mappenlijstkort.append(i[len(gpad)+1:])
-                    if len(mappenlijst) > 50:
-                        printmappenlijstmetsel(mappenlijstkort)
-                    optie,index = cFNL([mappenlijstkort,"A",1,1,"> ",True,helplijst+man+optieslijst+backlijst+quitlijst])
-                    if optie in quitlijst:
+                    mappenlijstverkort = printmappenlijstmetsel(mappenlijstkort)
+                    lenml = len(str(len(mappenlijstverkort)))
+                    mappenlijstnogkorter = []
+                    for mapp in mappenlijstverkort:
+                        if len(mapp) > 80-3-maxlen-lenml:
+                            mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
+                        else:
+                            mappenlijstnogkorter.append(mapp)
+                    mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
+                    if mappsel in quitlijst:
                         exit()
-                    elif optie in backlijst:
+                    elif mappsel in backlijst:
                         pass
-                    elif optie in man:
+                    elif mappsel in man:
                         subprocess.run(["man", "mpg123"])
-                    elif optie in helplijst:
+                    elif mappsel in helplijst:
                         hellup()
-                    if type(optie) == str and optie not in man+optieslijst+backlijst+quitlijst:
-                        optie = optie.upper()
-                        for i in genrelijst:
-                            if optie in [i[:1],i[:2],i]:
-                                if i not in optielijst:
-                                    optielijst.append(i)
-                        optie = optielijst
-                    tracklijst = []
-                    for o in optie:
-                        if o in mappenlijstkort:
-                            mmap = mappenlijst[mappenlijstkort.index(o)]
-                            mpad = os.path.join(gpad,mmap)
-                            for track in os.listdir(mpad):
-                                for e in extensielijst:
-                                    if track.endswith(e):
-                                        tpad = os.path.join(mpad,track)
-                                        tracklijst.append(tpad)
-                    tracklijst = sorted(tracklijst)
-                    printtracklijst(tracklijst)
-                    play(tracklijst)
+                    else:
+                        if mappsel == "*":
+                            mappsel = []
+                            for m in mappenlijstnogkorter:
+                                mappsel.append(m)
+                        tracklijstdef = []
+                        for m in mappsel:
+                            m = mappenlijstkort[mappenlijstnogkorter.index(m)]
+                            for g in genrelijst:
+                                for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
+                                    for track in filenames:
+                                        for e in extensielijst:
+                                            if track.endswith(e):
+                                                tracklijstdef.append(os.path.join(pad,g,m,track))
+                        tracklijst = sorted(tracklijstdef)
+                        printtracklijst(tracklijst)
+                        play(tracklijst)
         else:
             optie,index = cFNL([genrelijstlang,"A",1,1,"> ",True,helplijst+man+optieslijst+backlijst+quitlijst])
             if optie in quitlijst:
