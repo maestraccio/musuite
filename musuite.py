@@ -36,9 +36,9 @@ langlijstbasis = ["L"]
 langlijst = ["L","l"]
 quitlijstbasis = ["Q"]
 quitlijst = ["Q","q"]
-neelijstCJ = ["I","i","li","Li"]
-jalijstCJ = ["A","a","la","La"]
-neejaCJ = ["I","A"]
+neelijstCJ = ["i","li"]
+jalijstCJ = ["a","la"]
+neejaCJ = ["li","la"]
 neelijstEN = ["N","n","no"]
 jalijstEN = ["Y","y","yes","Yes"]
 neejaEN = ["N","Y"]
@@ -93,17 +93,20 @@ def setlang(oldlang):
 #                Afstand:Hier(                                   ʒi
 #)       )       )
 #WTI:WW(                                                         ha
-#        Progressi:Start(                                        zi
+#        Progressie:Start(                                       zi
 #                Activiteit:Actief(                              ʃa
-#                        Afstand:Hier(                           ʒi
-#))))
-#mo hamela m haca humeʒi haziʃaʒi
+#                        Status:Geordend(                        xa
+#                                Schaling:Groep(                 pa
+#)       )       )       )       )
+#mo hamela m haca humeʒi haziʃaxapa
 #ZTI:Voorwaardelijk(                                             mo
 #)
 #WTI:BNW(                                                        ho
 #        Afstand:Hier(                                           ʒi
-#                Progressie:Beginfase(                           ze
-#)       )
+#                WTI:ZNW(                                        hu
+#                        Afstand:Hier(                           ʒi      
+#                                Progressie:Beginfase(           ze      
+#)       )       )       )       )
 #WTI:WW(                                                         ha
 #        zti:Keuze(                                              me
 #                "L"(                                            "L"
@@ -117,8 +120,8 @@ def setlang(oldlang):
 #        zti:Keuze(                                              me
 #                Afstand:Hier(                                   ʒi
 #)       )       )
-#mo hoʒize hame"L" m haca humeʒi
-        wraptext = "mo hamela m haca humeʒi haziʃaʒi. mo hoʒize hame\"L\" m haca humeʒi:"
+#mo hoʒihuʒize hame"L" m haca humeʒi
+        wraptext = "mo hamela m haca humeʒi haziʃaxapa. mo hoʒihuʒize hame\"L\" m haca humeʒi:"
         neelijst = neelijstCJ
         jalijst = jalijstCJ
         neeja = neejaCJ
@@ -158,7 +161,9 @@ if picklang == "Y":
     lang = setlang(lang)
 
 def defgpad():
-    if lang == "EN":
+    if lang == "CJ":
+        man = manCJ
+    elif lang == "EN":
         man = manEN
     elif lang == "IT":
         man = manIT
@@ -180,7 +185,21 @@ def defgpad():
     return gpad
 
 def printtracklijst(tracklijst):
-    if lang == "EN":
+    if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        WTI:ZNW(                                                hu
+#            Registratie:Geluid(                                 co
+#                Status:Geordend(                                xa
+#)   )   )   )   )
+#WTI:ZNW(                                                        hu
+#    Tellen:0(                                                   bi
+#)
+#ma hupahucoxa hubi %s
+        print("ma hupahucoxa hubi %s" % str(len(tracklijst)))
+    elif lang == "EN":
         print("The track list contains %s tracks" % str(len(tracklijst)))
     elif lang == "IT":
         print("L’elenco delle tracce contiene %s brani" % str(len(tracklijst)))
@@ -188,7 +207,55 @@ def printtracklijst(tracklijst):
         print("De tracklijst bevat %s tracks" % str(len(tracklijst)))
     if len(tracklijst) > 50:
         print()
-        if lang == "EN":
+        if lang == "CJ":
+#ZTI:Oorzaak(                                            mu
+#)
+#WTI:WW(                                                 ha
+#        Registratie:Zien(                               ca
+#)       )
+#WTI:ZNW(                                                hu
+#        Schaling:Groep(                                 pa
+#                WTI:ZNW(                                hu
+#                        Registratie:Geluid(             co
+#                                Status:Geordend(        xa
+#)       )       )       )       )
+#WTI:BNW(                                                ho      
+#        Schaling:Groep(                                 pa
+#                Grootte:Klein(                          ñe
+#                        Schaling:Meervoud(              po
+#)       )       )       )
+#ZTI:Scheiding(                                          m
+#)
+#WTI:ZNW(                                                hu
+#        Schaling:Groep(                                 pa
+#                WTI:ZNW(                                hu
+#                        Registratie:Geluid(             co
+#                                Status:Geordend(        xa
+#                                        Grootte:Groot(  ño
+#)       )       )       )       )       )
+#WTI:BW(                                                 hi
+#        Registratie:Zien(                               ca
+#                Schaling:Alles(                         pu
+#                        Waarheid:Niet(                  li
+#                                Waarheid:Misschien(     lüi
+#)       )       )       )       )
+#mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi
+#ZTI:Voorwaarde(                                         mo
+#)
+#WTI:WW(                                                 ha
+#        ZTI:Keuze(                                      me
+#                "B"(                                    "B"
+#)       )       )
+#ZTI:Scheiding(                                          m
+#)
+#WTI:WW(                                                 ha
+#        Registratie:Zien(                               ca
+#                Waarheid:Onwaar(                        li
+#                        Tijd:Vanaf nu(                  qe
+#)       )       )       )
+#mo hame"B" m hacaliqe
+            wraptext = "mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi. mo hame\"B\" m hacaliqe."
+        elif lang == "EN":
             wraptext = "The track list is long and may not fit on your screen. The list is therefore displayed in multiple parts. Use \"B\" to break the display and continue to playback."
         elif lang == "IT":
             wraptext = "L’elenco delle tracce è lungo e potrebbe non entrare sullo schermo. L’elenco viene quindi mostrato in più parti. Usa \"B\" per interrompere la visualizzazione e passare alla riproduzione."
@@ -226,15 +293,77 @@ def printtracklijst(tracklijst):
     print()
 
 def printmappenlijst(mappenlijst):
-    if lang == "EN":
-        print("The folder list contains %s folders" % str(len(tracklijst)))
+    if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        WTI:ZNW(                                                hu
+#            Materie:Iets(                                       wa
+#                Connectie:Binnen(                               ŋüi
+#)   )   )   )   )
+#WTI:ZNW(                                                        hu
+#    Tellen:0(                                                   bi
+#)
+#ma hupahuwaŋüi hubi %s
+        print("ma hupahuwaŋüi hubi %s" % str(len(mappenlijst)))
+    elif lang == "EN":
+        print("The folder list contains %s folders" % str(len(mappenlijst)))
     elif lang == "IT":
-        print("L'elenco delle cartelle contiene %s cartelle" % str(len(tracklijst)))
+        print("L'elenco delle cartelle contiene %s cartelle" % str(len(mappenlijst)))
     else:
-        print("De mappenlijst bevat %s mappen" % str(len(tracklijst)))
+        print("De mappenlijst bevat %s mappen" % str(len(mappenlijst)))
     if len(mappenlijst) > 50:
         print()
-        if lang == "EN":
+        if lang == "CJ":
+#ZTI:Oorzaak(                                            mu
+#)
+#WTI:WW(                                                 ha
+#        Registratie:Zien(                               ca
+#)       )
+#WTI:ZNW(                                                hu
+#        Schaling:Groep(                                 pa
+#                WTI:ZNW(                                hu
+#                       Materie:Iets(                    wa
+#                               Connectie:Binnen(        ŋüi
+#)       )       )       )       )
+#WTI:BNW(                                                ho      
+#        Schaling:Groep(                                 pa
+#                Grootte:Klein(                          ñe
+#                        Schaling:Meervoud(              po
+#)       )       )       )
+#ZTI:Scheiding(                                          m
+#)
+#WTI:ZNW(                                                hu
+#        Schaling:Groep(                                 pa
+#                WTI:ZNW(                                hu
+#                       Materie:Iets(                    wa
+#                               Connectie:Binnen(        ŋüi
+#                                        Grootte:Groot(  ño
+#)       )       )       )       )       )
+#WTI:BW(                                                 hi
+#        Registratie:Zien(                               ca
+#                Schaling:Alles(                         pu
+#                        Waarheid:Niet(                  li
+#                                Waarheid:Misschien(     lüi
+#)       )       )       )       )
+#mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi
+#ZTI:Voorwaarde(                                         mo
+#)
+#WTI:WW(                                                 ha
+#        ZTI:Keuze(                                      me
+#                "B"(                                    "B"
+#)       )       )
+#ZTI:Scheiding(                                          m
+#)
+#WTI:WW(                                                 ha
+#        Registratie:Zien(                               ca
+#                Waarheid:Onwaar(                        li
+#                        Tijd:Vanaf nu(                  qe
+#)       )       )       )
+#mo hame"B" m hacaliqe
+            wraptext = "mu haca hupahuwaŋüi hopañepo m hupahuwaŋüiño hicapulilüi. mo hame\"B\" m hacaliqe."
+        elif lang == "EN":
             wraptext = "The folder list is long and may not fit on your screen. The list is therefore displayed in multiple parts. Use \"B\" to break the display and continue to playback."
         elif lang == "IT":
             wraptext = "L'elenco delle cartelle è lungo e potrebbe non entrare sullo schermo. L'elenco viene quindi mostrato in più parti. Usa \"B\" per interrompere la visualizzazione e passare alla riproduzione."
@@ -272,7 +401,21 @@ def printmappenlijst(mappenlijst):
     print()
 
 def printtracklijstmetsel(tracklijst):
-    if lang == "EN":
+    if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        WTI:ZNW(                                                hu
+#            Registratie:Geluid(                                 co
+#                Status:Geordend(                                xa
+#)   )   )   )   )
+#WTI:ZNW(                                                        hu
+#    Tellen:0(                                                   bi
+#)
+#ma hupahucoxa hubi %s
+        print("ma hupahucoxa hubi %s" % str(len(tracklijst)))
+    elif lang == "EN":
         print("The track list contains %s tracks" % str(len(tracklijst)))
     elif lang == "IT":
         print("L’elenco delle tracce contiene %s brani" % str(len(tracklijst)))
@@ -281,7 +424,41 @@ def printtracklijstmetsel(tracklijst):
     tracklijstverkort = []
     if len(tracklijst) > 50:
         print()
-        if lang == "EN":
+        if lang == "CJ":
+#ZTI:Oorzaak(                                            mu
+#)
+#WTI:WW(                                                 ha
+#        Registratie:Zien(                               ca
+#)       )
+#WTI:ZNW(                                                hu
+#        Schaling:Groep(                                 pa
+#                WTI:ZNW(                                hu
+#                        Registratie:Geluid(             co
+#                                Status:Geordend(        xa
+#)       )       )       )       )
+#WTI:BNW(                                                ho      
+#        Schaling:Groep(                                 pa
+#                Grootte:Klein(                          ñe
+#                        Schaling:Meervoud(              po
+#)       )       )       )
+#ZTI:Scheiding(                                          m
+#)
+#WTI:ZNW(                                                hu
+#        Schaling:Groep(                                 pa
+#                WTI:ZNW(                                hu
+#                        Registratie:Geluid(             co
+#                                Status:Geordend(        xa
+#                                        Grootte:Groot(  ño
+#)       )       )       )       )       )
+#WTI:BW(                                                 hi
+#        Registratie:Zien(                               ca
+#                Schaling:Alles(                         pu
+#                        Waarheid:Niet(                  li
+#                                Waarheid:Misschien(     lüi
+#)       )       )       )       )
+#mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi
+            wraptext = "mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi."
+        elif lang == "EN":
             wraptext = "The track list is long and may not fit on your screen. The list is therefore first displayed in multiple parts so you can see the numbers of the track(s) you want to select. After that, you will have the option to enter your final choice. Remember those numbers."
         elif lang == "IT":
             wraptext = "L'elenco delle tracce è lungo e potrebbe non entrare sullo schermo. L'elenco viene quindi mostrato inizialmente in più parti in modo che tu possa vedere i numeri delle tracce che desideri selezionare. Successivamente potrai inserire la tua scelta definitiva. Ricorda quei numeri."
@@ -309,7 +486,50 @@ def printtracklijstmetsel(tracklijst):
                 elif go in backlijst:
                     break
         print()
-        if lang == "EN":
+        if lang == "CJ":
+#WTI:ZNW(                                                        hu
+#        Schaling:Groep(                                         pa
+#                Progressie:Eind(                                zu
+#)       )       )
+#hupazu.
+#ZTI:Zin(                                                        ma
+#)
+#WTI:Pers.vnw:2(                                                 hea
+#)
+#WTI:WW(                                                         ha
+#        ZTI:Keuze(                                              me
+#                Waarheid:Concreet(                              lo      
+#)       )       )
+#WTI:Bijwoord(                                                   hi
+#        Tijd:Binnenkort(                                        qa
+#)       )
+#ma hea hamelo hiqa.
+#WTI:Zin(                                                        ma
+#)
+#WTI:Pers.vnw:2(                                                 hea
+#)
+#WTI:WW(                                                         ha
+#        Kennis:Denken(                                          de
+#                Connectie:Gekoppeld(                            ŋo
+#                        Schaling:Groep(                         pa
+#                                Verlangen:Willen(               ke
+#                                        Registratie:Horen(      co
+#)       )       )       )       )       )
+#ma hea hadeŋopakeco.
+#
+#WTI:Zin(                                                        ma
+#)
+#WTI:Pers.vnw:2(                                                 hea
+#)
+#WTI:WW(                                                         ha
+#        Activiteit:Beweging(                                    ʃe
+#                Materie:Ding(                                   wo
+#                        "ENTER"(                                "ENTER"
+#)       )       )       )
+#ma hea haʃewo"ENTER".
+
+            wraptext = "hupazu. ma hea hamelo hiqa. ma hea hadeŋopakeco. ma hea haʃewo\"ENTER\"."
+        elif lang == "EN":
             wraptext = "The end of the list has been reached and the option to enter your choice will follow. Remember the number(s) of the track(s) you want to select. Now first press \"Enter\""
         elif lang == "IT":
             wraptext = "La fine dell'elenco è stata raggiunta e a seguire ci sarà l'opzione per inserire la tua scelta. Ricorda il/i numero/i della/le traccia/e che desideri selezionare. Ora premi prima \"Invio\""
@@ -338,7 +558,21 @@ def printtracklijstmetsel(tracklijst):
 def printmappenlijstmetsel(mappenlijst):
     mappenlijstverkort = []
     if len(mappenlijst) > 50:
-        if lang == "EN":
+        if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        WTI:ZNW(                                                hu
+#            Materie:Iets(                                       wa
+#                Connectie:Binnen(                               ŋüi
+#)   )   )   )   )
+#WTI:ZNW(                                                        hu
+#    Tellen:0(                                                   bi
+#)
+#ma hupahuwaŋüi hubi %s
+            print("ma hupahuwaŋüi hubi %s" % str(len(mappenlijst)))
+        elif lang == "EN":
             print("The folder list contains %s folders" % str(len(mappenlijst)))
         elif lang == "IT":
             print("L'elenco delle cartelle contiene %s cartelle" % str(len(mappenlijst)))
@@ -445,7 +679,50 @@ def play(tracklijst):
         pass
 
 def hellup():
-    if lang == "EN":
+    if lang == "CJ":
+        helpteksten = [
+            "",
+            "",
+            "",
+            # print as-is [3]
+            """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK
+ {\\    ...\\path}\\
+                 {ABC}\\
+                       {artistA - albumB}\\
+                                          {track1.mp3}
+                                          {track2.mp3}
+                       {albumZ - artistQ}\\
+                                          {track3.mp3}
+                                          {track4.mp3}
+                 {JZZ}\\
+                       {albumD - artistC}\\
+                                          {track5.mp3}
+                                          {track6.mp3}
+                       {artistR - albumY}\\
+                                          {track7.mp3}
+                                          {track8.mp3}
+                 {POP}\\
+                       {artistE - albumF}\\
+                                          {track11.mp3}
+                                          {track12.mp3}
+                       {artistS - albumX}\\
+                                          {track21.mp3}
+                                          {track22.mp3}""",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+            ]
+        neelijst = neelijstCJ
+        jalijst = jalijstCJ
+        neeja = neejaCJ
+        man = manCJ
+    elif lang == "EN":
         helpteksten = [
             "With musuite, you can play your organized music collection and saved online streams. Press \"Enter\" to proceed with your choice, \"B\" to interrupt the current function, or \"Q\" to quit. To change the language, you can select \"L\" in the main menu.",
             "musuite uses mpg123, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
@@ -585,7 +862,50 @@ def hellup():
             break
         elif stop in quitlijst:
             exit()
-    if lang == "EN":
+    if lang == "CJ":
+#ZTI:Voorwaardelijk(                                             mo
+#)
+#WTI:WW(                                                         ha
+#        zti:Keuze(                                              me
+#                Waarheid:Waar(                                  la
+#)       )       )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#        Registratie:Zien(                                       ca
+#)       )
+#WTI:ZNW(                                                        hu
+#        Kennis:Weten(                                           da
+#                Afstand:Hier(                                   ʒi
+#)       )       )
+#WTI:WW(                                                         ha
+#        Progressie:Start(                                       zi
+#                Activiteit:Actief(                              ʃa
+#                        Status:Geordend(                        xa
+#                                Schaling:Groep(                 pa
+#)       )       )       )       )
+#mo hamela m haca hudaʒi haziʃaxapa
+#ZTI:Voorwaarde(                                                 mo
+#)
+#WTI:WW(                                                         ha
+#        zti:Keuze(                                              me
+#                "H"(                                            "Ḧ"
+#)       )       )
+#WTI:BW(                                                         hi
+#        zti:Keuze(                                              me
+#                Afstand:Overal(                                 pu
+#)       )       )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#        Registratie:Zien(                                       ca
+#                Kennis:Weten(                                   da
+#                        Schaling:Groep(                         pa
+#                                Afstand:Hier(                   ʒi
+#)       )       )       )       )
+#mo hame"H" himepu m hacadapaʒi
+        wraptext = "mo hamela m haca hudaʒi haziʃaxapa. mo hame\"H\" himepu m hacadapaʒi:"
+    elif lang == "EN":
         wraptext = "Do you want to see this help text again the next time you start the program? You can always call up this help text with \"H\":"
     elif lang == "IT":
         wraptext = "Vuoi rivedere questa guida la prossima volta che avvii il programma? Puoi richiamare questa guida in qualsiasi momento con \"H\":"
@@ -1005,8 +1325,8 @@ while loop == True:
                                     printtracklijst(tracklijst)
                                     play(tracklijst)
             else:
-                loopMT = True
-                while loopMT == True:
+                loopMG = True
+                while loopMG == True:
                     optie,index = cFNL([genrelijstlang,"A",1,1,"> ",True,helplijst+man+optieslijst+backlijst+quitlijst])
                     if optie in quitlijst:
                         exit()
@@ -1018,32 +1338,47 @@ while loop == True:
                         hellup()
                     elif type(optie) == str:
                         if "*" in optie:
-                           tracklijst = []
-                           for g in genrelijst:
-                               gpad = os.path.join(pad,g)
-                               mappenlijst = []
-                               for m in os.listdir(gpad):
-                                   if os.path.isdir(os.path.join(gpad,m)):
-                                       mpad = os.path.join(pad,g,m)
-                                       mappenlijst.append(mpad)
-                               mappenlijst = sorted(mappenlijst)
-                               for m in mappenlijst:
-                                   mpad = os.path.join(gpad,m)
-                                   for track in os.listdir(mpad):
-                                       for e in extensielijst:
-                                           if track.endswith(e):
-                                               tpad = os.path.join(mpad,track)
-                                               tracklijst.append(tpad)
+                            tracklijst = []
+                            for g in genrelijst:
+                                gpad = os.path.join(pad,g)
+                                mappenlijst = []
+                                for m in os.listdir(gpad):
+                                    if os.path.isdir(os.path.join(gpad,m)):
+                                        mpad = os.path.join(pad,g,m)
+                                        mappenlijst.append(mpad)
+                                mappenlijst = sorted(mappenlijst)
+                                for m in mappenlijst:
+                                    mpad = os.path.join(gpad,m)
+                                    for track in os.listdir(mpad):
+                                        for e in extensielijst:
+                                            if track.endswith(e):
+                                                tpad = os.path.join(mpad,track)
+                                                tracklijst.append(tpad)
                         else:
+                            tracklijst = []
+                            keuzelijst = []
                             optie = optie.upper()
                             for i in genrelijst:
                                 if optie in [i[:1],i[:2],i]:
-                                    if i not in optielijst:
-                                        optielijst.append(i)
-                            optie = optielijst
+                                    if i not in optieslijst:
+                                        keuzelijst.append(i)
+                            print(keuzelijst)
+                            optie = keuzelijst
                             for g in optie:
-                                if g in genrelijstlang:
-                                    optie[optie.index(g)] = genrelijst[genrelijstlang.index(g)]
+                                gpad = os.path.join(pad,g)
+                                mappenlijst = []
+                                for m in os.listdir(gpad):
+                                    if os.path.isdir(os.path.join(gpad,m)):
+                                        mpad = os.path.join(pad,g,m)
+                                        mappenlijst.append(mpad)
+                                mappenlijst = sorted(mappenlijst)
+                                for m in mappenlijst:
+                                    mpad = os.path.join(gpad,m)
+                                    for track in os.listdir(mpad):
+                                        for e in extensielijst:
+                                            if track.endswith(e):
+                                                tpad = os.path.join(mpad,track)
+                                                tracklijst.append(tpad)
                         tracklijst = sorted(tracklijst)
                         printtracklijst(tracklijst)
                         play(tracklijst)
@@ -1051,22 +1386,22 @@ while loop == True:
                         if len(optie) < 1:
                             pass
                         else:
-                           tracklijst = []
-                           for g in optie:
-                               g = genrelijst[genrelijstlang.index(g)]
-                               gpad = os.path.join(pad,g)
-                               mappenlijst = []
-                               for m in os.listdir(gpad):
-                                   if os.path.isdir(os.path.join(gpad,m)):
-                                       mpad = os.path.join(pad,g,m)
-                                       mappenlijst.append(mpad)
-                               mappenlijst = sorted(mappenlijst)
-                               for m in mappenlijst:
-                                   mpad = os.path.join(gpad,m)
-                                   for track in os.listdir(mpad):
-                                       if track.endswith(".mp3"):
-                                           tpad = os.path.join(mpad,track)
-                                           tracklijst.append(tpad)
-                           tracklijst = sorted(tracklijst)
-                           printtracklijst(tracklijst)
-                           play(tracklijst)
+                            tracklijst = []
+                            for g in optie:
+                                g = genrelijst[genrelijstlang.index(g)]
+                                gpad = os.path.join(pad,g)
+                                mappenlijst = []
+                                for m in os.listdir(gpad):
+                                    if os.path.isdir(os.path.join(gpad,m)):
+                                        mpad = os.path.join(pad,g,m)
+                                        mappenlijst.append(mpad)
+                                mappenlijst = sorted(mappenlijst)
+                                for m in mappenlijst:
+                                    mpad = os.path.join(gpad,m)
+                                    for track in os.listdir(mpad):
+                                        if track.endswith(".mp3"):
+                                            tpad = os.path.join(mpad,track)
+                                            tracklijst.append(tpad)
+                            tracklijst = sorted(tracklijst)
+                            printtracklijst(tracklijst)
+                            play(tracklijst)
