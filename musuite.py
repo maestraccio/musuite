@@ -4,8 +4,8 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "1.02"
-Date = "2026-08-09"
+Versie = "1.03"
+Date = "2026-08-10"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
 #MUSUITElogo="""
