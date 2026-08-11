@@ -53,9 +53,9 @@ manEN = ["man mpg123","woman mpg123"]
 manIT = ["man mpg123","woman mpg123","uomo mpg123","donna mpg123"]
 manNL = ["man mpg123","woman mpg123","vrouw mpg123"]
 def setlang(oldlang):
-    # Informatie over hucoji vind je op www.hucoji.org
-    # You can find information about hucoji at www.hucoji.org
-    # Puoi trovare informazioni su hucoji al sito www.hucoji.org
+# Informatie over hucoji vind je op www.hucoji.org
+# You can find information about hucoji at www.hucoji.org
+# Puoi trovare informazioni su hucoji al sito www.hucoji.org
     pickdict = {
             "CJ":"hucoji",
             "EN":"English",
@@ -80,46 +80,46 @@ def setlang(oldlang):
 #ZTI:Voorwaardelijk(                                             mo
 #)
 #WTI:WW(                                                         ha
-#        zti:Keuze(                                              me
-#                Waarheid:Waar(                                  la
-#)       )       )
+#    zti:Keuze(                                                  me
+#        Waarheid:Waar(                                          la
+#)   )   )
 #ZTI:Scheiding(                                                  m
 #)
 #WTI:WW(                                                         ha
-#        Registratie:Zien(                                       ca
-#)       )
+#    Registratie:Zien(                                           ca
+#)   )
 #WTI:ZNW(                                                        hu
-#        zti:Keuze(                                              me
-#                Afstand:Hier(                                   ʒi
-#)       )       )
+#    zti:Keuze(                                                  me
+#        Afstand:Hier(                                           ʒi
+#)   )   )
 #WTI:WW(                                                         ha
-#        Progressie:Start(                                       zi
-#                Activiteit:Actief(                              ʃa
-#                        Status:Geordend(                        xa
-#                                Schaling:Groep(                 pa
-#)       )       )       )       )
+#    Progressie:Start(                                           zi
+#        Activiteit:Actief(                                      ʃa
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#)   )   )   )   )
 #mo hamela m haca humeʒi haziʃaxapa
 #ZTI:Voorwaardelijk(                                             mo
 #)
 #WTI:BNW(                                                        ho
-#        Afstand:Hier(                                           ʒi
-#                WTI:ZNW(                                        hu
-#                        Afstand:Hier(                           ʒi      
-#                                Progressie:Beginfase(           ze      
-#)       )       )       )       )
+#    Afstand:Hier(                                               ʒi
+#        WTI:ZNW(                                                hu
+#            Afstand:Hier(                                       ʒi      
+#                Progressie:Beginfase(                           ze      
+#)   )   )   )   )
 #WTI:WW(                                                         ha
-#        zti:Keuze(                                              me
-#                "L"(                                            "L"
-#)       )       )
+#    zti:Keuze(                                                  me
+#        "L"(                                                    "L"
+#)   )   )
 #ZTI:Scheiding(                                                  m
 #)
 #WTI:WW(                                                         ha
-#        Registratie:Zien(                                       ca
-#)       )
+#    Registratie:Zien(                                           ca
+#)   )
 #WTI:ZNW(                                                        hu
-#        zti:Keuze(                                              me
-#                Afstand:Hier(                                   ʒi
-#)       )       )
+#    zti:Keuze(                                                  me
+#         Afstand:Hier(                                          ʒi
+#)   )   )
 #mo hoʒihuʒize hame"L" m haca humeʒi
         wraptext = "mo hamela m haca humeʒi haziʃaxapa. mo hoʒihuʒize hame\"L\" m haca humeʒi:"
         neelijst = neelijstCJ
@@ -190,15 +190,15 @@ def printtracklijst(tracklijst):
 #)
 #WTI:ZNW(                                                        hu
 #    Schaling:Groep(                                             pa
-#        WTI:ZNW(                                                hu
+#        Materie:Iets(                                           wa
 #            Registratie:Geluid(                                 co
 #                Status:Geordend(                                xa
 #)   )   )   )   )
 #WTI:ZNW(                                                        hu
 #    Tellen:0(                                                   bi
 #)
-#ma hupahucoxa hubi %s
-        print("ma hupahucoxa hubi %s" % str(len(tracklijst)))
+#ma hupawacoxa hubi %s
+        print("ma hupawacoxa hubi %s" % str(len(tracklijst)))
     elif lang == "EN":
         print("The track list contains %s tracks" % str(len(tracklijst)))
     elif lang == "IT":
@@ -208,53 +208,53 @@ def printtracklijst(tracklijst):
     if len(tracklijst) > 50:
         print()
         if lang == "CJ":
-#ZTI:Oorzaak(                                            mu
+#ZTI:Oorzaak(                                                    mu
 #)
-#WTI:WW(                                                 ha
-#        Registratie:Zien(                               ca
-#)       )
-#WTI:ZNW(                                                hu
-#        Schaling:Groep(                                 pa
-#                WTI:ZNW(                                hu
-#                        Registratie:Geluid(             co
-#                                Status:Geordend(        xa
-#)       )       )       )       )
-#WTI:BNW(                                                ho      
-#        Schaling:Groep(                                 pa
-#                Grootte:Klein(                          ñe
-#                        Schaling:Meervoud(              po
-#)       )       )       )
-#ZTI:Scheiding(                                          m
+#WTI:WW(                                                         ha
+#    Registratie:Zien(                                           ca
+#)   )
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Materie:Iets(                                           wa
+#            Registratie:Geluid(                                 co
+#                Status:Geordend(                                xa
+#)   )   )   )   )
+#WTI:BNW(                                                        ho      
+#    Schaling:Groep(                                             pa
+#        Grootte:Klein(                                          ñe
+#            Schaling:Meervoud(                                  po
+#)   )   )   )
+#ZTI:Scheiding(                                                  m
 #)
-#WTI:ZNW(                                                hu
-#        Schaling:Groep(                                 pa
-#                WTI:ZNW(                                hu
-#                        Registratie:Geluid(             co
-#                                Status:Geordend(        xa
-#                                        Grootte:Groot(  ño
-#)       )       )       )       )       )
-#WTI:BW(                                                 hi
-#        Registratie:Zien(                               ca
-#                Schaling:Alles(                         pu
-#                        Waarheid:Niet(                  li
-#                                Waarheid:Misschien(     lüi
-#)       )       )       )       )
-#mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi
-#ZTI:Voorwaarde(                                         mo
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Materie:Iets(                                           wa
+#            Registratie:Geluid(                                 co
+#                Status:Geordend(                                xa
+#                    Grootte:Groot(                              ño
+#)   )   )   )   )   )
+#WTI:BW(                                                         hi
+#    Registratie:Zien(                                           ca
+#        Schaling:Alles(                                         pu
+#            Waarheid:Niet(                                      li
+#                Waarheid:Misschien(                             lüi
+#)   )   )   )   )
+#mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi
+#ZTI:Voorwaarde(                                                 mo
 #)
-#WTI:WW(                                                 ha
-#        ZTI:Keuze(                                      me
-#                "B"(                                    "B"
-#)       )       )
-#ZTI:Scheiding(                                          m
+#WTI:WW(                                                         ha
+#    ZTI:Keuze(                                                  me
+#                "B"(                                            "B"
+#)   )   )
+#ZTI:Scheiding(                                                  m
 #)
-#WTI:WW(                                                 ha
-#        Registratie:Zien(                               ca
-#                Waarheid:Onwaar(                        li
-#                        Tijd:Vanaf nu(                  qe
-#)       )       )       )
+#WTI:WW(                                                         ha
+#    Registratie:Zien(                                           ca
+#        Waarheid:Onwaar(                                        li
+#            Tijd:Vanaf nu(                                      qe
+#)   )   )   )
 #mo hame"B" m hacaliqe
-            wraptext = "mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi. mo hame\"B\" m hacaliqe."
+            wraptext = "mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi. mo hame\"B\" m hacaliqe."
         elif lang == "EN":
             wraptext = "The track list is long and may not fit on your screen. The list is therefore displayed in multiple parts. Use \"B\" to break the display and continue to playback."
         elif lang == "IT":
@@ -316,51 +316,51 @@ def printmappenlijst(mappenlijst):
     if len(mappenlijst) > 50:
         print()
         if lang == "CJ":
-#ZTI:Oorzaak(                                            mu
+#ZTI:Oorzaak(                                                    mu
 #)
-#WTI:WW(                                                 ha
-#        Registratie:Zien(                               ca
+#WTI:WW(                                                         ha
+#    Registratie:Zien(                                           ca
 #)       )
-#WTI:ZNW(                                                hu
-#        Schaling:Groep(                                 pa
-#                WTI:ZNW(                                hu
-#                       Materie:Iets(                    wa
-#                               Connectie:Binnen(        ŋüi
-#)       )       )       )       )
-#WTI:BNW(                                                ho      
-#        Schaling:Groep(                                 pa
-#                Grootte:Klein(                          ñe
-#                        Schaling:Meervoud(              po
-#)       )       )       )
-#ZTI:Scheiding(                                          m
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        WTI:ZNW(                                                hu
+#            Materie:Iets(                                       wa
+#                Connectie:Binnen(                               ŋüi
+#)   )   )   )   )
+#WTI:BNW(                                                        ho      
+#    Schaling:Groep(                                             pa
+#        Grootte:Klein(                                          ñe
+#            Schaling:Meervoud(                                  po
+#)   )   )   )
+#ZTI:Scheiding(                                                  m
 #)
-#WTI:ZNW(                                                hu
-#        Schaling:Groep(                                 pa
-#                WTI:ZNW(                                hu
-#                       Materie:Iets(                    wa
-#                               Connectie:Binnen(        ŋüi
-#                                        Grootte:Groot(  ño
-#)       )       )       )       )       )
-#WTI:BW(                                                 hi
-#        Registratie:Zien(                               ca
-#                Schaling:Alles(                         pu
-#                        Waarheid:Niet(                  li
-#                                Waarheid:Misschien(     lüi
-#)       )       )       )       )
-#mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi
-#ZTI:Voorwaarde(                                         mo
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        wti:ZNW(                                                hu
+#            Materie:Iets(                                       wa
+#                Connectie:Binnen(                               ŋüi
+#                    Grootte:Groot(                              ño
+#)   )   )   )   )   )
+#WTI:BW(                                                         hi
+#    Registratie:Zien(                                           ca
+#        Schaling:Alles(                                         pu
+#            Waarheid:Niet(                                      li
+#                Waarheid:Misschien(                             lüi
+#)   )   )   )   )
+#mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi
+#ZTI:Voorwaarde(                                                 mo
 #)
-#WTI:WW(                                                 ha
-#        ZTI:Keuze(                                      me
-#                "B"(                                    "B"
-#)       )       )
-#ZTI:Scheiding(                                          m
+#WTI:WW(                                                         ha
+#    ZTI:Keuze(                                                  me
+#        "B"(                                                    "B"
+#)   )   )
+#ZTI:Scheiding(                                                  m
 #)
-#WTI:WW(                                                 ha
-#        Registratie:Zien(                               ca
-#                Waarheid:Onwaar(                        li
-#                        Tijd:Vanaf nu(                  qe
-#)       )       )       )
+#WTI:WW(                                                         ha
+#    Registratie:Zien(                                           ca
+#        Waarheid:Onwaar(                                        li
+#            Tijd:Vanaf nu(                                      qe
+#)   )   )   )
 #mo hame"B" m hacaliqe
             wraptext = "mu haca hupahuwaŋüi hopañepo m hupahuwaŋüiño hicapulilüi. mo hame\"B\" m hacaliqe."
         elif lang == "EN":
@@ -406,15 +406,15 @@ def printtracklijstmetsel(tracklijst):
 #)
 #WTI:ZNW(                                                        hu
 #    Schaling:Groep(                                             pa
-#        WTI:ZNW(                                                hu
+#        Materie:Iets(                                           wa
 #            Registratie:Geluid(                                 co
 #                Status:Geordend(                                xa
 #)   )   )   )   )
 #WTI:ZNW(                                                        hu
 #    Tellen:0(                                                   bi
 #)
-#ma hupahucoxa hubi %s
-        print("ma hupahucoxa hubi %s" % str(len(tracklijst)))
+#ma hupawacoxa hubi %s
+        print("ma hupawacoxa hubi %s" % str(len(tracklijst)))
     elif lang == "EN":
         print("The track list contains %s tracks" % str(len(tracklijst)))
     elif lang == "IT":
@@ -425,39 +425,39 @@ def printtracklijstmetsel(tracklijst):
     if len(tracklijst) > 50:
         print()
         if lang == "CJ":
-#ZTI:Oorzaak(                                            mu
+#ZTI:Oorzaak(                                                    mu
 #)
-#WTI:WW(                                                 ha
-#        Registratie:Zien(                               ca
-#)       )
-#WTI:ZNW(                                                hu
-#        Schaling:Groep(                                 pa
-#                WTI:ZNW(                                hu
-#                        Registratie:Geluid(             co
-#                                Status:Geordend(        xa
-#)       )       )       )       )
-#WTI:BNW(                                                ho      
-#        Schaling:Groep(                                 pa
-#                Grootte:Klein(                          ñe
-#                        Schaling:Meervoud(              po
-#)       )       )       )
-#ZTI:Scheiding(                                          m
+#WTI:WW(                                                         ha
+#    Registratie:Zien(                                           ca
+#)   )
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Materie:Iets(                                           wa
+#            Registratie:Geluid(                                 co
+#                Status:Geordend(                                xa
+#)   )   )   )   )
+#WTI:BNW(                                                        ho      
+#    Schaling:Groep(                                             pa
+#        Grootte:Klein(                                          ñe
+#            Schaling:Meervoud(                                  po
+#)   )   )   )
+#ZTI:Scheiding(                                                  m
 #)
-#WTI:ZNW(                                                hu
-#        Schaling:Groep(                                 pa
-#                WTI:ZNW(                                hu
-#                        Registratie:Geluid(             co
-#                                Status:Geordend(        xa
-#                                        Grootte:Groot(  ño
-#)       )       )       )       )       )
-#WTI:BW(                                                 hi
-#        Registratie:Zien(                               ca
-#                Schaling:Alles(                         pu
-#                        Waarheid:Niet(                  li
-#                                Waarheid:Misschien(     lüi
-#)       )       )       )       )
-#mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi
-            wraptext = "mu haca hupahucoxa hopañepo m hupahucoxaño hicapulilüi."
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Materie:Iets(                                           wa
+#            Registratie:Geluid(                                 co
+#                Status:Geordend(                                xa
+#                    Grootte:Groot(                              ño
+#)   )   )   )   )   )
+#WTI:BW(                                                         hi
+#    Registratie:Zien(                                           ca
+#        Schaling:Alles(                                         pu
+#            Waarheid:Niet(                                      li
+#                Waarheid:Misschien(                             lüi
+#)   )   )   )   )
+#mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi
+            wraptext = "mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi."
         elif lang == "EN":
             wraptext = "The track list is long and may not fit on your screen. The list is therefore first displayed in multiple parts so you can see the numbers of the track(s) you want to select. After that, you will have the option to enter your final choice. Remember those numbers."
         elif lang == "IT":
@@ -488,33 +488,33 @@ def printtracklijstmetsel(tracklijst):
         print()
         if lang == "CJ":
 #WTI:ZNW(                                                        hu
-#        Schaling:Groep(                                         pa
-#                Progressie:Eind(                                zu
-#)       )       )
+#    Schaling:Groep(                                             pa
+#        Progressie:Eind(                                        zu
+#)   )   )
 #hupazu.
 #ZTI:Zin(                                                        ma
 #)
 #WTI:Pers.vnw:2(                                                 hea
 #)
 #WTI:WW(                                                         ha
-#        ZTI:Keuze(                                              me
-#                Waarheid:Concreet(                              lo      
-#)       )       )
+#    ZTI:Keuze(                                                  me
+#        Waarheid:Concreet(                                      lo      
+#)   )   )
 #WTI:Bijwoord(                                                   hi
-#        Tijd:Binnenkort(                                        qa
-#)       )
+#    Tijd:Binnenkort(                                            qa
+#)   )
 #ma hea hamelo hiqa.
 #WTI:Zin(                                                        ma
 #)
 #WTI:Pers.vnw:2(                                                 hea
 #)
 #WTI:WW(                                                         ha
-#        Kennis:Denken(                                          de
-#                Connectie:Gekoppeld(                            ŋo
-#                        Schaling:Groep(                         pa
-#                                Verlangen:Willen(               ke
-#                                        Registratie:Horen(      co
-#)       )       )       )       )       )
+#    Kennis:Denken(                                              de
+#        Connectie:Gekoppeld(                                    ŋo
+#            Schaling:Groep(                                     pa
+#                Verlangen:Willen(                               ke
+#                    Registratie:Horen(                          co
+#)   )   )   )   )   )
 #ma hea hadeŋopakeco.
 #
 #WTI:Zin(                                                        ma
@@ -522,12 +522,11 @@ def printtracklijstmetsel(tracklijst):
 #WTI:Pers.vnw:2(                                                 hea
 #)
 #WTI:WW(                                                         ha
-#        Activiteit:Beweging(                                    ʃe
-#                Materie:Ding(                                   wo
-#                        "ENTER"(                                "ENTER"
-#)       )       )       )
+#    Activiteit:Beweging(                                        ʃe
+#        Materie:Ding(                                           wo
+#            "ENTER"(                                            "ENTER"
+#)   )   )   )
 #ma hea haʃewo"ENTER".
-
             wraptext = "hupazu. ma hea hamelo hiqa. ma hea hadeŋopakeco. ma hea haʃewo\"ENTER\"."
         elif lang == "EN":
             wraptext = "The end of the list has been reached and the option to enter your choice will follow. Remember the number(s) of the track(s) you want to select. Now first press \"Enter\""
@@ -634,7 +633,27 @@ def printmappenlijstmetsel(mappenlijst):
     return mappenlijstverkort
 
 def play(tracklijst):
-    if lang == "EN":
+    if lang == "CJ":
+#ZTI:Vraag(                                                      mi
+#)
+#WTI:BW(                                                         hi
+#    Status:Rommelig(                                            xüe
+#)   )
+#mi hixüe
+        willekeurig = "mi hixüe"
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Progressie:Start(                                           ze
+#        Activiteit:Beweging(                                    ʃe
+#            "mpg123"(                                           "mpg123"
+#)   )   )   )
+#ma hazeʃe"mpg123"
+        mpg123 = "ma hazeʃe\"mpg123\"\n"
+        neelijst = neelijstCJ
+        jalijst = jalijstCJ
+        neeja = neejaCJ
+    elif lang == "EN":
         willekeurig = "Random order?"
         mpg123 = "Starting playback with mpg123\n"
         neelijst = neelijstEN
@@ -866,43 +885,43 @@ def hellup():
 #ZTI:Voorwaardelijk(                                             mo
 #)
 #WTI:WW(                                                         ha
-#        zti:Keuze(                                              me
-#                Waarheid:Waar(                                  la
-#)       )       )
+#    zti:Keuze(                                                  me
+#        Waarheid:Waar(                                          la
+#)   )   )
 #ZTI:Scheiding(                                                  m
 #)
 #WTI:WW(                                                         ha
 #        Registratie:Zien(                                       ca
-#)       )
+#)   )
 #WTI:ZNW(                                                        hu
-#        Kennis:Weten(                                           da
-#                Afstand:Hier(                                   ʒi
-#)       )       )
+#    Kennis:Weten(                                               da
+#        Afstand:Hier(                                           ʒi
+#)   )   )
 #WTI:WW(                                                         ha
-#        Progressie:Start(                                       zi
-#                Activiteit:Actief(                              ʃa
-#                        Status:Geordend(                        xa
-#                                Schaling:Groep(                 pa
-#)       )       )       )       )
+#    Progressie:Start(                                           zi
+#        Activiteit:Actief(                                      ʃa
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#)   )   )   )   )
 #mo hamela m haca hudaʒi haziʃaxapa
 #ZTI:Voorwaarde(                                                 mo
 #)
 #WTI:WW(                                                         ha
-#        zti:Keuze(                                              me
-#                "H"(                                            "Ḧ"
-#)       )       )
+#    zti:Keuze(                                                  me
+#        "H"(                                                    "Ḧ"
+#)   )   )
 #WTI:BW(                                                         hi
-#        zti:Keuze(                                              me
-#                Afstand:Overal(                                 pu
-#)       )       )
+#    zti:Keuze(                                                  me
+#        Afstand:Overal(                                         pu
+#)   )   )
 #ZTI:Scheiding(                                                  m
 #)
 #WTI:WW(                                                         ha
-#        Registratie:Zien(                                       ca
-#                Kennis:Weten(                                   da
-#                        Schaling:Groep(                         pa
-#                                Afstand:Hier(                   ʒi
-#)       )       )       )       )
+#    Registratie:Zien(                                           ca
+#        Kennis:Weten(                                           da
+#            Schaling:Groep(                                     pa
+#                Afstand:Hier(                                   ʒi
+#)   )   )   )   )
 #mo hame"H" himepu m hacadapaʒi
         wraptext = "mo hamela m haca hudaʒi haziʃaxapa. mo hame\"H\" himepu m hacadapaʒi:"
     elif lang == "EN":
@@ -995,23 +1014,88 @@ for i in genrelijst:
 loop = True
 while loop == True:
     if lang == "CJ":
+#WTI:ZNW(                                                        hu
+#    Afstand:Hier(                                               ʒi
+#        Prograssie:Beginfase(                                   ze
+#)   )   )
+#huʒize
         hoofdmenu = " - - huʒize - -"
         mosdict = {
-                "M":"MP3-bestand(en) uit eigen collectie",
-                "S":"online Stream"
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        "MP3"(                                                  "MP3"
+#)   )   )
+#WTI:BNW(                                                        ho
+#    Connectie:Binnen(                                           ŋüi
+#        Schaling:Meervoud(                                      po
+#            wti:PV:2(                                           hea
+#)   )   )   )
+#huwa"MP3" hoŋüipohea
+                "M":"huwa\"MP3\" hoŋüipohea",
+#WTI:ZNW(                                                        hu
+#    Activiteit:Beweging(                                        ʃe
+#)   )
+#WTI:BNW(                                                        ho
+#    Afstand:Hier(                                               ʒi
+#        Waarheid:Onwaar(                                        li
+#)   )   )   
+#huʃe hoʒili
+                "S":"huʃe hoʒili"
                 }
         zosdict = {
-                "Z":"Zoeken op zoekterm",
-                "S":"Scrollen door de genrecollectie"
+#WTI:WW(                                                         ha
+#    zti:Keuze(                                                  me
+#        Schaling:Groep(                                         pa
+#            Connectie:Bijbehorend(                              ŋe
+#)   )   )   )
+#hamepaŋe
+                "m":"hamepaŋe",
+#WTI:WW(                                                         ha
+#    Registratie:Zien(                                           ca
+#        Progressie:Vooruitgang(                                 za
+#            Status:Geordend(                                    xa
+#)   )   )   )
+#hacazaxa
+                "c":"hacazaxa"
                 }
         gmtdict = {
-                "G":"Genre, Stijl, Categorie",
-                "M":"Map, Album, Verzameling",
-                "T":"Track, Lied, Opus"
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Status:Gelijkmatig(                                     xi
+#)   )   )
+#hupaxi
+                "G":"hupaxi",
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Connectie:Samen(                                        ŋa
+#)   )   )
+#hupaŋa
+                "M":"hupaŋa",
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#         Registratie:Horen(                                     co
+#             Status:Geordend(                                   xa
+#)   )   )   )
+#huwacoxa
+                "T":"huwacoxa"
                 }
         man = manCJ
-        willekeurig = "Willekeurige volgorde?"
-        mpg123 = "Start afspelen met mpg123\n"
+#ZTI:Vraag(                                                      mi
+#)
+#WTI:BW(                                                         hi
+#    Status:Rommelig(                                            xüe
+#)   )
+#mi hixüe
+        willekeurig = "mi hixüe"
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Progressie:Start(                                           ze
+#        Activiteit:Beweging(                                    ʃe
+#            "mpg123"(                                           "mpg123"
+#)   )   )   )
+#ma hazeʃe"mpg123"
+        mpg123 = "ma hazeʃe\"mpg123\"\n"
     elif lang == "EN":
         hoofdmenu = " - - MAIN MENU - -"
         mosdict = {
@@ -1020,7 +1104,7 @@ while loop == True:
                 }
         zosdict = {
                 "F":"Find by search term",
-                "S":"Scroll through the genre collection"
+                "S":"Scroll"
                 }
         gmtdict = {
                 "G":"Genre, Style, Category",
@@ -1038,7 +1122,7 @@ while loop == True:
                 }
         zosdict = {
                 "C":"Cercare per termine di ricerca",
-                "S":"Sfoglia la raccolta dei generi"
+                "S":"Sfoglia"
                 }
         gmtdict = {
                 "G":"Genere, Stile, Categoria",
@@ -1056,7 +1140,7 @@ while loop == True:
                 }
         zosdict = {
                 "Z":"Zoeken op zoekterm",
-                "S":"Scrollen door de genrecollectie"
+                "S":"Scrollen"
                 }
         gmtdict = {
                 "G":"Genre, Stijl, Categorie",
