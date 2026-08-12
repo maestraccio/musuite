@@ -4,8 +4,8 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "1.03"
-Date = "2026-08-10"
+Versie = "1.032"
+Date = "2026-08-12"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
 #MUSUITElogo="""
@@ -457,7 +457,24 @@ def printtracklijstmetsel(tracklijst):
 #                Waarheid:Misschien(                             lüi
 #)   )   )   )   )
 #mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi
-            wraptext = "mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi."
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Connectie:Koppel(                                           ŋo
+#        Kennis:Weten(                                           da
+#            zti:Keuze(                                          me
+#)   )   )   )
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Bewging(                                         ʃa
+#        zti:Keuze(                                              me
+#)   )   )
+#WTI:BW(                                                         hi
+#    Tijd:Binnenkort(                                            qa
+#)   )
+#ma haŋodame. ma haʃame hiqa.
+            wraptext = "mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi. ma haŋodame. ma haʃame hiqa."
         elif lang == "EN":
             wraptext = "The track list is long and may not fit on your screen. The list is therefore first displayed in multiple parts so you can see the numbers of the track(s) you want to select. After that, you will have the option to enter your final choice. Remember those numbers."
         elif lang == "IT":
@@ -509,13 +526,13 @@ def printtracklijstmetsel(tracklijst):
 #WTI:Pers.vnw:2(                                                 hea
 #)
 #WTI:WW(                                                         ha
-#    Kennis:Denken(                                              de
-#        Connectie:Gekoppeld(                                    ŋo
+#    Connectie:Gekoppeld(                                        ŋo
+#        Kennis:Weten(                                           da
 #            Schaling:Groep(                                     pa
 #                Verlangen:Willen(                               ke
 #                    Registratie:Horen(                          co
 #)   )   )   )   )   )
-#ma hea hadeŋopakeco.
+#ma hea haŋodapakeco.
 #
 #WTI:Zin(                                                        ma
 #)
@@ -527,7 +544,7 @@ def printtracklijstmetsel(tracklijst):
 #            "ENTER"(                                            "ENTER"
 #)   )   )   )
 #ma hea haʃewo"ENTER".
-            wraptext = "hupazu. ma hea hamelo hiqa. ma hea hadeŋopakeco. ma hea haʃewo\"ENTER\"."
+            wraptext = "hupazu. ma hea hamelo hiqa. ma hea haŋodapakeco. ma hea haʃewo\"ENTER\"."
         elif lang == "EN":
             wraptext = "The end of the list has been reached and the option to enter your choice will follow. Remember the number(s) of the track(s) you want to select. Now first press \"Enter\""
         elif lang == "IT":
@@ -578,7 +595,58 @@ def printmappenlijstmetsel(mappenlijst):
         else:
             print("De mappenlijst bevat %s mappen" % str(len(mappenlijst)))
         print()
-        if lang == "EN":
+        if lang == "CJ":
+#ZTI:Oorzaak(                                                    mu
+#)
+#WTI:WW(                                                         ha
+#    Registratie:Zien(                                           ca
+#)       )
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        WTI:ZNW(                                                hu
+#            Materie:Iets(                                       wa
+#                Connectie:Binnen(                               ŋüi
+#)   )   )   )   )
+#WTI:BNW(                                                        ho      
+#    Schaling:Groep(                                             pa
+#        Grootte:Klein(                                          ñe
+#            Schaling:Meervoud(                                  po
+#)   )   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        wti:ZNW(                                                hu
+#            Materie:Iets(                                       wa
+#                Connectie:Binnen(                               ŋüi
+#                    Grootte:Groot(                              ño
+#)   )   )   )   )   )
+#WTI:BW(                                                         hi
+#    Registratie:Zien(                                           ca
+#        Schaling:Alles(                                         pu
+#            Waarheid:Niet(                                      li
+#                Waarheid:Misschien(                             lüi
+#)   )   )   )   )
+#mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Connectie:Koppel(                                           ŋo
+#        Kennis:Weten(                                           da
+#            zti:Keuze(                                          me
+#)   )   )   )
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Bewging(                                         ʃa
+#        zti:Keuze(                                              me
+#)   )   )
+#WTI:BW(                                                         hi
+#    Tijd:Binnenkort(                                            qa
+#)   )
+#ma haŋodame. ma haʃame hiqa.
+            wraptext = "mu haca hupawacoxa hopañepo m hupawacoxaño hicapulilüi. ma haŋodame. ma haʃame hiqa."
+        elif lang == "EN":
             wraptext = "The folder list is long and may not fit on your screen. The list is therefore first displayed in multiple parts so you can see the number(s) of the folder(s) you want to select. After that, you will have the option to enter your final choice. Remember those numbers."
         elif lang == "IT":
             wraptext = "L'elenco delle cartelle è lungo e potrebbe non entrare sullo schermo. L'elenco viene quindi mostrato inizialmente in più parti in modo che tu possa vedere il/i numero/i della/le cartella/e che desideri selezionare. Successivamente potrai inserire la tua scelta definitiva. Ricorda quei numeri."
@@ -606,7 +674,50 @@ def printmappenlijstmetsel(mappenlijst):
                 elif go in backlijst:
                     break
         print()
-        if lang == "EN":
+        if lang == "CJ":
+#WTI:ZNW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Progressie:Eind(                                        zu
+#)   )   )
+#hupazu.
+#ZTI:Zin(                                                        ma
+#)
+#WTI:Pers.vnw:2(                                                 hea
+#)
+#WTI:WW(                                                         ha
+#    ZTI:Keuze(                                                  me
+#        Waarheid:Concreet(                                      lo      
+#)   )   )
+#WTI:Bijwoord(                                                   hi
+#    Tijd:Binnenkort(                                            qa
+#)   )
+#ma hea hamelo hiqa.
+#WTI:Zin(                                                        ma
+#)
+#WTI:Pers.vnw:2(                                                 hea
+#)
+#WTI:WW(                                                         ha
+#    Connectie:Gekoppeld(                                        ŋo
+#       Kennis:Weten(                                            da
+#            Schaling:Groep(                                     pa
+#                Verlangen:Willen(                               ke
+#                    Registratie:Horen(                          co
+#)   )   )   )   )   )
+#ma hea hadeŋopakeco.
+#
+#WTI:Zin(                                                        ma
+#)
+#WTI:Pers.vnw:2(                                                 hea
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Beweging(                                        ʃe
+#        Materie:Ding(                                           wo
+#            "ENTER"(                                            "ENTER"
+#)   )   )   )
+#ma hea haʃewo"ENTER".
+#hupazu. ma hea hamelo hiqa. ma hea haŋodapakeco. ma hea haʃewo"ENTER"
+            wraptext = "hupazu. ma hea hamelo hiqa. ma hea haŋodapakeco. ma hea haʃewo\"ENTER\""
+        elif lang == "EN":
             wraptext = "The end of the list has been reached and the option to enter your choice will follow. Remember the number(s) of the folder(s) you want to select. Now first press \"Enter\""
         elif lang == "IT":
             wraptext = "La fine dell'elenco è stata raggiunta e a seguire ci sarà l'opzione per inserire la tua scelta. Ricorda il/i numero/i della/le cartella/e che desideri selezionare. Ora premi prima \"Invio\""
@@ -955,15 +1066,56 @@ if showhelp == "Y":
 
 ############################################
 
-if lang == "EN":
+if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Afstand:Hier(                                               ʒi
+#        Materie:Iets(                                           wa
+#            Registratie:Horen(                                  co
+#                Status:Geordend(                                xa
+#                    Schaling:Meervoud(                          po
+#)   )   )   )   )   )
+#WTI:ZNW(                                                        hu
+#    Connectie:Binnen(                                           ŋüi
+#        Progressie:Start(                                       zi
+#)   )   )
+#ma huʒiwacoxapo huŋüizi
+    padtekst = "ma huʒiwacoxapo huŋüizi:"
+#ZTI:Oorzaak(                                                    mu
+#)
+#WTI:WW(                                                         ha
+#    Tijd:VanafNu(                                               qe
+#        Progressie:Vooruitgang(                                 za
+#)   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#    Connectie:Samen(                                            ŋa
+#        Materie:Iets(                                           wa
+#            Registratie:Horen(                                  co
+#                Status:Geordend(                                xa
+#                    Schaling:Meervoud(                          po
+#)   )   )   )   )   )
+#mu haqeza m haŋawacoxapo...
+    gener = "mu haqeza m haŋawacoxapo..."
+#WTI:BNW(                                                        ho
+#    Progressie:Eindpunt(                                        zu
+#)   )
+#hozu
+    klaar = "... hozu"
+elif lang == "EN":
     padtekst = "The path used as the MAIN_FOLDER for your music collection is:"
     gener = "Your music collection is being gathered, this may take a moment..."
+    klaar = "... Done"
 elif lang == "IT":
     padtekst = "Il percorso utilizzato come CARTELLA_PRINCIPALE della tua raccolta musicale è:"
     gener = "Sto raccogliendo la tua collezione musicale, potrebbe richiedere un momento..."
+    klaar = "... Fatto"
 else:
     padtekst = "Het pad dat gebruikt wordt als HOOFDMAP van je muziekcollectie is:"
     gener = "Je muziekcollectie wordt verzameld, dit kan even duren..."
+    klaar = "... Klaar"
 for w in textwrap.wrap(padtekst,80):
     print(w)
 print(pad)
@@ -1008,6 +1160,7 @@ for i in genrelijst:
         optieslijst.append(i.lower())
         optieslijst.append(i[:1].upper())
         optieslijst.append(i[:2].upper())
+print(klaar)
 
 ############################################
 
@@ -1044,19 +1197,19 @@ while loop == True:
                 }
         zosdict = {
 #WTI:WW(                                                         ha
-#    zti:Keuze(                                                  me
-#        Schaling:Groep(                                         pa
-#            Connectie:Bijbehorend(                              ŋe
-#)   )   )   )
-#hamepaŋe
-                "m":"hamepaŋe",
+#    Materie:Iets(                                               wa
+#        Afstand:Daar(                                           ʒa
+#            Status:Gelijkmatig(                                 xi
+#                Afstand:Hier(                                   ʒi
+#)   )   )   )   )
+                "w":"hawaʒaxiʒi",
 #WTI:WW(                                                         ha
-#    Registratie:Zien(                                           ca
-#        Progressie:Vooruitgang(                                 za
-#            Status:Geordend(                                    xa
+#    Progressie:Vooruitgang(                                     za
+#        Status:Geordend(                                        xa
+#            Registratie:Zien(                                   ca
 #)   )   )   )
 #hacazaxa
-                "c":"hacazaxa"
+                "z":"hazaxaca"
                 }
         gmtdict = {
 #WTI:ZNW(                                                        hu
@@ -1080,22 +1233,6 @@ while loop == True:
                 "T":"huwacoxa"
                 }
         man = manCJ
-#ZTI:Vraag(                                                      mi
-#)
-#WTI:BW(                                                         hi
-#    Status:Rommelig(                                            xüe
-#)   )
-#mi hixüe
-        willekeurig = "mi hixüe"
-#ZTI:Zin(                                                        ma
-#)
-#WTI:WW(                                                         ha
-#    Progressie:Start(                                           ze
-#        Activiteit:Beweging(                                    ʃe
-#            "mpg123"(                                           "mpg123"
-#)   )   )   )
-#ma hazeʃe"mpg123"
-        mpg123 = "ma hazeʃe\"mpg123\"\n"
     elif lang == "EN":
         hoofdmenu = " - - MAIN MENU - -"
         mosdict = {
@@ -1112,8 +1249,6 @@ while loop == True:
                 "T":"Track, Song, Opus"
                 }
         man = manEN
-        willekeurig = "Random order?"
-        mpg123 = "Starting playback with mpg123\n"
     elif lang == "IT":
         hoofdmenu = " - - MENU PRINCIPALE - -"
         mosdict = {
@@ -1130,8 +1265,6 @@ while loop == True:
                 "T":"Traccia, Canzone, Numero"
                 }
         man = manIT
-        willekeurig = "Ordine casuale?"
-        mpg123 = "Avvio della riproduzione con mpg123\n"
     else:
         hoofdmenu = " - - HOOFDMENU - -"
         mosdict = {
@@ -1148,8 +1281,6 @@ while loop == True:
                 "T":"Track, Lied, Opus"
                 }
         man = manNL
-        willekeurig = "Willekeurige volgorde?"
-        mpg123 = "Start afspelen met mpg123\n"
     moslijst = []
     for i in mosdict:
         moslijst.append(i.lower())
@@ -1205,12 +1336,47 @@ while loop == True:
                 while loopMT == True:
                     tracklijstkort = []
                     tracklijst = []
-                    if lang == "EN":
-                        zoekterm = input("Enter a search term (no exit command like \"Q\"):\n")
+                    if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Kennis:Denken(                                              de
+#        Materie:Iets(                                           wa
+#)   )   )
+#WTI:WW(                                                         ha
+#    Activiteit:Bewegen(                                         ʃa
+#        Materie:Iets(                                           wa
+#)   )   )
+#WTI:WW(                                                         ha
+#    Activiteit:Bewegen(                                         ʃa
+#        Materie:Ding(                                           wo
+#            "ENTER"(                                            "ENTER"
+#)   )   )   )
+#ma hadewa haʃawa haʃawo"ENTER"
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    zti:Keuze(                                                  me
+#        Waarheid:Onwaar(                                        li
+#)   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Ding(                                               wo
+#        Connectie:Gekoppeld(                                    ŋo
+#            Activiteit:Beweging(                                ʃa
+#                Progressie:Eindpunt(                            zu
+#)   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Status:Gelijkmatig(                                         xi
+#        "Q"(                                                    "Q"
+#)   )   )
+#ma hameli huwoŋoʃazu hoxi"Q"
+                        zoekterm = input("ma hadewa haʃawa haʃawo\"ENTER\". ma hameli huwoŋoʃazu hoxi\"Q\":\n")
+                    elif lang == "EN":
+                        zoekterm = input("Enter a search term (no exit command like \"Q\") and press \"Enter\":\n")
                     elif lang == "IT":
-                        zoekterm = input("Inserisci un termine di ricerca (nessun comando di uscita come \"Q\"):\n")
+                        zoekterm = input("Inserisci un termine di ricerca (nessun comando di uscita come \"Q\") e premi \"Invio\":\n")
                     else:
-                        zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\"):\n")
+                        zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\") en druk op \"Enter\":\n")
                     if zoekterm in quitlijst:
                         exit()
                     elif zoekterm in backlijst:
@@ -1228,7 +1394,31 @@ while loop == True:
                         tracklijstkort = sorted(tracklijstkort)
                         if len(tracklijstkort) < 1:
                             print()
-                            if lang == "EN":
+                            if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZMW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Richting:Hierheen(                                      süi
+#)   )   )
+#WTI:BNW(                                                        ho
+#    Grootte::NulNegatief(                                       ñüi
+#)   )
+#ma hupasüi hoñüi.
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Kennis:Denken(                                              de
+#)   )
+#WTI:ZNW(                                                        hu
+#    Status:Gelijk((                                             xi
+#        Grootte:Klein(                                          ñe
+#            Grootte:Groot(                                      ño
+#                Waarheid:Onwaar(                                li
+#)   )   )   )   )
+#ma hade huxiñeñoli.
+                                wraptext = "ma hupasüi hoñüi. ma hade huxiñeñoli."
+                            elif lang == "EN":
                                 wraptext = "Your search did not return any results. Remember that the search is case-sensitive."
                             elif lang == "IT":
                                 wraptext = "La tua ricerca non ha restituito risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
@@ -1268,7 +1458,22 @@ while loop == True:
             elif k.upper() == gmtlijst[1].upper():
                 loopMM = True
                 while loopMM == True:
-                    if lang == "EN":
+                    if lang == "CJ":
+#WTI:WW(                                                         ha
+#    Materie:Iets(                                               wa
+#        Afstand:Daar(                                           ʒa
+#            Status:Gelijkmatig(                                 xi
+#                Afstand:Hier(                                   ʒi
+#)   )   )   )   )
+#hawaʒaxiʒi
+#WTI:WW(                                                         ha
+#    Progressie:Vooruitgang(                                     za
+#        Status:Geordend(                                        xa
+#            Registratie:Zien(                                   ca
+#)   )   )   )
+#hacazaxa
+                        wraptext = "me hawaʒaxiʒi m hazaxaca."
+                    elif lang == "EN":
                         wraptext = "Do you want to search using a search term or browse through the collection?"
                     elif lang == "IT":
                         wraptext = "Vuoi effettuare una ricerca con un termine specifico o scorrere la collezione?"
@@ -1292,12 +1497,47 @@ while loop == True:
                                 mappenlijst = []
                                 tracklijstkort = []
                                 tracklijstverkort = []
-                                if lang == "EN":
-                                    zoekterm = input("Enter a search term (no exit command like \"Q\"):\n")
+                                if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Kennis:Denken(                                              de
+#        Materie:Iets(                                           wa
+#)   )   )
+#WTI:WW(                                                         ha
+#    Activiteit:Bewegen(                                         ʃa
+#        Materie:Iets(                                           wa
+#)   )   )
+#WTI:WW(                                                         ha
+#    Activiteit:Bewegen(                                         ʃa
+#        Materie:Ding(                                           wo
+#            "ENTER"(                                            "ENTER"
+#)   )   )   )
+#ma hadewa haʃawa haʃawo"ENTER"
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    zti:Keuze(                                                  me
+#        Waarheid:Onwaar(                                        li
+#)   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Ding(                                               wo
+#        Connectie:Gekoppeld(                                    ŋo
+#            Activiteit:Beweging(                                ʃa
+#                Progressie:Eindpunt(                            zu
+#)   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Status:Gelijkmatig(                                         xi
+#        "Q"(                                                    "Q"
+#)   )   )
+#ma hameli huwoŋoʃazu hoxi"Q"
+                                    zoekterm = input("ma hadewa haʃawa haʃawo\"ENTER\". ma hameli huwoŋoʃazu hoxi\"Q\":\n")
+                                elif lang == "EN":
+                                    zoekterm = input("Enter a search term (no exit command like \"Q\") and press \"Enter\":\n")
                                 elif lang == "IT":
-                                    zoekterm = input("Inserisci un termine di ricerca (nessun comando di uscita come \"Q\"):\n")
+                                    zoekterm = input("Inserisci un termine di ricerca (nessun comando di uscita come \"Q\") e premi \"Invio\":\n")
                                 else:
-                                    zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\"):\n")
+                                    zoekterm = input("Voer een zoekterm in (geen afsluitopdracht zoals \"Q\") en druk op \"Enter\":\n")
                                 if zoekterm in quitlijst:
                                     exit()
                                 elif zoekterm in backlijst:
@@ -1313,7 +1553,31 @@ while loop == True:
                                     mappenlijstkort = sorted(mappenlijstkort)
                                     if len(mappenlijstkort) < 1:
                                         print()
-                                        if lang == "EN":
+                                        if lang == "CJ":
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZMW(                                                        hu
+#    Schaling:Groep(                                             pa
+#        Richting:Hierheen(                                      süi
+#)   )   )
+#WTI:BNW(                                                        ho
+#    Grootte::NulNegatief(                                       ñüi
+#)   )
+#ma hupasüi hoñüi.
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Kennis:Denken(                                              de
+#)   )
+#WTI:ZNW(                                                        hu
+#    Status:Gelijkmatig(                                         xi
+#        Grootte:Klein(                                          ñe
+#            Grootte:Groot(                                      ño
+#                Waarheid:Onwaar(                                li
+#)   )   )   )   )
+#ma hade huxiñeñoli.
+                                            wraptext = "ma hupasüi hoñüi. ma hade huxiñeñoli."
+                                        elif lang == "EN":
                                             wraptext = "Your search did not return any results. Remember that the search is case-sensitive."
                                         elif lang == "IT":
                                             wraptext = "La tua ricerca non ha prodotto risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
@@ -1332,7 +1596,6 @@ while loop == True:
                                             else:
                                                 mappenlijstnogkorter.append(mapp)
                                         mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
-                                        print("mappsel = ",mappsel)
                                         if mappsel in quitlijst:
                                             exit()
                                         elif mappsel in backlijst:
