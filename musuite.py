@@ -52,6 +52,20 @@ manCJ = ["man mpg123","woman mpg123","hufu mpg123"]
 manEN = ["man mpg123","woman mpg123"]
 manIT = ["man mpg123","woman mpg123","uomo mpg123","donna mpg123"]
 manNL = ["man mpg123","woman mpg123","vrouw mpg123"]
+#ZTI:Zin(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Progressie:Start(                                           ze
+#        Activiteit:Actief(                                      ʃa
+#            Schaling:Groep(                                     pa
+#                Status:Geordend(                                xa
+#                    "mpg123"(                                   "mpg123"
+#)   )   )   )   )   )
+#ma hazeʃapaxa"mpg123"
+mpg123CJ = "ma hazeʃapaxa\"mpg123\"\n"
+mpg123EN = "Starting playback with mpg123\n"
+mpg123IT = "Avvio della riproduzione con mpg123\n"
+mpg123NL = "Start afspelen met mpg123\n"
 def setlang(oldlang):
 # Informatie over hucoji vind je op www.hucoji.org
 # You can find information about hucoji at www.hucoji.org
@@ -95,10 +109,10 @@ def setlang(oldlang):
 #WTI:WW(                                                         ha
 #    Progressie:Start(                                           zi
 #        Activiteit:Actief(                                      ʃa
-#            Status:Geordend(                                    xa
-#                Schaling:Groep(                                 pa
+#            Schaling:Groep(                                     pa
+#                Status:Geordend(                                xa
 #)   )   )   )   )
-#mo hamela m haca humeʒi haziʃaxapa
+#mo hamela m haca humeʒi haziʃapaxa
 #ZTI:Voorwaardelijk(                                             mo
 #)
 #WTI:BNW(                                                        ho
@@ -121,7 +135,7 @@ def setlang(oldlang):
 #         Afstand:Hier(                                          ʒi
 #)   )   )
 #mo hoʒihuʒize hame"L" m haca humeʒi
-        wraptext = "mo hamela m haca humeʒi haziʃaxapa. mo hoʒihuʒize hame\"L\" m haca humeʒi:"
+        wraptext = "mo hamela m haca humeʒi haziʃapaxa. mo hoʒihuʒize hame\"L\" m haca humeʒi:"
         neelijst = neelijstCJ
         jalijst = jalijstCJ
         neeja = neejaCJ
@@ -752,33 +766,25 @@ def play(tracklijst):
 #)   )
 #mi hixüe
         willekeurig = "mi hixüe"
-#ZTI:Zin(                                                        ma
-#)
-#WTI:WW(                                                         ha
-#    Progressie:Start(                                           ze
-#        Activiteit:Beweging(                                    ʃe
-#            "mpg123"(                                           "mpg123"
-#)   )   )   )
-#ma hazeʃe"mpg123"
-        mpg123 = "ma hazeʃe\"mpg123\"\n"
+        mpg123 = mpg123CJ
         neelijst = neelijstCJ
         jalijst = jalijstCJ
         neeja = neejaCJ
     elif lang == "EN":
         willekeurig = "Random order?"
-        mpg123 = "Starting playback with mpg123\n"
+        mpg123 = mpg123EN
         neelijst = neelijstEN
         jalijst = jalijstEN
         neeja = neejaEN
     elif lang == "IT":
         willekeurig = "Ordine casuale?"
-        mpg123 = "Avvio della riproduzione con mpg123\n"
+        mpg123 = mpg123IT
         neelijst = neelijstIT
         jalijst = jalijstIT
         neeja = neejaIT
     else:
         willekeurig = "Willekeurige volgorde?"
-        mpg123 = "Start afspelen met mpg123\n"
+        mpg123 = mpg123NL
         neelijst = neelijstNL
         jalijst = jalijstNL
         neeja = neejaNL
@@ -811,7 +817,124 @@ def play(tracklijst):
 def hellup():
     if lang == "CJ":
         helpteksten = [
-            "",
+#ZTI:Zin(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Activiteit:Actief(                                          ʃa
+#        Schaling:Groep(                                         pa
+#            Status:Geordend(                                    xa
+#                "musuite"(                                      "musuite"
+#)   )   )   )   )
+#WTI:BW(                                                         hi
+#    Connectie:Samen(                                            ŋa
+#        WTI:PVNW(                                               he
+#            :2(                                                 a
+#)   )   )   )
+#WTI:WW(                                                         ha
+#    Registratie:Horen(                                          co
+#        Richting:0(                                             si
+#)   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#)   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Status:Geordend(                                            xa
+#)   )
+#WTI:BW(                                                         hi
+#    Connectie:Los(                                              ŋi
+#)   )
+#WTI:ZNW(                                                        hu
+#    Registratie:Horen(                                          co
+#        Status:Geordend(                                        xa
+#            Progressie:Vooruitgang(                             za
+#                Frequentie:Altijd(                              ru 
+#)   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Afstand:Hier(                                               ʒi
+#        Waarheid:Onwaar(                                        li
+#)   )   )
+#WTI:BNW(                                                        ho
+#    Schaling:Meervoud(                                          po
+#)   )
+#ma huʃapaxa"musuite" hiŋahea hacosi huwacoxapa hoxa hiŋi hucoxazaru hoʒili hopo.
+#ZTI:Keuze(                                                      me
+#)
+#ZTI:Voorwaarde(                                                 mo
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Beweging(                                        ʃe
+#        Materie:Ding(                                           wo
+#            "Enter"(                                            "Enter"
+#)   )   )   )
+#WTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#    Progressie:Vooruitgang(                                     za
+#)   )
+#WTI:Scheiding(                                                  m
+#)
+#ZTI:Voorwaarde(                                                 mo
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Beweging(                                        ʃe
+#        Materie:Ding(                                           wo
+#            "B"(                                                "B"
+#)   )   )   )
+#WTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#       Progressie:Omkeer(                                       züi
+#)   )
+#WTI:Scheiding(                                                  m
+#)
+#ZTI:Voorwaarde(                                                 mo
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Beweging(                                        ʃe
+#        Materie:Ding(                                           wo
+#            "Q"(                                                "Q"
+#)   )   )   )
+#WTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#       Richting:Weg(                                            süu
+#)   )
+#me mo haʃewo"Enter" m haza m mo haʃewo"B" m hazüi m mo haʃewo"Q" m hasüu.
+#ZTI:Voorwaarde(                                                 mo
+#)
+#WTI:BW(                                                         hi
+#    Afstand:Hier(                                               ʒi
+#        Progressie:Beginfase(                                   ze
+#            Activiteit:Actief(                                  ʃa
+#                Schaling:Groep(                                 pa
+#                    Status:Geordend(                            xa
+#)   )   )   )   )   )
+#WTI:WW(                                                         ha
+#    ZTI:keuze(                                                  me
+#        Activiteit:Beweging(                                    ʃe
+#            Materie:Ding(                                       wo
+#                "L"(                                            "L"
+#)   )   )   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#    ZTI:keuze(                                                  me
+#)   )
+#WTI:ZNW(                                                        hu
+#    ZTI:zin(                                                    ma
+#        WTI:ww(                                                 ha
+#            Schaling:Groep(                                     pa
+#)   )   )   )
+#WTI:BNW(                                                        ho
+#    Status:Gelijk(                                              xi
+#        Waarheid:Onwaar(                                        li
+#)   )   )
+#mo hiʒizeʃapaxa hameʃewo"L" m hame humahapa hoxili
+            "ma huʃapaxa\"musuite\" hiŋahea hacosi huwacoxapa hoxa hiŋi hucoxazaru hoʒili hopo. me mo haʃewo\"Enter\" m haza m mo haʃewo\"B\" m hazüi m mo haʃewo\"Q\" m hasüu. mo hiʒizeʃapaxa hameʃewo\"L\" m hame humahapa hoxili.",
+#            musuite uses mpg123, available in most repositories, and "chooseFromNumberedList.py", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as "musuite.py" and "adjustables.py".
             "",
             "",
             # print as-is [3]
@@ -1011,10 +1134,10 @@ def hellup():
 #WTI:WW(                                                         ha
 #    Progressie:Start(                                           zi
 #        Activiteit:Actief(                                      ʃa
-#            Status:Geordend(                                    xa
-#                Schaling:Groep(                                 pa
+#            Schaling:Groep(                                     pa
+#                Status:Geordend(                                xa
 #)   )   )   )   )
-#mo hamela m haca hudaʒi haziʃaxapa
+#mo hamela m haca hudaʒi haziʃapaxa
 #ZTI:Voorwaarde(                                                 mo
 #)
 #WTI:WW(                                                         ha
@@ -1034,7 +1157,7 @@ def hellup():
 #                Afstand:Hier(                                   ʒi
 #)   )   )   )   )
 #mo hame"H" himepu m hacadapaʒi
-        wraptext = "mo hamela m haca hudaʒi haziʃaxapa. mo hame\"H\" himepu m hacadapaʒi:"
+        wraptext = "mo hamela m haca hudaʒi haziʃapaxa. mo hame\"H\" himepu m hacadapaʒi:"
     elif lang == "EN":
         wraptext = "Do you want to see this help text again the next time you start the program? You can always call up this help text with \"H\":"
     elif lang == "IT":
@@ -1173,27 +1296,29 @@ while loop == True:
 #)   )   )
 #huʒize
         hoofdmenu = " - - huʒize - -"
+        mpg123 = mpg123CJ
         mosdict = {
 #WTI:ZNW(                                                        hu
-#    Materie:Iets(                                               wa
-#        "MP3"(                                                  "MP3"
+#    "MP3"(                                                      "MP3"
+#        Schaling:Groep(                                         pa
 #)   )   )
 #WTI:BNW(                                                        ho
-#    Connectie:Binnen(                                           ŋüi
-#        Schaling:Meervoud(                                      po
-#            wti:PV:2(                                           hea
-#)   )   )   )
-#huwa"MP3" hoŋüipohea
-                "M":"huwa\"MP3\" hoŋüipohea",
-#WTI:ZNW(                                                        hu
-#    Activiteit:Beweging(                                        ʃe
+#    Afstand:Hier(                                               ʒi
 #)   )
+#hu"MP3"pa hoʒi
+                "M":"hu\"MP3\"pa hoʒi",
+#WTI:ZNW(                                                        hu
+#    Registratie:Horen(                                          co
+#        Status:Geordend(                                        xa
+#            Progressie:Vooruitgang(                             za
+#                Frequentie:Altijd(                              ru 
+#)   )   )   )   )
 #WTI:BNW(                                                        ho
 #    Afstand:Hier(                                               ʒi
 #        Waarheid:Onwaar(                                        li
-#)   )   )   
-#huʃe hoʒili
-                "S":"huʃe hoʒili"
+#)   )   )
+#hucoxazaru hoʒili
+                "Z":"hucoxazaru hoʒili"
                 }
         zosdict = {
 #WTI:WW(                                                         ha
@@ -1235,6 +1360,7 @@ while loop == True:
         man = manCJ
     elif lang == "EN":
         hoofdmenu = " - - MAIN MENU - -"
+        mpg123 = mpg123EN
         mosdict = {
                 "M":"MP3 file(s) from own collection",
                 "S":"online Stream"
@@ -1251,6 +1377,7 @@ while loop == True:
         man = manEN
     elif lang == "IT":
         hoofdmenu = " - - MENU PRINCIPALE - -"
+        mpg123 = mpg123IT
         mosdict = {
                 "M":"File MP3 dalla collezione personale",
                 "S":"Streaming online"
@@ -1267,6 +1394,7 @@ while loop == True:
         man = manIT
     else:
         hoofdmenu = " - - HOOFDMENU - -"
+        mpg123 = mpg123NL
         mosdict = {
                 "M":"MP3-bestand(en) uit eigen collectie",
                 "S":"online Stream"
