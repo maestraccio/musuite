@@ -4,8 +4,8 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "1.032"
-Date = "2026-08-12"
+Versie = "1.034"
+Date = "2026-09-06"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
 #MUSUITElogo="""
@@ -62,7 +62,7 @@ manNL = ["man mpg123","woman mpg123","vrouw mpg123"]
 #                    "mpg123"(                                   "mpg123"
 #)   )   )   )   )   )
 #ma hazeʃapaxa"mpg123"
-mpg123CJ = "ma hazeʃapaxa\"mpg123\"\n"
+mpg123CJ = "ma hazeʃapaxa\"MPG123\"\n"
 mpg123EN = "Starting playback with mpg123\n"
 mpg123IT = "Avvio della riproduzione con mpg123\n"
 mpg123NL = "Start afspelen met mpg123\n"
@@ -759,13 +759,17 @@ def printmappenlijstmetsel(mappenlijst):
 
 def play(tracklijst):
     if lang == "CJ":
-#ZTI:Vraag(                                                      mi
-#)
+#WTI:WW(                                                         ha
+#    ZTI:keuze(                                                  me
+#        Waarheid:Waar(                                          la
+#            ZTI:scheiding(                                      m
+#                Waarheid:Onwaar(                                li
+#)   )   )   )   )
 #WTI:BW(                                                         hi
 #    Status:Rommelig(                                            xüe
 #)   )
-#mi hixüe
-        willekeurig = "mi hixüe"
+#hamelamli hixüe
+        willekeurig = "hamelamli hixüe"
         mpg123 = mpg123CJ
         neelijst = neelijstCJ
         jalijst = jalijstCJ
@@ -933,37 +937,422 @@ def hellup():
 #        Waarheid:Onwaar(                                        li
 #)   )   )
 #mo hiʒizeʃapaxa hameʃewo"L" m hame humahapa hoxili
-            "ma huʃapaxa\"musuite\" hiŋahea hacosi huwacoxapa hoxa hiŋi hucoxazaru hoʒili hopo. me mo haʃewo\"Enter\" m haza m mo haʃewo\"B\" m hazüi m mo haʃewo\"Q\" m hasüu. mo hiʒizeʃapaxa hameʃewo\"L\" m hame humahapa hoxili.",
-#            musuite uses mpg123, available in most repositories, and "chooseFromNumberedList.py", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as "musuite.py" and "adjustables.py".
-            "",
-            "",
+            "ma huʃapaxa\"MUSUITE\" hiŋahea hacosi huwacoxapa hoxa hiŋi hucoxazaru hoʒili hopo. me mo haʃewo\"ENTER\" m haza m mo haʃewo\"B\" m hazüi m mo haʃewo\"Q\" m hasüu. mo hiʒizeʃapaxa hameʃewo\"L\" m hame humahapa hoxili.",
+#ZTI:Voorwaardelijk(                                             mo
+#)
+#WTI:ZNW(                                                        hu
+#    Activiteit:Actief(                                          ʃa
+#        Schaling:Groep(                                         pa
+#            Status:Geordend(                                    xa
+#                "mpg123"(                                       "mpg123"
+#)   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Connectie:Binnen(                                           ŋüi
+#        "repo"(                                                 "repo"
+#            Schaling:Meervoud(                                  po
+#                3(                                              o
+#)   )   )   )   )
+#WTI:BW(                                                         hi
+#    Connectie:Los(                                              ŋi
+#)   )
+#WTI:ZNW(                                                        hu
+#    "chooseFromNumberedList.py"(                                "chooseFromNumberedList.py"
+#)   )
+#WTI:BNW(                                                        ho
+#    Connectie:Binnen(                                           ŋüi
+#        "https://github.com/maestraccio/chooseFromNumberedList"("https://github.com/maestraccio/chooseFromNumberedList"
+#)   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Actief(                                          ʃa
+#)   )
+#WTI:ZNW(                                                        hu
+#    Activiteit:Actief(                                          ʃa
+#        Schaling:Groep(                                         pa
+#            Status:Geordend(                                    xa
+#                "musuite"(                                      "musuite"
+#)   )   )   )   )
+#mo huʃapaxa"mpg123" hoŋüi"repo"poo hiŋi hu"chooseFromNumberedList.py" hoŋüi"https://github.com/maestraccio/chooseFromNumberedList" m haʃa huʃapaxa"musuite"
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Afstand:Hier(                                               ʒi
+#        Connectie:Samen(                                        ŋa
+#)   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Ding(                                               wa
+#        Activiteit:Actief(                                      ʃa
+#            Schaling:Groep(                                     pa
+#                Status:Geordend(                                xa
+#                    "musuite"(                                  "musuite"
+#)   )   )   )   )   )
+#ma haʒiŋa huwaʃapaxa"musuite"
+            "mo huʃapaxa\"MPG123\" hoŋüi\"REPO\"poo hiŋi hu\"\'chooseFromNumberedList.py\'\" hoŋüi\"\'https://github.com/maestraccio/chooseFromNumberedList\'\" m haʃa huʃapaxa\"MUSUITE\". ma haʒiŋa huwaʃapaxa\"MUSUITE\".",
+            #"It is important, no, ESSENTIAL, that your organized music collection looks like this:",
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Verlangen:Eisen(                                            ku
+#)   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#)   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Status:Geordend(                                            xa
+#)   )
+#WTI:BW(                                                         hi
+#    Status:Gelijk(                                              xi
+#)   )
+#ma haku huwacoxapa hoxa hixi:
+            "ma haku huwacoxapa hoxa hixi:",
             # print as-is [3]
-            """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK
- {\\    ...\\path}\\
-                 {ABC}\\
-                       {artistA - albumB}\\
-                                          {track1.mp3}
-                                          {track2.mp3}
-                       {albumZ - artistQ}\\
-                                          {track3.mp3}
-                                          {track4.mp3}
-                 {JZZ}\\
-                       {albumD - artistC}\\
-                                          {track5.mp3}
-                                          {track6.mp3}
-                       {artistR - albumY}\\
-                                          {track7.mp3}
-                                          {track8.mp3}
-                 {POP}\\
-                       {artistE - albumF}\\
-                                          {track11.mp3}
-                                          {track12.mp3}
-                       {artistS - albumX}\\
-                                          {track21.mp3}
-                                          {track22.mp3}""",
-            "",
-            "",
-            "",
+#            """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK
+# {\\    ...\\path}\\
+#                 {ABC}\\
+#                       {artistA - albumB}\\
+#                                          {track1.mp3}
+#                                          {track2.mp3}
+#                       {albumZ - artistQ}\\
+#                                          {track3.mp3}
+#                                          {track4.mp3}
+#                 {JZZ}\\
+#                       {albumD - artistC}\\
+#                                          {track5.mp3}
+#                                          {track6.mp3}
+#                       {artistR - albumY}\\
+#                                          {track7.mp3}
+#                                          {track8.mp3}
+#                 {POP}\\
+#                       {artistE - albumF}\\
+#                                          {track11.mp3}
+#                                          {track12.mp3}
+#                       {artistS - albumX}\\
+#                                          {track21.mp3}
+#                                          {track22.mp3}""",
+####################################################################################################
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connecte:Samen(                                         ŋa
+#)   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#                    Schaling:Meervoud(                          po
+#)   )   )   )   )   )
+#hupoŋa huwacoxapapo
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Registratie:Horen(                              co
+#                    Status:Gelijk(                              xi
+#)   )   )   )   )
+#huwacoxacoxi
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connectie:Samen(                                        ŋa
+#)   )   )
+#hupoŋa
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#         Registratie:Horen(                                     co
+#             Status:Geordend(                                   xa
+#)   )   )   )
+#huwacoxa
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connectie:Samen(                                        ŋa
+#            Afstand:HIer(                                       ʒi
+#)   )   )    )
+#hupoŋaʒi
+#WTI:ZNW(                                                        hu
+#    Natuur:Persoon(                                             fu
+#        Schaling:Groep(                                         pa
+#)   )   )
+#hufu(pa)
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#)   )   )   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#         Registratie:Horen(                                     co
+#             Status:Geordend(                                   xa
+#)   )   )   )
+#huwacoxa
+
+            """\\hupoŋa_huwacoxapapo\\huwacoxacoxi\\hupoŋa                   \\huwacoxa
+ {\\    ...\\hupoŋaʒi}\\
+                     {    ABC   }\\
+                                  {hufu(pa)A - huwacoxapaB}\\
+                                                            {huwacoxa1.mp3}
+                                                            {huwacoxa2.mp3}
+                                  {huwacoxapaZ - hufu(pa)Q}\\
+                                                            {huwacoxa3.mp3}
+                                                            {huwacoxa4.mp3}
+                     {    JZZ   }\\
+                                  {huwacoxapaD - hufu(pa)C}\\
+                                                            {huwacoxa5.mp3}
+                                                            {huwacoxa6.mp3}
+                                  {hufu(pa)R - huwacoxapaY}\\
+                                                            {huwacoxa7.mp3}
+                                                            {huwacoxa8.mp3}
+                     {    POP   }\\
+                                  {hufu(pa)E - huwacoxapaF}\\
+                                                            {huwacoxa11.mp3}
+                                                            {huwacoxa12.mp3}
+                                  {hufu(pa)S - huwacoxapaX}\\
+                                                            {huwacoxa21.mp3}
+                                                            {huwacoxa22.mp3}""",
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#)   )
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connectie:Samen(                                        ŋa
+#            Afstand:HIer(                                       ʒi
+#)   )   )    )
+#WTI:WTI(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#                    Schaling:Meervoud(                          po
+#)   )   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Status:Geordend(                                            xa
+#)   )
+#WTI:BW(                                                         hi
+#    WTI:znw(                                                    hu
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Registratie:Horen(                              co
+#                    Status:Gelijk(                              xi
+#)   )   )   )   )   )
+#ma hiŋüi hupoŋaʒi huwacoxapapo hoxa hihucoxacoxi
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connectie:Samen(                                        ŋa
+#)   )   )
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#        WTI:znw(                                                hu
+#            Registratie:Horen(                                  co
+#                Status:Geordend(                                xa
+#                    Registratie:Horen(                          co
+#                        Status:Gelijk(                          xi
+#)   )   )   )   )   )   )
+#WTI:BW(                                                         hi
+#    Progressie:Start(                                           zi
+#        Progressie:Eind(                                        zu
+#            Tellen:3(                                           bo
+#)   )   )   )
+#WTI:BNW(                                                        ho
+#    Connectie:Buiten(                                           ŋüu
+#        Grootte:Negatief(                                       ñüa
+#            Waarheid:Onwaar(                                    li
+#                Connectie:Buiten(                               ŋüu
+#                    Grootte:Positief(                           ña
+#                        Waarheid:Onwaar(                        li
+#)   )   )   )   )   )   )
+#ma hupoŋa hiŋüihucoxacoxi hizizubo hoŋüuñüaliŋüuñali
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#)   )
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connectie:Samen(                                        ŋa
+#)   )   )
+#WTI:BW(                                                         hi
+#    WTI:znw(                                                    hu
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Registratie:Horen(                              co
+#                    Status:Gelijk(                              xi
+#                        Schaling:Meervoud(                      po
+#)   )   )   )   )   )   )
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#)   )
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connectie:Samen(                                        ŋa
+#)   )   )
+#WTI:BW(                                                         hi
+#    WTI:znw(                                                    hu
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Meervoud(                              po
+#)   )   )   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Meervoud(                              po
+#)   )   )   )   )
+#ma hiŋüi hupoŋa hihucoxacoxipo hiŋüi hupoŋa hihucoxapo huwacoxapo
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:WW(                                                         ha
+#    Richting:Richting(                                          si
+#        Waarheid:Onwaar(                                        li
+#)   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#)   )   )   )
+#ZTI:Keuze(                                                      me
+#)
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#        Schaling:Meervoud(                                      po
+#            Connectie:Samen(                                    ŋa
+#                Connectie:Binnen(                               ŋüi
+#                    Schaling:Meervoud(                          po
+#                        Connectie:Samen(                        ŋa
+#)   )   )   )   )   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:BW(                                                         hi
+#    Connectie:Buiten(                                           ŋüu
+#        Schaling:Meervoud(                                      po
+#            Connectie:Samen(                                    ŋa
+#)   )   )   )
+#ma hasili huwacoxa me hiŋüipoŋaŋüipoŋa m hiŋüupoŋa
+            "ma hiŋüi hupoŋaʒi huwacoxapapo hoxa hihucoxacoxi. ma hupoŋa hiŋüihucoxacoxi hizizubo hoŋüuñüaliŋüuñali. ma hiŋüi hupoŋa hihucoxacoxipo hiŋüi hupoŋa hihucoxapo huwacoxapo. ma hasili huwacoxa me hiŋüipoŋaŋüipoŋa m hiŋüupoŋa.",
+#ZTI:VOORWAARDELIJK(                                             mo
+#)
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Registratie:Horen(                                      co
+#            Status:Geordend(                                    xa
+#                Schaling:Groep(                                 pa
+#                    Connectie:Samen(                            ŋa
+#)   )   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Afstand:Hier(                                               ʒi
+#        Richting:Opwaarts(                                      so
+#            Status:Gelijk(                                      xi
+#                Waarheid:Onwaar(                                li
+#)   )   )   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#ZTI:KEUZE(                                                      me
+#)
+#WTI:WW(                                                         ha
+#    Status:Geordend(                                            xa
+#        Richting:Vooruit(                                       se
+#            Status:Gelijk(                                      xi
+#)   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:WW(                                                         ha
+#    Activiteit:Actief(                                          ʃa
+#        "musuite"(                                              "musuite"
+#            Waarheid:Onwaar(                                    li
+#)   )   )   )
+#mo huwacoxapaŋa hoʒisoxili m me haxasexi m haʃa"musuite"li
+            "mo huwacoxapaŋa hoʒisoxili m me haxasexi m haʃa\"MUSUITE\"li.",
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:PVNW:2(                                                     hea
+#)
+#WTI:WW(                                                         ha
+#    Connectie:Gekoppeld(                                        ŋo
+#)   )
+#WTI:ZNW(                                                        hu
+#    WTI:BW(                                                     hi
+#        Schaling:Meervoud(                                      po
+#            Connectie:Samen(                                    ŋa
+#                Progressie:Start(                               zi
+#)   )   )   )   )
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#)   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        "'adjustables.py'"(                                     "'adjustables.py'"
+#)   )   )
+#WTI:BW(                                                         hi
+#    Richting:NaarRechts(                                        sa
+#        "'pad = '"(                                             "'pad = '"
+#)   )   )
+#ma hea haŋo huhipoŋazi hiŋüi huwa"'adjustables.py'" hisa"'pad = '"
+#ZTI:ZIN(                                                        ma
+#)
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        "'adjustables.py'"(                                     "'adjustables.py'"
+#)   )   )
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#)   )
+#WTI:ZNW(                                                        hu
+#    Schaling:Meervoud(                                          po
+#        Connectie:Samen(                                        ŋa
+#            Status:Gelijk(                                      xi
+#)   )   )  )
+#WTI:BW(                                                         hi
+#    Connectie:Samen(                                            ŋa
+#)   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Activiteit:Actief(                                      ʃa
+#            Schaling:Groep(                                     pa
+#                Status:Geordend(                                xa
+#                    "'musuite.py'"(                             "musuite.py"
+#)   )   )   )   )   )
+#ma huwa"'adjustables.py'" hiŋüi hupoŋaxi hiŋa huwaʃapaxa"musuite.py"
+#ZTI:OORZAAK(                                                    mu
+#)
+#WTI:BW(                                                         hi
+#    Connectie:Binnen(                                           ŋüi
+#)   )
+#WTI:ZNW(                                                        hu
+#    "OS"(                                                       "OS"
+#        Status:Gelijk(                                          xi
+#            Waarheid:Onwaar(                                    li
+#)   )   )   )
+#WTI:ZNW(                                                        hu
+#    Materie:Iets(                                               wa
+#        Connectie:Tussen(                                       ŋüa
+#            WTI:bw(                                             hi
+#                Schaling:Meervoud(                              po
+#)   )   )   )   )
+#WTI:BNW(                                                        ho
+#    Status:Gelijk(                                              xi
+#        Waarheid:Onwaar(                                        li
+#)   )   )
+#ZTI:Scheiding(                                                  m
+#)
+#WTI:PVNW:2(                                                     hea
+#)
+#WTI:WW(                                                         ha
+#    ZTI:keuze(                                                  me
+#        "\"(                                                    "\"
+#            ZTI:Scheiding(                                      m
+#                "/"(                                            "/"
+#)   )   )   )   )
+#WTI:BW(                                                         hi
+#    Kennis:Begrip(                                              do
+#)   )
+#mu hiŋüi hu"OS"xili huwaŋüahipo hoxili m hea hame"\"m"/" hido
+            "ma hea haŋo huhipoŋazi hiŋüi huwa\"\'adjustables.py\'\" hisa\"\'pad = \'\". ma huwa\"\'adjustables.py\'\" hiŋüi hupoŋaxi hiŋa huwaʃapaxa\"\'musuite.py\'\". mu hiŋüi hu\"OS\"xili huwaŋüahipo hoxili m hea hame\"\\\"m\"/\" hido.",
             "",
             "",
             "",
@@ -982,28 +1371,28 @@ def hellup():
             "It is important, no, ESSENTIAL, that your organized music collection looks like this:",
             # print as-is [3]
             """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK
- {\\    ...\\path}\\
-                 {ABC}\\
-                       {artistA - albumB}\\
-                                          {track1.mp3}
-                                          {track2.mp3}
-                       {albumZ - artistQ}\\
-                                          {track3.mp3}
-                                          {track4.mp3}
-                 {JZZ}\\
-                       {albumD - artistC}\\
-                                          {track5.mp3}
-                                          {track6.mp3}
-                       {artistR - albumY}\\
-                                          {track7.mp3}
-                                          {track8.mp3}
-                 {POP}\\
-                       {artistE - albumF}\\
-                                          {track11.mp3}
-                                          {track12.mp3}
-                       {artistS - albumX}\\
-                                          {track21.mp3}
-                                          {track22.mp3}""",
+{\\ ...\\path}\\
+             {ABC}\\
+                   {artistA - albumB}\\
+                                      {track1.mp3}
+                                      {track2.mp3}
+                   {albumZ - artistQ}\\
+                                      {track3.mp3}
+                                      {track4.mp3}
+             {JZZ}\\
+                   {albumD - artistC}\\
+                                      {track5.mp3}
+                                      {track6.mp3}
+                   {artistR - albumY}\\
+                                      {track7.mp3}
+                                      {track8.mp3}
+             {POP}\\
+                   {artistE - albumF}\\
+                                      {track11.mp3}
+                                      {track12.mp3}
+                   {artistS - albumX}\\
+                                      {track21.mp3}
+                                      {track22.mp3}""",
             "In the MAIN_FOLDER, the albums of your artists are sorted by genre. Each genre folder has a name that consists of exactly three letters, no more and no less. Inside the genre folders are the albums, and inside those are the music files. Do not use subfolders, do not place loose music files at another level.",
             "If your music collection is organized differently, adjust it. If you don’t want to, use another program.",
             "In the file \"adjustables.py\" (included and located in the same directory as this program), you specify the exact location of the MAIN_FOLDER after \"pad = \". Use the path formatting as used by your operating system. So, pay attention to whether you should use \"\\\" or \"/\".",
@@ -1025,28 +1414,28 @@ def hellup():
             "È importante, anzi ESSENZIALE, che la tua collezione musicale organizzata sia strutturata così:",
             # print as-is [3]
             """\\CARTELLA_PRINCIPALE \\GENERE\\ALBUM              \\TRACCIA
-          {\\...\\percorso}\\
-                           {ABC}\\
-                                 {artistaA - albumB}\\
-                                                     {traccia1.mp3}
-                                                     {traccia2.mp3}
-                                 {albumZ - artistaQ}\\
-                                                     {traccia3.mp3}
-                                                     {traccia4.mp3}
-                           {JZZ}\\
-                                 {albumD - artistaC}\\
-                                                     {traccia5.mp3}
-                                                     {traccia6.mp3}
-                                 {artistaR - albumY}\\
-                                                     {traccia7.mp3}
-                                                     {traccia8.mp3}
-                           {POP}\\
-                                 {artistaE - albumF}\\
-                                                     {traccia11.mp3}
-                                                     {traccia12.mp3}
-                                 {artistaS - albumX}\\
-                                                     {traccia21.mp3}
-                                                     {traccia22.mp3}""",
+{\\   ...   \\percorso}\\
+                       {ABC}\\
+                             {artistaA - albumB}\\
+                                                 {traccia1.mp3}
+                                                 {traccia2.mp3}
+                             {albumZ - artistaQ}\\
+                                                 {traccia3.mp3}
+                                                 {traccia4.mp3}
+                       {JZZ}\\
+                             {albumD - artistaC}\\
+                                                 {traccia5.mp3}
+                                                 {traccia6.mp3}
+                             {artistaR - albumY}\\
+                                                 {traccia7.mp3}
+                                                 {traccia8.mp3}
+                       {POP}\\
+                             {artistaE - albumF}\\
+                                                 {traccia11.mp3}
+                                                 {traccia12.mp3}
+                             {artistaS - albumX}\\
+                                                 {traccia21.mp3}
+                                                 {traccia22.mp3}""",
             "Nella CARTELLA_PRINCIPALE ci sono gli album dei tuoi artisti, organizzati per genere. Ogni cartella di genere ha un nome composto da esattamente tre lettere, non una di più e non una di meno. All'interno delle cartelle di genere ci sono gli album, e al loro interno i file musicali. Non usare sottocartelle, non mettere file musicali sciolti a un altro livello.",
             "Se la struttura della tua collezione musicale è diversa, modificala. Se non vuoi farlo, usa un altro programma.",
             "Nel file \"adjustables.py\" (fornito e situato nella stessa cartella di questo programma), specifichi tu stesso la posizione esatta della CARTELLA PRINCIPALE dopo \"pad = \". Utilizza la formattazione del percorso come viene utilizzata dal tuo sistema operativo. Fai quindi attenzione a utilizzare \"\\\" o \"/\" a seconda dei casi.",
@@ -1067,29 +1456,29 @@ def hellup():
             "musuite maakt gebruik van mpg123, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
             "Het is belangrijk, nee ESSENTIEEL dat je georganiseerde muziekverzameling er zo uitziet:",
             # print as-is [3]
-            """\\HOOFDMAP \\GENRE\\ALBUM              \\TRACK
-{\\.    ..\\pad}\\
-               {ABC}\\
-                     {artiestA - albumB}\\
-                                         {track1.mp3}
-                                         {track2.mp3}
-                     {albumZ - artiestQ}\\
-                                         {track3.mp3}
-                                         {track4.mp3}
-               {JZZ}\\
-                     {albumD - artiestC}\\
-                                         {track5.mp3}
-                                         {track6.mp3}
-                     {artiestR - albumY}\\
-                                         {track7.mp3}
-                                         {track8.mp3}
-               {POP}\\
-                     {artiestE - albumF}\\
-                                         {track11.mp3}
-                                         {track12.mp3}
-                     {artiestS - albumX}\\
-                                         {track21.mp3}
-                                         {track22.mp3}""",
+            """\\ HOOFDMAP\\GENRE\\ALBUM              \\TRACK
+{\\...\\pad}\\
+           {ABC}\\
+                 {artiestA - albumB}\\
+                                     {track1.mp3}
+                                     {track2.mp3}
+                 {albumZ - artiestQ}\\
+                                     {track3.mp3}
+                                     {track4.mp3}
+           {JZZ}\\
+                 {albumD - artiestC}\\
+                                     {track5.mp3}
+                                     {track6.mp3}
+                 {artiestR - albumY}\\
+                                     {track7.mp3}
+                                     {track8.mp3}
+           {POP}\\
+                 {artiestE - albumF}\\
+                                     {track11.mp3}
+                                     {track12.mp3}
+                 {artiestS - albumX}\\
+                                     {track21.mp3}
+                                     {track22.mp3}""",
             "In de HOOFDMAP staan de albums van je artiesten per genre gesorteerd. Iedere genre-map heeft een naam die uit precies drie letters bestaat, niet meer en niet minder. In de genre-mappen staan de albums en daarin staan de muziekbestanden. Gebruik geen submappen, plaats geen losse muziekbestanden op een ander niveau.",
             "Ziet de organisatie van jouw muziekcollectie er anders uit, pas die dan aan. Wil je dat niet, gebruik dan een ander programma.",
             "In het bestand \"adjustables.py\" (meegeleverd en staat in dezelfde map als dit programma) geef je zelf de exacte locatie op van de HOOFDMAP, achter \"pad = \". Gebruik de padnaamopmaak zoals die op jouw besturingssysteem wordt gebruikt. Let dus op of je \"\\\" of \"/\" moet gebruiken.",
@@ -1339,16 +1728,17 @@ while loop == True:
         gmtdict = {
 #WTI:ZNW(                                                        hu
 #    Schaling:Groep(                                             pa
-#        Status:Gelijkmatig(                                     xi
+#        Registratie:Horen(                                      co
+#            Status:Gelijkmatig(                                 xi
 #)   )   )
-#hupaxi
-                "G":"hupaxi",
+#hupacoxi
+                "G":"hupacoxi",
 #WTI:ZNW(                                                        hu
-#    Schaling:Groep(                                             pa
+#    Schaling:Meervoud(                                          po
 #        Connectie:Samen(                                        ŋa
 #)   )   )
-#hupaŋa
-                "M":"hupaŋa",
+#hupoŋa
+                "M":"hupoŋa",
 #WTI:ZNW(                                                        hu
 #    Materie:Iets(                                               wa
 #         Registratie:Horen(                                     co
