@@ -4,7 +4,7 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "1.2"
+Versie = "1.21"
 Date = "2026-11-05"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
@@ -2195,47 +2195,62 @@ for w in textwrap.wrap(padtekst,80):
     print(w)
 print(pad)
 print()
-for w in textwrap.wrap(gener,80):
-    print(w)
-genrelijst = []
-for i in os.listdir(pad):
-    if os.path.isdir(pad+i):
-        genrelijst.append(i)
-genrelijst = sorted(genrelijst)
-genrelijstlang = []
-for g in genrelijst:
-    if g in genredict:
-        genrelijstlang.append(g+" : "+genredict[g])
+try:
+    for w in textwrap.wrap(gener,80):
+        print(w)
+    genrelijst = []
+    for i in os.listdir(pad):
+        if os.path.isdir(pad+i):
+            genrelijst.append(i)
+    genrelijst = sorted(genrelijst)
+    genrelijstlang = []
+    for g in genrelijst:
+        if g in genredict:
+            genrelijstlang.append(g+" : "+genredict[g])
+        else:
+            genrelijstlang.append(g)
+    genrelijstlang = sorted(genrelijstlang)
+    allemappenlijst = []
+    for g in genrelijst:
+        for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g)):
+            for mapp in dirnames:
+                allemappenlijst.append(mapp)
+    extensielijst = [".mp1",".mp2",".mp3",".mpeg",".mpg",".mpga"]
+    alletrackslijst = []
+    for g in genrelijst:
+        for m in allemappenlijst:
+            for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
+                for track in filenames:
+                    for e in extensielijst:
+                        if track.endswith(e):
+                            alletrackslijst.append(track)
+    maxlen = len(str(len(alletrackslijst)))
+    streamslijst = []
+    for i in streamsdict:
+        streamslijst.append(i)
+    optieslijst = ["*"]
+    for i in genrelijst:
+        if i[:1] not in optieslijst:
+            optieslijst.append(i[:1].lower())
+            optieslijst.append(i[:2].lower())
+            optieslijst.append(i.lower())
+            optieslijst.append(i[:1].upper())
+            optieslijst.append(i[:2].upper())
+    print(klaar)
+    padwaar = True
+except:
+    if lang == "CJ":
+        print("ma hiʒi huwa\"MP3\"li. ma haco hame hucoxaza hoʒili hixüili")
+    elif lang == "EN":
+        print("No MP3 files found. You can only choose to listen from your online streams")
+    elif lang == "CJ":
+        print("Nessun file MP3 trovato. Puoi solo sceglere di ascolare dagli streaming online")
     else:
-        genrelijstlang.append(g)
-genrelijstlang = sorted(genrelijstlang)
-allemappenlijst = []
-for g in genrelijst:
-    for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g)):
-        for mapp in dirnames:
-            allemappenlijst.append(mapp)
-extensielijst = [".mp1",".mp2",".mp3",".mpeg",".mpg",".mpga"]
-alletrackslijst = []
-for g in genrelijst:
-    for m in allemappenlijst:
-        for dirpath, dirnames, filenames in os.walk(os.path.join(pad,g,m)):
-            for track in filenames:
-                for e in extensielijst:
-                    if track.endswith(e):
-                        alletrackslijst.append(track)
-maxlen = len(str(len(alletrackslijst)))
-streamslijst = []
-for i in streamsdict:
-    streamslijst.append(i)
-optieslijst = ["*"]
-for i in genrelijst:
-    if i[:1] not in optieslijst:
-        optieslijst.append(i[:1].lower())
-        optieslijst.append(i[:2].lower())
-        optieslijst.append(i.lower())
-        optieslijst.append(i[:1].upper())
-        optieslijst.append(i[:2].upper())
-print(klaar)
+        print("Geen MP3-bestanden gevonden. Je kunt alleen luisteren naar je keuze uit online streams")
+    streamslijst = []
+    for i in streamsdict:
+        streamslijst.append(i)
+    padwaar = False
 
 ############################################
 
@@ -2384,22 +2399,26 @@ while loop == True:
         gmtlijst.append(i.lower())
     loop = True
     while loop == True:
-        print()
-        print(hoofdmenu)
-        v,k = cFD([mosdict,0,"M","> ",langlijst+helplijst+man+moslijst+backlijst+quitlijst])
-        if k.upper() in quitlijst:
-            exit()
-        elif k.upper() in backlijst:
-            pass
-        elif k.lower() in manmpg123:
-            subprocess.run(["man", "mpg123"])
-        elif k.lower() in manmpv:
-            subprocess.run(["man", "mpv"])
-        elif k in helplijst:
-            hellup()
-        elif k in langlijst:
-            lang = setlang(lang)
+        if padwaar == True:
+            print()
+            print(hoofdmenu)
+            v,k = cFD([mosdict,0,"M","> ",langlijst+helplijst+man+moslijst+backlijst+quitlijst])
+            if k.upper() in quitlijst:
+                exit()
+            elif k.upper() in backlijst:
+                pass
+            elif k.lower() in manmpg123:
+                subprocess.run(["man", "mpg123"])
+            elif k.lower() in manmpv:
+                subprocess.run(["man", "mpv"])
+            elif k in helplijst:
+                hellup()
+            elif k in langlijst:
+                lang = setlang(lang)
+            else:
+                break
         else:
+            k = moslijst[1]
             break
     if k.upper() == moslijst[1].upper():
         loopS = True
@@ -2418,7 +2437,7 @@ while loop == True:
             else:
                 su = streamsdict[s]
                 print(mpv)
-                subprocess.run(["mpv", su])
+                subprocess.run(["mpv", "--volume=50", su])
     else:
         loopM = True
         while loopM == True:
