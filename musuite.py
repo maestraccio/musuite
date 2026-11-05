@@ -4,10 +4,19 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
-Versie = "1.1"
-Date = "2026-10-24"
+Versie = "1.2"
+Date = "2026-11-05"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
+colD = "\033[94m"
+colG = "\033[93m"
+colH = "\033[7m"
+colJ = "\033[92m"
+colN = "\033[91m"
+colR = "\033[0m"
+colS = "\033[95m"
+colT = "\033[96m"
+colW = "\033[33m"
 #MUSUITElogo="""
 # /____    ___                        __          _\
 #||____   ___  __  __  ___  __  __ (#)____   ___ __||
@@ -38,20 +47,24 @@ quitlijstbasis = ["Q"]
 quitlijst = ["Q","q"]
 neelijstCJ = ["i","li"]
 jalijstCJ = ["a","la"]
-neejaCJ = ["li","la"]
+neejaCJ = [colN+"li"+colR,colJ+"la"+colR]
 neelijstEN = ["N","n","no"]
 jalijstEN = ["Y","y","yes","Yes"]
-neejaEN = ["N","Y"]
+neejaEN = [colN+"N"+colR,colJ+"Y"+colR]
 neelijstIT = ["N","n","no","No"]
 jalijstIT = ["S","s","si","sì","Si","Sì"]
-neejaIT = ["N","S"]
+neejaIT = [colN+"N"+colR,colJ+"S"+colR]
 neelijstNL = ["N","n","nee","Nee"]
 jalijstNL = ["J","j","ja","Ja"]
-neejaNL = ["N","J"]
-manCJ = ["man mpg123","woman mpg123","hufu mpg123"]
-manEN = ["man mpg123","woman mpg123"]
-manIT = ["man mpg123","woman mpg123","uomo mpg123","donna mpg123"]
-manNL = ["man mpg123","woman mpg123","vrouw mpg123"]
+neejaNL = [colN+"N"+colR,colJ+"J"+colR]
+manmpg123CJ = ["man mpg123","woman mpg123","hufu mpg123"]
+manmpg123EN = ["man mpg123","woman mpg123"]
+manmpg123IT = ["man mpg123","woman mpg123","uomo mpg123","donna mpg123"]
+manmpg123NL = ["man mpg123","woman mpg123","vrouw mpg123"]
+manmpvCJ = ["man mpgv","woman mpv","hufu mpv"]
+manmpvEN = ["man mpv","woman mpv"]
+manmpvIT = ["man mpv","woman mpv","uomo mpv","donna mpv"]
+manmpvNL = ["man mpv","woman mpv","vrouw mpv"]
 #ZTI:ZIN(                                                        ma
 #    WTI:WW(                                                     ha
 #        Progressie:Start(                                       ze
@@ -66,6 +79,10 @@ mpg123CJ = "ma hazeʃapaxa\"MPG123\"\n"
 mpg123EN = "Starting playback with mpg123\n"
 mpg123IT = "Avvio della riproduzione con mpg123\n"
 mpg123NL = "Start afspelen met mpg123\n"
+mpvCJ = "ma hazeʃapaxa\"MPV\"\n"
+mpvEN = "Starting playback with mpv\n"
+mpvIT = "Avvio della riproduzione con mpv\n"
+mpvNL = "Start afspelen met mpv\n"
 def setlang(oldlang):
 # Informatie over hucoji vind je op www.hucoji.org
 # You can find information about hucoji at www.hucoji.org
@@ -179,20 +196,30 @@ if picklang == "Y":
 
 def defgpad():
     if lang == "CJ":
-        man = manCJ
+        manmpg123 = manmpg123CJ
+        manmpv = manmpvCJ
+        man = manmpg123CJ+manmpvCJ
     elif lang == "EN":
-        man = manEN
+        manmpg123 = manmpg123EN
+        manmpv = manmpvEN
+        man = manmpg123EN+manmpvEN
     elif lang == "IT":
-        man = manIT
+        manmpg123 = manmpg123IT
+        manmpv = manmpvIT
+        man = manmpg123IT+manmpvIT
     else:
-        man = manNL
+        manmpg123 = manmpg123NL
+        manmpv = manmpvNL
+        man = manmpg123NL+manmpvNL
     optie,index = cFNL([genrelijstlang,"A",1,1,"> ",helplijst+man+backlijst+quitlijst])
     if optie in quitlijst:
         exit()
     elif optie in backlijst:
         return optie
-    elif optie in man:
+    elif optie in manmpg123:
         subprocess.run(["man", "mpg123"])
+    elif optie in manmpv:
+        subprocess.run(["man", "mpv"])
     elif optie in helplijst:
         hellup()
     if optie in genrelijstlang:
@@ -217,13 +244,13 @@ def printtracklijst(tracklijst):
 #    )   )   )
 #)
 #ma hupawacoxapa hozizu %s
-        print("ma hupawacoxapa hozizu %s" % str(len(tracklijst)))
+        print("ma hupa%swacoxa%spa hozizu %s" % (colT,colR,str(len(tracklijst))))
     elif lang == "EN":
-        print("The track list contains %s tracks" % str(len(tracklijst)))
+        print("The %strack%s list contains %s %strack%ss" % (colT,colR,str(len(tracklijst)),colT,colR))
     elif lang == "IT":
-        print("L’elenco delle tracce contiene %s brani" % str(len(tracklijst)))
+        print("L’elenco delle %stracce%s contiene %s %sbrani%s" % (colT,colR,str(len(tracklijst)),colT,colR))
     else:
-        print("De tracklijst bevat %s tracks" % str(len(tracklijst)))
+        print("De %strack%slijst bevat %s %strack%ss" % (colT,colR,str(len(tracklijst)),colT,colR))
     if len(tracklijst) > 50:
         print()
         if lang == "CJ":
@@ -281,9 +308,10 @@ def printtracklijst(tracklijst):
             wraptext = "L’elenco delle tracce è lungo e potrebbe non entrare sullo schermo. L’elenco viene quindi mostrato in più parti. Usa \"B\" per interrompere la visualizzazione e passare alla riproduzione."
         else:
             wraptext = "De tracklijst is lang en past mogelijk niet op je scherm. De lijst wordt daarom in meerdere delen getoond. Gebruik \"B\" om de weergave af te breken en door te gaan naar afspelen."
+        print(colT, end = "")
         for i in textwrap.wrap(wraptext,80):
             print(i)
-        print()
+        print(colR)
         lenlijst = len(tracklijst)
         count = 0
         while count < lenlijst:
@@ -327,13 +355,13 @@ def printmappenlijst(mappenlijst):
 #    )   )   )
 #)
 #ma huwaŋüipa hozizu %s
-        print("ma huwaŋüipa hozizu %s" % str(len(mappenlijst)))
+        print("ma hu%swaŋüi%spa hozizu %s" % (colD,colR,str(len(mappenlijst))))
     elif lang == "EN":
-        print("The folder list contains %s folders" % str(len(mappenlijst)))
+        print("The %sfolder%s list contains %s %sfolder%ss" % (colD,colR,str(len(mappenlijst)),colD,colR))
     elif lang == "IT":
-        print("L'elenco delle cartelle contiene %s cartelle" % str(len(mappenlijst)))
+        print("L'elenco delle %scartelle%s contiene %s %scartelle%s" % (colD,colR,str(len(mappenlijst)),colD,colR))
     else:
-        print("De mappenlijst bevat %s mappen" % str(len(mappenlijst)))
+        print("De %smap%spenlijst bevat %s %smap%spen" % (colD,colR,str(len(mappenlijst)),colD,colR))
     if len(mappenlijst) > 50:
         print()
         if lang == "CJ":
@@ -390,9 +418,10 @@ def printmappenlijst(mappenlijst):
             wraptext = "L'elenco delle cartelle è lungo e potrebbe non entrare sullo schermo. L'elenco viene quindi mostrato in più parti. Usa \"B\" per interrompere la visualizzazione e passare alla riproduzione."
         else:
             wraptext = "De mappenlijst is lang en past mogelijk niet op je scherm. De lijst wordt daarom in meerdere delen getoond. Gebruik \"B\" of \"U\" om de weergave af te breken en door te gaan naar afspelen."
+        print(colD,end="")
         for i in textwrap.wrap(wraptext,80):
             print(i)
-        print()
+        print(colR)
         lenlijst = len(mappenlijst)
         count = 0
         while count < lenlijst:
@@ -437,13 +466,13 @@ def printtracklijstmetsel(tracklijst):
 #    )   )   )
 #)
 #ma hupawacoxapa huzizu %s
-        print("ma hupawacoxapa huzizu %s" % str(len(tracklijst)))
+        print("ma hupa%swacoxa%spa huzizu %s" % (colT,colR,str(len(tracklijst))))
     elif lang == "EN":
-        print("The track list contains %s tracks" % str(len(tracklijst)))
+        print("The %strack%s list contains %s %strack%ss" % (colT,colR,str(len(tracklijst)),colT,colR))
     elif lang == "IT":
-        print("L’elenco delle tracce contiene %s brani" % str(len(tracklijst)))
+        print("L’elenco delle %stracce%s contiene %s %sbrani%s" % (colT,colR,str(len(tracklijst),colT,colR)))
     else:
-        print("De tracklijst bevat %s tracks" % str(len(tracklijst)))
+        print("De %strack%slijst bevat %s %strack%ss" % (colT,colR,str(len(tracklijst)),colT,colR))
     tracklijstverkort = []
     if len(tracklijst) > 50:
         print()
@@ -505,10 +534,10 @@ def printtracklijstmetsel(tracklijst):
             wraptext = "L'elenco delle tracce è lungo e potrebbe non entrare sullo schermo. L'elenco viene quindi mostrato inizialmente in più parti in modo che tu possa vedere i numeri delle tracce che desideri selezionare. Successivamente potrai inserire la tua scelta definitiva. Ricorda quei numeri."
         else:
             wraptext = "De tracklijst is lang en past mogelijk niet op je scherm. De lijst wordt daarom eerst in meerdere delen getoond zodat je de nummers van de track(s) die je in je selectie wilt een keer hebt kunnen zien. Daarna krijg je de optie om je definitieve keuze in te geven. Onthoud die nummers."
-        print()
+        print(colT)
         for i in textwrap.wrap(wraptext,80):
             print(i)
-        print()
+        print(colR)
         lenlijst = len(tracklijst)
         count = 0
         while count < lenlijst:
@@ -574,8 +603,10 @@ def printtracklijstmetsel(tracklijst):
             wraptext = "La fine dell'elenco è stata raggiunta e a seguire ci sarà l'opzione per inserire la tua scelta. Ricorda il/i numero/i della/le traccia/e che desideri selezionare. Ora premi prima \"Invio\""
         else:
             wraptext = "Het einde van de lijst is bereikt en de optie om je keuze in te voeren volgt hierna. Onthoud de/het nummer(s) van de track(s) die je wilt selecteren. Druk nu eerst op \"Enter\""
+        print(colT,end="")
         for i in textwrap.wrap(wraptext,80):
             print(i)
+        print(colR)
         go = input()
         if go in quitlijst:
             exit()
@@ -612,13 +643,13 @@ def printmappenlijstmetsel(mappenlijst):
 #    )   )   )
 #)
 #ma hupahuwaŋüipa hozizu %s
-            print("ma hupahuwaŋüipa hozizu %s" % str(len(mappenlijst)))
+            print("ma hupa%shuwaŋüi%spa hozizu %s" % (colD,colR,str(len(mappenlijst))))
         elif lang == "EN":
-            print("The folder list contains %s folders" % str(len(mappenlijst)))
+            print("The %sfolder%s list contains %s %sfolder%ss" % (colD,colR,str(len(mappenlijst)),colD,colR))
         elif lang == "IT":
-            print("L'elenco delle cartelle contiene %s cartelle" % str(len(mappenlijst)))
+            print("L'elenco delle %scartelle%s contiene %s %scartelle%s" % (colD,colR,str(len(mappenlijst)),colD,colR))
         else:
-            print("De mappenlijst bevat %s mappen" % str(len(mappenlijst)))
+            print("De %smap%spenlijst bevat %s %smap%spen" % (colD,colR,str(len(mappenlijst)),colD,colR))
         print()
         if lang == "CJ":
 #ZTI:Oorzaak(                                                    mu
@@ -678,10 +709,10 @@ def printmappenlijstmetsel(mappenlijst):
             wraptext = "L'elenco delle cartelle è lungo e potrebbe non entrare sullo schermo. L'elenco viene quindi mostrato inizialmente in più parti in modo che tu possa vedere il/i numero/i della/le cartella/e che desideri selezionare. Successivamente potrai inserire la tua scelta definitiva. Ricorda quei numeri."
         else:
             wraptext = "De mappenlijst is lang en past mogelijk niet op je scherm. De lijst wordt daarom eerst in meerdere delen getoond zodat je het/de nummer(s) van de map(pen) die je in je selectie wilt een keer hebt kunnen zien. Daarna krijg je de optie om je definitieve keuze in te geven. Onthoud die nummers."
-        print()
+        print(colD)
         for i in textwrap.wrap(wraptext,80):
             print(i)
-        print()
+        print(colR)
         lenlijst = len(mappenlijst)
         count = 0
         while count < lenlijst:
@@ -749,8 +780,10 @@ def printmappenlijstmetsel(mappenlijst):
             wraptext = "La fine dell'elenco è stata raggiunta e a seguire ci sarà l'opzione per inserire la tua scelta. Ricorda il/i numero/i della/le cartella/e che desideri selezionare. Ora premi prima \"Invio\""
         else:
             wraptext = "Het einde van de lijst is bereikt en de optie om je keuze in te voeren volgt hierna. Onthoud het/de nummer(s) van de map(pen) die je wilt selecteren. Druk nu eerst op \"Enter\""
+        print(colD)
         for i in textwrap.wrap(wraptext,80):
             print(i)
+        print(colR)
         go = input()
         if go in quitlijst:
             exit()
@@ -771,6 +804,9 @@ def printmappenlijstmetsel(mappenlijst):
 
 def play(tracklijst):
     if lang == "CJ":
+        manmpg123 = manmpg123CJ
+        manmpv = manmpvCJ
+        man = manmpg123CJ+manmpvCJ
 #ZTI:Zin(                                                        ma
 #    WTI:BW(                                                     hi
 #        Status:Rommelig(                                        xüe
@@ -783,26 +819,39 @@ def play(tracklijst):
 #    )   )   )   )   )
 #)
 #ma hixüe hamelamli
-        willekeurig = "ma hixüe hamelamli"
+        willekeurig = colW+"ma hixüe hamelamli"+colR
         mpg123 = mpg123CJ
+        mpv = mpvCJ
         neelijst = neelijstCJ
         jalijst = jalijstCJ
         neeja = neejaCJ
     elif lang == "EN":
-        willekeurig = "Random order?"
+        manmpg123 = manmpg123EN
+        manmpv = manmpvEN
+        man = manmpg123EN+manmpvEN
+        willekeurig = colW+"Random order?"+colR
         mpg123 = mpg123EN
+        mpv = mpvEN
         neelijst = neelijstEN
         jalijst = jalijstEN
         neeja = neejaEN
     elif lang == "IT":
-        willekeurig = "Ordine casuale?"
+        manmpg123 = manmpg123IT
+        manmpv = manmpvIT
+        man = manmpg123IT+manmpvIT
+        willekeurig = colW+"Ordine casuale?"+colR
         mpg123 = mpg123IT
+        mpv = mpvIT
         neelijst = neelijstIT
         jalijst = jalijstIT
         neeja = neejaIT
     else:
-        willekeurig = "Willekeurige volgorde?"
+        manmpg123 = manmpg123NL
+        manmpv = manmpvNL
+        man = manmpg123NL+manmpvNL
+        willekeurig = colW+"Willekeurige volgorde?"+colR
         mpg123 = mpg123NL
+        mpv = mpvNL
         neelijst = neelijstNL
         jalijst = jalijstNL
         neeja = neejaNL
@@ -816,15 +865,18 @@ def play(tracklijst):
             exit()
         elif ja.lower() in backlijst:
             return
-        elif ja.lower() in man:
-            subprocess.run(["man", "mpg123"])
         elif ja.lower() in helplijst:
             hellup()
+        elif ja.lower() in manmpg123:
+            subprocess.run(["man", "mpg123"])
+        elif ja.lower() in manmpv:
+            subprocess.run(["man", "mpv"])
         if ja.lower() in neelijst:
             random = ""
     try:
         with open(os.path.join(pad,"tracklijst.m3u"),"w") as tl:
             for tr in tracklijst:
+                #print(colT+tr+colR, file=tl)
                 print(tr, file=tl)
         print(mpg123)
         subprocess.run(["mpg123", "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
@@ -835,6 +887,21 @@ def play(tracklijst):
 def hellup():
     if lang == "CJ":
         helpteksten = [
+                """hiʒu:                                                                           
+"B"           : hazüi                                                           
+"H"           : haca huda                                                       
+"Q"           : hasüu                                                           
+"hufu mpg123” : haca huda huʃapaxa"MPG123"                                      
+"hufu mpv”    : haca huda huʃapaxa"MPV"                                         
+                                                                                
+hiʒizi huʃapaxa:                                                                
+"L" : hame hucodo                                                               
+                                                                                
+hiʒiŋüi hupamepa:                                                               
+">”           : hase                                                            
+"<”           : hasüe                                                           
+"*”           : hamepu                                                          
+2,5,11,17,23  : hamepo hixi"CSV"                                                """,
 #ZTI:Zin(                                                        ma
 #    WTI:ZNW(                                                    hu
 #        Activiteit:Actief(                                      ʃa
@@ -995,7 +1062,7 @@ def hellup():
 #    )   )   )   )   )   )
 #)
 #ma haʒiŋa huwaʃapaxa"musuite"
-            "mo huʃapaxa\"MPG123\" hoŋüi\"REPO\"poo hiŋi hu\"\'chooseFromNumberedList.py\'\" hoŋüi\"\'https://github.com/maestraccio/chooseFromNumberedList\'\" m haʃa huʃapaxa\"MUSUITE\". ma haʒiŋa huwaʃapaxa\"MUSUITE\".",
+            "mo huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\" hoŋüi\"REPO\"poo hiŋi hu\"\'chooseFromNumberedList.py\'\" hoŋüi\"\'https://github.com/maestraccio/chooseFromNumberedList\'\" m haʃa huʃapaxa\"MUSUITE\". ma haʒiŋa huwaʃapaxa\"MUSUITE\".",
 #ZTI:ZIN(                                                        ma
 #    WTI:WW(                                                     ha
 #        Verlangen:Eisen(                                        ku
@@ -1095,29 +1162,29 @@ def hellup():
 #)   )   )   )
 #huwacoxa
 
-            """\\huwaŋüi_huwacoxapapo\\hucoxacoxi\\huwaŋüi                  \\huwacoxa
- {\\    ...\\huwaŋüiʒi}\\
-                      {   ABC  }\\
-                                 {hufu(pa)A - huwacoxapaB}\\
-                                                           {huwacoxa1.mp3}
-                                                           {huwacoxa2.mp3}
-                                 {huwacoxapaZ - hufu(pa)Q}\\
-                                                           {huwacoxa3.mp3}
-                                                           {huwacoxa4.mp3}
-                      {   JZZ  }\\
-                                 {huwacoxapaD - hufu(pa)C}\\
-                                                           {huwacoxa5.mp3}
-                                                           {huwacoxa6.mp3}
-                                 {hufu(pa)R - huwacoxapaY}\\
-                                                           {huwacoxa7.mp3}
-                                                           {huwacoxa8.mp3}
-                      {   POP  }\\
-                                 {hufu(pa)E - huwacoxapaF}\\
-                                                           {huwacoxa11.mp3}
-                                                           {huwacoxa12.mp3}
-                                 {hufu(pa)S - huwacoxapaX}\\
-                                                           {huwacoxa21.mp3}
-                                                           {huwacoxa22.mp3}""",
+            """\\huwaŋüi_huwacoxapapo\\hucoxacoxi\\huwaŋüi                  \\huwacoxa             
+ {\\    ...\\huwaŋüiʒi}\\                                                          
+                      {   ABC  }\\                                               
+                                 {hufu(pa)A - huwacoxapaB}\\                     
+                                                           {huwacoxa1.mp3}      
+                                                           {huwacoxa2.mp3}      
+                                 {huwacoxapaZ - hufu(pa)Q}\\                     
+                                                           {huwacoxa3.mp3}      
+                                                           {huwacoxa4.mp3}      
+                      {   JZZ  }\\                                               
+                                 {huwacoxapaD - hufu(pa)C}\\                     
+                                                           {huwacoxa5.mp3}      
+                                                           {huwacoxa6.mp3}      
+                                 {hufu(pa)R - huwacoxapaY}\\                     
+                                                           {huwacoxa7.mp3}      
+                                                           {huwacoxa8.mp3}      
+                      {   POP  }\\                                               
+                                 {hufu(pa)E - huwacoxapaF}\\                     
+                                                           {huwacoxa11.mp3}     
+                                                           {huwacoxa12.mp3}     
+                                 {hufu(pa)S - huwacoxapaX}\\                     
+                                                           {huwacoxa21.mp3}     
+                                                           {huwacoxa22.mp3}     """,
 #ZTI:ZIN(                                                        ma
 #    WTI:BW(                                                     hi
 #        Connectie:Binnen(                                       ŋüi
@@ -1762,7 +1829,7 @@ def hellup():
 #    )
 #)
 #mu huʃapaxa hi"MPG123" m huwacoxapu haʃasecoli. 
-            "mo haʃa huʃapaxa\"MUSUITE\" m huku huʃapaxa\"MPG123\". ma haŋoda huʃapaxa\"MPG123\" hiʒi. mo haʃawopa\"\'hufu mpg123\'\" m hudasepo huʃapaxa\"MPG123\". mu huʃapaxa hi\"MPG123\" m huwacoxapu haʃasecoli. ",
+            "mo haʃa huʃapaxa\"MUSUITE\" m huku huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\". ma haŋoda huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\" hiʒi. me mo haʃawopa\"\'hufu mpg123\'\" mom hudasepo huʃapaxa\"MPG123\" mem mo haʃawopa\"\'hufu mpv\'\" mom hudasepo huʃapaxa\"MPV\". mu huʃapaxa hi\"MPG123\" m huwacoxapu haʃasecoli. ",
 #            "Enjoy your listening!"
 #ZTI:ZIN(                                                        ma
 #    WTI:PVNW:1(                                                 hee
@@ -1794,36 +1861,53 @@ def hellup():
         neelijst = neelijstCJ
         jalijst = jalijstCJ
         neeja = neejaCJ
-        man = manCJ
+        manmpg123 = manmpg123CJ
+        manmpv = manmpvCJ
+        man = manmpg123CJ+manmpvCJ
     elif lang == "EN":
         helpteksten = [
+        """Everywhere:                                                                     
+"B”          : Back                                                             
+"H”          : Help                                                             
+"Q”          : Quit                                                             
+"man mpg123” : or "woman mpg123": mpg123 manual                                 
+"man mpv”    : or "woman mpv"   : mpv manual                                    
+                                                                                
+In main menu:                                                                   
+"L”          : Language selection                                               
+                                                                                
+In selection lists:                                                             
+">”          : Scroll forward                                                   
+"<”          : Scroll backward                                                  
+"*”          : Select all                                                       
+2,5,11,17,23 : CSV-style multiple selections                                    """,
             "With musuite, you can play your organized music collection and saved online streams. Press \"Enter\" to proceed with your choice, \"B\" to interrupt the current function, or \"Q\" to quit. To change the language, you can select \"L\" in the main menu.",
-            "musuite uses mpg123, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
+            "musuite uses mpg123 and mpv, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
             "It is important, no, ESSENTIAL, that your organized music collection looks like this:",
             # print as-is [3]
-            """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK
-{\\ ...\\path}\\
-             {ABC}\\
-                   {artistA - albumB}\\
-                                      {track1.mp3}
-                                      {track2.mp3}
-                   {albumZ - artistQ}\\
-                                      {track3.mp3}
-                                      {track4.mp3}
-             {JZZ}\\
-                   {albumD - artistC}\\
-                                      {track5.mp3}
-                                      {track6.mp3}
-                   {artistR - albumY}\\
-                                      {track7.mp3}
-                                      {track8.mp3}
-             {POP}\\
-                   {artistE - albumF}\\
-                                      {track11.mp3}
-                                      {track12.mp3}
-                   {artistS - albumX}\\
-                                      {track21.mp3}
-                                      {track22.mp3}""",
+            """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK                                     
+{\\ ...\\path}\\                                                                   
+             {ABC}\\                                                             
+                   {artistA - albumB}\\                                          
+                                      {track1.mp3}                              
+                                      {track2.mp3}                              
+                   {albumZ - artistQ}\\                                          
+                                      {track3.mp3}                              
+                                      {track4.mp3}                              
+             {JZZ}\\                                                             
+                   {albumD - artistC}\\                                          
+                                      {track5.mp3}                              
+                                      {track6.mp3}                              
+                   {artistR - albumY}\\                                          
+                                      {track7.mp3}                              
+                                      {track8.mp3}                              
+             {POP}\\                                                             
+                   {artistE - albumF}\\                                          
+                                      {track11.mp3}                             
+                                      {track12.mp3}                             
+                   {artistS - albumX}\\                                          
+                                      {track21.mp3}                             
+                                      {track22.mp3}                             """,
             "In the MAIN_FOLDER, the albums of your artists are sorted by genre. Each genre folder has a name that consists of exactly three letters, no more and no less. Inside the genre folders are the albums, and inside those are the music files. Do not use subfolders, do not place loose music files at another level.",
             "If your music collection is organized differently, adjust it. If you don’t want to, use another program.",
             "In the file \"adjustables.py\" (included and located in the same directory as this program), you specify the exact location of the MAIN_FOLDER after \"pad = \". Use the path formatting as used by your operating system. So, pay attention to whether you should use \"\\\" or \"/\".",
@@ -1831,110 +1915,155 @@ def hellup():
             "In the same file \"adjustables.py\", create a list of your favorite online streams, with a short description or the ICY-NAME.",
             "You have already understood that the file \"adjustables.py\" is important for the proper functioning of musuite. There are also a few other variables in it that you should better stay away from, or at least handle with great caution.",
             "Type your choice via the keyboard, or use the \"closing brackets\" (\")\", \"]\", \"}\", \">\": to move forward) and the \"opening brackets\" (\"(\", \"[\", \"{\", \"<\": to move backward). Press \"Enter\" to confirm your choice. There is no support for using a mouse or other pointer hardware in musuite. Some choice lists support multiple selections. In that case, enter the choice numbers or exact keys (case-sensitive), separated by commas, consecutively before pressing \"Enter\". For the genre selection, you can also quickly filter by using just the first letter or the first two letters of multiple genres you want to select at once.",
-            "For playback, the program calls \"mpg123\". Make sure it is installed. For its use, consult the official man pages with the command \"man mpg123\" or \"woman mpg123\". Remember that \"mpg123\" does not support all music file types. The name says it all.",
+            "For playback, the program calls \"mpg123\" or \"mpv\". Make sure these are installed. For their use, consult the official man pages with the command \"man mpg123\" or \"woman mpg123\" for help on \"mpg123\" or \"man mpv\" or \"woman mpv\" for help on \"mpv\". Remember that \"mpg123\" does not support all music file types. The name says it all.",
             "Enjoy your listening!"
             ]
         neelijst = neelijstEN
         jalijst = jalijstEN
         neeja = neejaEN
-        man = manEN
+        manmpg123 = manmpg123EN
+        manmpv = manmpvEN
+        man = manmpg123EN+manmpvEN
     elif lang == "IT":
         helpteksten = [
+            """Ovunque:                                                                        
+"B”           : Indietro                                                        
+"H”           : Aiuto                                                           
+"Q”           : Esci                                                            
+"uomo mpg123” : o "donna mpg123" : Manuale mpg123                               
+"uomo mpv"    : o "donna mpv"    : Manuale mpv                                  
+                                                                                
+In menu principale:                                                             
+"L”           : Selezione lingua                                                
+                                                                                
+In liste di selezione:                                                          
+">”           : Scorri avanti                                                   
+"<”           : Scorri indietro                                                 
+"*”           : Seleziona tutto                                                 
+2,5,11,17,23  : Selezione multipla in stile CSV                                 """,
             "Con musuite puoi riprodurre la tua collezione musicale organizzata e gli stream online salvati. Premi \"Invio\" per procedere con la tua scelta, \"B\" per interrompere la funzione corrente o \"Q\" per uscire. Per cambiare la lingua, puoi selezionare \"L\" nel menu principale.",
-            "musuite utilizza mpg123, disponibile nella maggior parte dei repository, e \"chooseFromNumberedList.py\", che puoi scaricare da https://github.com/maestraccio/chooseFromNumberedList. Posizionalo nella stessa cartella di \"musuite.py\" e \"adjustables.py\".",
+            "musuite utilizza mpg123 e mpv, disponibile nella maggior parte dei repository, e \"chooseFromNumberedList.py\", che puoi scaricare da https://github.com/maestraccio/chooseFromNumberedList. Posizionalo nella stessa cartella di \"musuite.py\" e \"adjustables.py\".",
             "È importante, anzi ESSENZIALE, che la tua collezione musicale organizzata sia strutturata così:",
             # print as-is [3]
-            """\\CARTELLA_PRINCIPALE \\GENERE\\ALBUM              \\TRACCIA
-{\\   ...   \\percorso}\\
-                       {ABC}\\
-                             {artistaA - albumB}\\
-                                                 {traccia1.mp3}
-                                                 {traccia2.mp3}
-                             {albumZ - artistaQ}\\
-                                                 {traccia3.mp3}
-                                                 {traccia4.mp3}
-                       {JZZ}\\
-                             {albumD - artistaC}\\
-                                                 {traccia5.mp3}
-                                                 {traccia6.mp3}
-                             {artistaR - albumY}\\
-                                                 {traccia7.mp3}
-                                                 {traccia8.mp3}
-                       {POP}\\
-                             {artistaE - albumF}\\
-                                                 {traccia11.mp3}
-                                                 {traccia12.mp3}
-                             {artistaS - albumX}\\
-                                                 {traccia21.mp3}
-                                                 {traccia22.mp3}""",
+            """\\CARTELLA_PRINCIPALE \\GENERE\\ALBUM              \\TRACCIA                        
+{\\   ...   \\percorso}\\                                                          
+                       {ABC}\\                                                   
+                             {artistaA - albumB}\\                               
+                                                 {traccia1.mp3}                 
+                                                 {traccia2.mp3}                 
+                             {albumZ - artistaQ}\\                               
+                                                 {traccia3.mp3}                 
+                                                 {traccia4.mp3}                 
+                       {JZZ}\\                                                   
+                             {albumD - artistaC}\\                               
+                                                 {traccia5.mp3}                 
+                                                 {traccia6.mp3}                 
+                             {artistaR - albumY}\\                               
+                                                 {traccia7.mp3}                 
+                                                 {traccia8.mp3}                 
+                       {POP}\\                                                   
+                             {artistaE - albumF}\\                               
+                                                 {traccia11.mp3}                
+                                                 {traccia12.mp3}                
+                             {artistaS - albumX}\\                               
+                                                 {traccia21.mp3}                
+                                                 {traccia22.mp3}                """,
             "Nella CARTELLA_PRINCIPALE ci sono gli album dei tuoi artisti, organizzati per genere. Ogni cartella di genere ha un nome composto da esattamente tre lettere, non una di più e non una di meno. All'interno delle cartelle di genere ci sono gli album, e al loro interno i file musicali. Non usare sottocartelle, non mettere file musicali sciolti a un altro livello.",
             "Se la struttura della tua collezione musicale è diversa, modificala. Se non vuoi farlo, usa un altro programma.",
             "Nel file \"adjustables.py\" (fornito e situato nella stessa cartella di questo programma), specifichi tu stesso la posizione esatta della CARTELLA PRINCIPALE dopo \"pad = \". Utilizza la formattazione del percorso come viene utilizzata dal tuo sistema operativo. Fai quindi attenzione a utilizzare \"\\\" o \"/\" a seconda dei casi.",
-            "Nello stesso file \"adjustables.pyi\", puoi aggiungere tu stesso descrizioni ai nomi dei tuoi generi. Ci sono già degli esempi che puoi utilizzare e/o modificare. I nomi dei generi che compaiono nella lista ma non nella tua raccolta non creano problemi. Puoi lasciarli così come sono o rimuoverli, come preferisci. Dopotutto, si tratta della tua raccolta.",
+            "Nello stesso file \"adjustables.py\", puoi aggiungere tu stesso descrizioni ai nomi dei tuoi generi. Ci sono già degli esempi che puoi utilizzare e/o modificare. I nomi dei generi che compaiono nella lista ma non nella tua raccolta non creano problemi. Puoi lasciarli così come sono o rimuoverli, come preferisci. Dopotutto, si tratta della tua raccolta.",
             "Sempre nel file \"adjustables.py\", crea anche una lista dei tuoi stream online preferiti, con una breve descrizione o il nome ICY-NAME.",
             "Hai già capito che il file \"adjustables.py\" è importante per il corretto funzionamento di musuite. All'interno ci sono anche alcune altre variabili con cui è meglio non avere a che fare, o almeno con cui bisogna maneggiare con grande cautela.",
             "Digita la tua scelta tramite la tastiera, oppure utilizza le parentesi chiuse (\")\", \"]\", \"}\", \">\": per andare avanti) e le parentesi aperte (\"(\", \"[\", \"{\", \"<\": per andare indietro). Premi \"Enter\" per confermare la tua scelta. Non è supportato l'uso di un mouse o di altre periferiche di puntamento in musuite. Alcune liste di scelta supportano più scelte. In tal caso, inserisci i numeri delle scelte o le chiavi esatte (sensibili alle maiuscole), separate da virgole, consecutivamente prima di premere \"Enter\". Per la selezione dei generi, puoi anche filtrare rapidamente utilizzando solo la prima lettera o le prime due lettere di più generi che vuoi selezionare contemporaneamente.",
-            "Per la riproduzione, il programma richiama \"mpg123\". Assicurati che sia installato. Per il suo utilizzo, consulta le pagine man ufficiali con il comando \"man mpg123\" o \"donna mpg123\". Ricorda che \"mpg123\" non supporta tutti i formati di file musicali. Il nome dice già tutto.",
+            "Per la riproduzione, il programma richiama \"mpg123\" o \"mpv\". Assicurati che siano installati. Per il suo utilizzo, consulta le pagine man ufficiali con il comando \"man mpg123\" o \"donna mpg123\" per aiuto su \"mpg123\", o \"man mpv\" o \"donna mpv\" per aiuto su \"mpv\". Ricorda che \"mpg123\" non supporta tutti i formati di file musicali. Il nome dice già tutto.",
             "Buon ascolto!"
             ]
         neelijst = neelijstIT
         jalijst = jalijstIT
         neeja = neejaIT
-        man = manIT
+        manmpg123 = manmpg123IT
+        manmpv = manmpvIT
+        man = manmpg123IT+manmpvIT
     else:
         helpteksten = [
+            """Overal:                                                                         
+"B"          : Terug                                                            
+"H"          : Help                                                             
+"Q"          : Afsluiten                                                        
+"man mpg123" : of "vrouw mpg123" : Handleiding mpg123                           
+"man mpv"    : of "vrouw mpv"    : Handleiding mpv                              
+                                                                                
+In hoofdmenu:                                                                   
+"L"          : Taalkeuze                                                        
+                                                                                
+In keuzelijsten:                                                                
+">"          : Vooruit bladeren                                                 
+"<"          : Achteruit bladeren                                               
+"*"          : Alles selecteren                                                 
+2,5,11,17,23 : Meerdere selecties in CSV-stijl                                  """,
             "Met musuite kun je je georganiseerde muziekverzameling en verzamelde online streams afspelen. Druk op \"Enter\" om na je keuze door te gaan, \"B\" om de huidige functie te onderbreken of \"Q\" om te stoppen. Om de taal te wijzigen kun je in het hoofdmenu \"L\" kiezen.",
-            "musuite maakt gebruik van mpg123, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
+            "musuite maakt gebruik van mpg123 en mpv, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
             "Het is belangrijk, nee ESSENTIEEL dat je georganiseerde muziekverzameling er zo uitziet:",
             # print as-is [3]
-            """\\ HOOFDMAP\\GENRE\\ALBUM              \\TRACK
-{\\...\\pad}\\
-           {ABC}\\
-                 {artiestA - albumB}\\
-                                     {track1.mp3}
-                                     {track2.mp3}
-                 {albumZ - artiestQ}\\
-                                     {track3.mp3}
-                                     {track4.mp3}
-           {JZZ}\\
-                 {albumD - artiestC}\\
-                                     {track5.mp3}
-                                     {track6.mp3}
-                 {artiestR - albumY}\\
-                                     {track7.mp3}
-                                     {track8.mp3}
-           {POP}\\
-                 {artiestE - albumF}\\
-                                     {track11.mp3}
-                                     {track12.mp3}
-                 {artiestS - albumX}\\
-                                     {track21.mp3}
-                                     {track22.mp3}""",
+            """\\ HOOFDMAP\\GENRE\\ALBUM              \\TRACK                                      
+{\\...\\pad}\\                                                                     
+           {ABC}\\                                                               
+                 {artiestA - albumB}\\                                           
+                                     {track1.mp3}                               
+                                     {track2.mp3}                               
+                 {albumZ - artiestQ}\\                                           
+                                     {track3.mp3}                               
+                                     {track4.mp3}                               
+           {JZZ}\\                                                               
+                 {albumD - artiestC}\\                                           
+                                     {track5.mp3}                               
+                                     {track6.mp3}                               
+                 {artiestR - albumY}\\                                           
+                                     {track7.mp3}                               
+                                     {track8.mp3}                               
+           {POP}\\                                                               
+                 {artiestE - albumF}\\                                           
+                                     {track11.mp3}                              
+                                     {track12.mp3}                              
+                 {artiestS - albumX}\\                                           
+                                     {track21.mp3}                              
+                                     {track22.mp3}                              """,
             "In de HOOFDMAP staan de albums van je artiesten per genre gesorteerd. Iedere genre-map heeft een naam die uit precies drie letters bestaat, niet meer en niet minder. In de genre-mappen staan de albums en daarin staan de muziekbestanden. Gebruik geen submappen, plaats geen losse muziekbestanden op een ander niveau.",
             "Ziet de organisatie van jouw muziekcollectie er anders uit, pas die dan aan. Wil je dat niet, gebruik dan een ander programma.",
             "In het bestand \"adjustables.py\" (meegeleverd en staat in dezelfde map als dit programma) geef je zelf de exacte locatie op van de HOOFDMAP, achter \"pad = \". Gebruik de padnaamopmaak zoals die op jouw besturingssysteem wordt gebruikt. Let dus op of je \"\\\" of \"/\" moet gebruiken.",
             "In hetzelfde bestand \"adjustables.py\" kun je zelf beschrijvingen aan je genrenamen toevoegen. Er staan al voorbeelden in die je kunt gebruiken en/of aanpassen. Genrenamen die in de lijst staan maar niet in jouw verzameling voorkomen, staan je niet in de weg. Je kunt ze laten staan of verwijderen, wat jij wilt. Het is jouw verzameling.",
             "In dezelfde file \"adjustables.py\" maak je ook een lijst aan van je favoriete online streams, met een korte beschrijving of de ICY-NAME.",
-            "Je hebt al begrepen dat het bestand \"adjustables.py\" belangrijk is voor de juiste werking van musuite. Er staan nog enkele andere variabelen in waar je beter vanaf kunt blijven, of ten minste met grote voorzichtigheid mee moet omgaan.",
+            "Je hebt al begrepen dat het bestand \"adjustables.py\" belangrijk is voor de juiste werking van musuite. Er staan nog enkele andere variabelen in waar je beter vanaf kunt blijven, of tenminste met grote voorzichtigheid mee moet omgaan.",
             "Typ de optie van je keuze in via je toetsenbord, of gebruik de \"haakjes sluiten\" (\")\", \"]\", \"}\", \">\": vooruit) en de \"haakjes openen\" (\"(\", \"[\", \"{\", \"<\": achteruit) om er naartoe te bladeren. Druk op \"Enter\" om je keuze te bevestigen. Er is geen ondersteuning voor het gebruik van een muis of andere aanwijzerhardware in musuite. Sommige keuzelijsten ondersteunen meerdere keuzes. Voer in dat geval de keuzenummers of exacte keys (hoofdlettergevoelig) kommagescheiden achter elkaar in, voordat je op \"Enter\" drukt. Bij de genrekeuze kun je ook snel filteren op alleen de eerste letter of de eerste twee letters van meerdere genres die je tegelijk wilt selecteren.",
-            "Voor het afspelen wordt het programma \"mpg123\" aangeroepen. Zorg ervoor dat het geïnstalleerd is. Voor het gebruik daarvan kun je de officiele manpages raadplegen met de opdracht \"man mpg123\" of \"vrouw mpg123\". Denk eraan dat \"mpg123\" niet alle muziekbestandstypen kan afspelen. De naam zegt genoeg.",
+            "Voor het afspelen wordt het programma \"mpg123\" of \"mpv\" aangeroepen. Zorg ervoor dat die geïnstalleerd zijn. Voor het gebruik ervan kun je de officiele manpages raadplegen met de opdracht \"man mpg123\" of \"vrouw mpg123\" voor hulp bij \"mpg123\" of \"man mpv\" of \"vrouw mpv\" voor hulp bij \"mpv\". Denk eraan dat \"mpg123\" niet alle muziekbestandstypen kan afspelen. De naam zegt genoeg.",
             "Veel luisterplezier!"
             ]
         neelijst = neelijstNL
         jalijst = jalijstNL
         neeja = neejaNL
-        man = manNL
+        manmpg123 = manmpg123NL
+        manmpv = manmpvNL
+        man = manmpg123NL+manmpvNL
     for i in helpteksten:
-        if i == helpteksten[3]:
+        if (i == helpteksten[0]) or (i == helpteksten[4]):
+            print(colH,end="")
             print(i)
+            print(colR,end="")
         else:
+            print(colH,end="")
             for w in textwrap.wrap(i,80):
                 print(w)
+            print(colR,end="")
         stop = input()
         if stop in backlijst:
             break
         elif stop in quitlijst:
             exit()
+        elif stop.lower() in manmpg123:
+            subprocess.run(["man", "mpg123"])
+        elif stop.lower() in manmpv:
+            subprocess.run(["man", "mpv"])
+
     if lang == "CJ":
 #ZTI:Voorwaardelijk(                                             mo
 #)
@@ -1991,8 +2120,10 @@ def hellup():
         exit()
     elif nj in backlijst:
         return
-    elif nj in man:
+    elif nj.lower() in manmpg123:
         subprocess.run(["man", "mpg123"])
+    elif nj.lower() in manmpv:
+        subprocess.run(["man", "mpv"])
     elif nj in neelijst+jalijst:
         with open("adjustables.py","r") as a:
             regels = a.readlines()
@@ -2022,9 +2153,10 @@ if lang == "CJ":
 #WTI:ZNW(                                                        hu
 #    Connectie:Binnen(                                           ŋüi
 #        Progressie:Start(                                       zi
-#)   )   )
-#ma huʒiwacoxapo huŋüizi
-    padtekst = "ma huʒiwacoxapo huŋüizi:"
+#            Tijd:Nu(                                            qi
+#)   )   )   )
+#ma huʒiwacoxapo huŋüiziqi
+    padtekst = "ma huʒiwacoxapo huŋüiziqi:"
 #ZTI:Oorzaak(                                                    mu
 #)
 #WTI:WW(                                                         ha
@@ -2048,15 +2180,15 @@ if lang == "CJ":
 #hozu
     klaar = "... hozu"
 elif lang == "EN":
-    padtekst = "The path used as the MAIN_FOLDER for your music collection is:"
+    padtekst = "The path used as the MAIN_FOLDER for your music collection is now:"
     gener = "Your music collection is being gathered, this may take a moment..."
     klaar = "... Done"
 elif lang == "IT":
-    padtekst = "Il percorso utilizzato come CARTELLA_PRINCIPALE della tua raccolta musicale è:"
+    padtekst = "Il percorso utilizzato come CARTELLA_PRINCIPALE della tua raccolta musicale adesso è:"
     gener = "Sto raccogliendo la tua collezione musicale, potrebbe richiedere un momento..."
     klaar = "... Fatto"
 else:
-    padtekst = "Het pad dat gebruikt wordt als HOOFDMAP van je muziekcollectie is:"
+    padtekst = "Het pad dat nu gebruikt wordt als HOOFDMAP van je muziekcollectie is:"
     gener = "Je muziekcollectie wordt verzameld, dit kan even duren..."
     klaar = "... Klaar"
 for w in textwrap.wrap(padtekst,80):
@@ -2117,6 +2249,7 @@ while loop == True:
 #huʒize
         hoofdmenu = " - - huʒize - -"
         mpg123 = mpg123CJ
+        mpv = mpvCJ
         mosdict = {
 #WTI:ZNW(                                                        hu
 #    "MP3"(                                                      "MP3"
@@ -2126,7 +2259,7 @@ while loop == True:
 #    Afstand:Hier(                                               ʒi
 #)   )
 #hu"MP3"pa hoʒi
-                "M":"hu\"MP3\"pa hoʒi",
+                "M":colT+"hu\"MP3\"pa hoʒi"+colR,
 #WTI:ZNW(                                                        hu
 #    Registratie:Horen(                                          co
 #        Status:Geordend(                                        xa
@@ -2137,7 +2270,7 @@ while loop == True:
 #        Waarheid:Onwaar(                                        li
 #)   )   )
 #hucoxaza hoʒili
-                "Z":"hucoxaza hoʒili"
+                "Z":colS+"hucoxaza hoʒili"+colR
                 }
         zosdict = {
 #WTI:WW(                                                         ha
@@ -2146,14 +2279,14 @@ while loop == True:
 #            Status:Gelijkmatig(                                 xi
 #                Afstand:Hier(                                   ʒi
 #)   )   )   )   )
-                "w":"hawaʒaxiʒi",
+                "w":colD+"hawaʒaxiʒi"+colR,
 #WTI:WW(                                                         ha
 #    Progressie:Vooruitgang(                                     za
 #        Status:Geordend(                                        xa
 #            Registratie:Zien(                                   ca
 #)   )   )   )
 #hacazaxa
-                "z":"hazaxaca"
+                "z":colD+"hazaxaca"+colR
                 }
         gmtdict = {
 #WTI:ZNW(                                                        hu
@@ -2162,73 +2295,84 @@ while loop == True:
 #            Status:Gelijkmatig(                                 xi
 #)   )   )
 #hupacoxi
-                "G":"hupacoxi",
+                "G":colG+"hupacoxi"+colR,
 #WTI:ZNW(                                                        hu
 #    Schaling:Meervoud(                                          po
 #        Connectie:Samen(                                        ŋa
 #)   )   )
 #hupoŋa
-                "M":"hupoŋa",
+                "M":colD+"hupoŋa"+colR,
 #WTI:ZNW(                                                        hu
 #    Materie:Iets(                                               wa
 #         Registratie:Horen(                                     co
 #             Status:Geordend(                                   xa
 #)   )   )   )
 #huwacoxa
-                "T":"huwacoxa"
+                "T":colT+"huwacoxa"+colR
                 }
-        man = manCJ
+        manmpg123 = manmpg123CJ
+        manmpv = manmpvCJ
+        man = manmpg123CJ+manmpvCJ
     elif lang == "EN":
         hoofdmenu = " - - MAIN MENU - -"
         mpg123 = mpg123EN
+        mpv = mpvEN
         mosdict = {
-                "M":"MP3 file(s) from own collection",
-                "S":"online Stream"
+                "M":colT+"MP3 file(s) from own collection"+colR,
+                "S":colS+"online Stream"+colR
                 }
         zosdict = {
-                "F":"Find by search term",
-                "S":"Scroll"
+                "F":colD+"Find by search term"+colR,
+                "S":colD+"Scroll"+colR
                 }
         gmtdict = {
-                "G":"Genre, Style, Category",
-                "F":"Folder, Album, Collection",
-                "T":"Track, Song, Opus"
+                "G":colG+"Genre, Style, Category"+colR,
+                "F":colD+"Folder, Album, Collection"+colR,
+                "T":colT+"Track, Song, Opus"+colR
                 }
-        man = manEN
+        manmpg123 = manmpg123EN
+        manmpv = manmpvEN
+        man = manmpg123EN+manmpvEN
     elif lang == "IT":
         hoofdmenu = " - - MENU PRINCIPALE - -"
         mpg123 = mpg123IT
+        mpv = mpvIT
         mosdict = {
-                "M":"File MP3 dalla collezione personale",
-                "S":"Streaming online"
+                "M":colT+"File MP3 dalla collezione personale"+colR,
+                "S":colS+"Streaming online"+colR
                 }
         zosdict = {
-                "C":"Cercare per termine di ricerca",
-                "S":"Sfoglia"
+                "C":colD+"Cercare per termine di ricerca"+colR,
+                "S":colD+"Sfoglia"+colR
                 }
         gmtdict = {
-                "G":"Genere, Stile, Categoria",
-                "C":"Cartella, Album, Collezione",
-                "T":"Traccia, Canzone, Numero"
+                "G":colG+"Genere, Stile, Categoria"+colR,
+                "C":colD+"Cartella, Album, Collezione"+colR,
+                "T":colT+"Traccia, Canzone, Numero"+colR
                 }
-        man = manIT
+        manmpg123 = manmpg123IT
+        manmpv = manmpvIT
+        man = manmpg123IT+manmpvIT
     else:
         hoofdmenu = " - - HOOFDMENU - -"
         mpg123 = mpg123NL
+        mpv = mpvNL
         mosdict = {
-                "M":"MP3-bestand(en) uit eigen collectie",
-                "S":"online Stream"
+                "M":colT+"MP3-bestand(en) uit eigen collectie"+colR,
+                "S":colS+"online Stream"+colR
                 }
         zosdict = {
-                "Z":"Zoeken op zoekterm",
-                "S":"Scrollen"
+                "Z":colD+"Zoeken op zoekterm"+colR,
+                "S":colD+"Scrollen"+colR
                 }
         gmtdict = {
-                "G":"Genre, Stijl, Categorie",
-                "M":"Map, Album, Verzameling",
-                "T":"Track, Lied, Opus"
+                "G":colG+"Genre, Stijl, Categorie"+colR,
+                "M":colD+"Map, Album, Verzameling"+colR,
+                "T":colT+"Track, Lied, Opus"+colR
                 }
-        man = manNL
+        manmpg123 = manmpg123NL
+        manmpv = manmpvNL
+        man = manmpg123NL+manmpvNL
     moslijst = []
     for i in mosdict:
         moslijst.append(i.lower())
@@ -2238,20 +2382,26 @@ while loop == True:
     gmtlijst = []
     for i in gmtdict:
         gmtlijst.append(i.lower())
-    print()
-    print(hoofdmenu)
-    v,k = cFD([mosdict,0,"M","> ",langlijst+helplijst+man+moslijst+backlijst+quitlijst])
-    if k.upper() in quitlijst:
-        exit()
-    elif k.upper() in backlijst:
-        pass
-    elif k in man:
-        subprocess.run(["man", "mpg123"])
-    elif k in helplijst:
-        hellup()
-    elif k in langlijst:
-        lang = setlang(lang)
-    elif k.upper() == moslijst[1].upper():
+    loop = True
+    while loop == True:
+        print()
+        print(hoofdmenu)
+        v,k = cFD([mosdict,0,"M","> ",langlijst+helplijst+man+moslijst+backlijst+quitlijst])
+        if k.upper() in quitlijst:
+            exit()
+        elif k.upper() in backlijst:
+            pass
+        elif k.lower() in manmpg123:
+            subprocess.run(["man", "mpg123"])
+        elif k.lower() in manmpv:
+            subprocess.run(["man", "mpv"])
+        elif k in helplijst:
+            hellup()
+        elif k in langlijst:
+            lang = setlang(lang)
+        else:
+            break
+    if k.upper() == moslijst[1].upper():
         loopS = True
         while loopS == True:
             s,index = cFNL([streamslijst,"A",1,1,"> ",helplijst+man+backlijst+quitlijst])
@@ -2259,14 +2409,16 @@ while loop == True:
                 exit()
             elif s in backlijst:
                 break
-            elif s in man:
+            elif s.lower() in manmpg123:
                 subprocess.run(["man", "mpg123"])
+            elif s.lower() in manmpv:
+                subprocess.run(["man", "mpv"])
             elif s in helplijst:
                 hellup()
             else:
                 su = streamsdict[s]
-                print(mpg123)
-                subprocess.run(["mpg123", "-vm",  su])
+                print(mpv)
+                subprocess.run(["mpv", su])
     else:
         loopM = True
         while loopM == True:
@@ -2275,8 +2427,10 @@ while loop == True:
                 exit()
             elif k.upper() in backlijst:
                 break
-            elif k in man:
+            elif k.lower() in manmpg123:
                 subprocess.run(["man", "mpg123"])
+            elif k.lower() in manmpv:
+                subprocess.run(["man", "mpv"])
             elif k in helplijst:
                 hellup()
             elif k.upper() == gmtlijst[2].upper():
@@ -2329,8 +2483,10 @@ while loop == True:
                         exit()
                     elif zoekterm in backlijst:
                         break
-                    elif zoekterm in man:
+                    elif zoekterm.lower() in manmpg123:
                         subprocess.run(["man", "mpg123"])
+                    elif zoekterm.lower() in manmpv:
+                        subprocess.run(["man", "mpv"])
                     else:
                         for dirpath, dirnames, filenames in os.walk(pad):
                             for track in filenames:
@@ -2372,9 +2528,10 @@ while loop == True:
                                 wraptext = "La tua ricerca non ha restituito risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
                             else:
                                 wraptext = "Je zoekopdracht leverde geen resultaten op. Denk eraan dat de zoekopdracht hoofdlettergevoelig is."
+                            print(colN,end="")
                             for i in textwrap.wrap(wraptext,80):
                                 print(i)
-                            print()
+                            print(colR)
                         else:
                             tracklijstverkort = printtracklijstmetsel(tracklijstkort)
                             lentl = len(str(len(tracklijstverkort)))
@@ -2389,8 +2546,10 @@ while loop == True:
                                 exit()
                             elif tracksel in backlijst:
                                 break
-                            elif tracksel in man:
+                            elif tracksel.lower() in manmpg123:
                                 subprocess.run(["man", "mpg123"])
+                            elif tracksel.lower() in manmpv:
+                                subprocess.run(["man", "mpv"])
                             elif tracksel in helplijst:
                                 hellup()
                             else:
@@ -2433,8 +2592,10 @@ while loop == True:
                         exit()
                     elif k in backlijst:
                         break
-                    elif k in man:
+                    elif k.lower() in manmpg123:
                         subprocess.run(["man", "mpg123"])
+                    elif k.lower() in manmpv:
+                        subprocess.run(["man", "mpv"])
                     elif k in helplijst:
                         hellup()
                     else:
@@ -2490,8 +2651,10 @@ while loop == True:
                                     exit()
                                 elif zoekterm in backlijst:
                                     break
-                                elif zoekterm in man:
+                                elif zoekterm.lower() in manmpg123:
                                     subprocess.run(["man", "mpg123"])
+                                elif zoekterm.lower() in manmpv:
+                                    subprocess.run(["man", "mpv"])
                                 else:
                                     for dirpath, dirnames, filenames in os.walk(pad):
                                         for mapp in dirnames:
@@ -2531,25 +2694,31 @@ while loop == True:
                                             wraptext = "La tua ricerca non ha prodotto risultati. Ricorda che la ricerca distingue tra maiuscole e minuscole."
                                         else:
                                             wraptext = "Je zoekopdracht leverde geen resultaten op. Denk eraan dat de zoekopdracht hoofdlettergevoelig is."
+                                        print(colN,end="")
                                         for i in textwrap.wrap(wraptext,80):
                                             print(i)
-                                        print()
+                                        print(colR)
                                     else:
                                         mappenlijstverkort = printmappenlijstmetsel(mappenlijstkort)
                                         lenml = len(str(len(mappenlijstverkort)))
                                         mappenlijstnogkorter = []
-                                        for mapp in mappenlijstverkort:
-                                            if len(mapp) > 80-3-maxlen-lenml:
-                                                mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
-                                            else:
-                                                mappenlijstnogkorter.append(mapp)
+                                        try:
+                                            for mapp in mappenlijstverkort:
+                                                if len(mapp) > 80-3-maxlen-lenml:
+                                                    mappenlijstnogkorter.append(mapp[:40-maxlen-lenml]+"**"+mapp[len(mapp)-36:])
+                                                else:
+                                                    mappenlijstnogkorter.append(mapp)
+                                        except:
+                                            pass
                                         mappsel,index = cFNL([mappenlijstnogkorter,"A",1,1,"> ",True,optieslijst+helplijst+man+backlijst+quitlijst])
                                         if mappsel in quitlijst:
                                             exit()
                                         elif mappsel in backlijst:
                                             break
-                                        elif mappsel in man:
+                                        elif mappsel in manmpg123:
                                             subprocess.run(["man", "mpg123"])
+                                        elif mappsel in manmpv:
+                                            subprocess.run(["man", "mpv"])
                                         elif mappsel in helplijst:
                                             hellup()
                                         else:
@@ -2576,10 +2745,13 @@ while loop == True:
                                 if gpad in backlijst:
                                     break
                                 mappenlijst = []
-                                for m in os.listdir(gpad):
-                                    if os.path.isdir(os.path.join(gpad,m)):
-                                        mpad = os.path.join(gpad,m)
-                                        mappenlijst.append(mpad)
+                                try:
+                                    for m in os.listdir(gpad):
+                                        if os.path.isdir(os.path.join(gpad,m)):
+                                            mpad = os.path.join(gpad,m)
+                                            mappenlijst.append(mpad)
+                                except:
+                                    pass
                                 mappenlijst = sorted(mappenlijst)
                                 mappenlijstkort = []
                                 optielijst = []
@@ -2598,8 +2770,10 @@ while loop == True:
                                     exit()
                                 elif mappsel in backlijst:
                                     break
-                                elif mappsel in man:
+                                elif mappsel in manmpg123:
                                     subprocess.run(["man", "mpg123"])
+                                elif mappsel in manmpv:
+                                    subprocess.run(["man", "mpv"])
                                 elif mappsel in helplijst:
                                     hellup()
                                 else:
@@ -2627,8 +2801,10 @@ while loop == True:
                         exit()
                     elif optie in backlijst:
                         break
-                    elif optie in man:
+                    elif optie in manmpg123:
                         subprocess.run(["man", "mpg123"])
+                    elif optie in manmpv:
+                        subprocess.run(["man", "mpv"])
                     elif optie in helplijst:
                         hellup()
                     elif type(optie) == str:
