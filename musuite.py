@@ -3,7 +3,7 @@ import subprocess, os, sys, random, textwrap
 from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
-from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict
+from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict,volume
 Versie = "1.21"
 Date = "2026-11-05"
 hier = os.path.dirname(os.path.realpath(__file__))
@@ -83,6 +83,41 @@ mpvCJ = "ma hazeʃapaxa\"MPV\"\n"
 mpvEN = "Starting playback with mpv\n"
 mpvIT = "Avvio della riproduzione con mpv\n"
 mpvNL = "Start afspelen met mpv\n"
+
+def setvol(oldvol):
+    if lang == "CJ":
+        setvol = "ma haŋo hucoña hame huzi\"0\"zu\"100\" (hiqi %s):\n" % (oldvol)
+    elif lang == "EN":
+        setvol = "Set the volume to a scale of 0 to 100 (now %s):\n" % (oldvol)
+    elif lang == "IT":
+        setvol = "Imposta il volume su una scala da 0 a 100 (ora %s):\n" % (oldvol)
+    else:
+        setvol = "Stel het volume in op een schaal van 0 tot 100 (nu %s):\n" % (oldvol)
+    loop = True
+    while loop == True:
+        newvol = input(setvol)
+        try:
+            if 0 <= int(newvol) <= 100:
+                with open("adjustables.py","r") as a:
+                    regels = a.readlines()
+                with open("adjustables.py","w") as a:
+                    for r in regels:
+                        if r[:6] == "volume":
+                            r = "volume = \"%s\"\n" % (newvol)
+                        print(r, end = "", file = a)
+                    return int(newvol)
+        except:
+            if newvol == "":
+                return oldvol
+            elif newvol in quitlijst:
+                exit()
+            elif newvol in backlijst:
+                return oldvol
+            elif newvol.lower() in manmpg123:
+                subprocess.run(["man", "mpg123"])
+            elif newvol.lower() in manmpv:
+                subprocess.run(["man", "mpv"])
+
 def setlang(oldlang):
 # Informatie over hucoji vind je op www.hucoji.org
 # You can find information about hucoji at www.hucoji.org
@@ -879,7 +914,9 @@ def play(tracklijst):
                 #print(colT+tr+colR, file=tl)
                 print(tr, file=tl)
         print(mpg123)
-        subprocess.run(["mpg123", "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
+        vol = setvol(volume)
+        factor = int(vol/100*32768)
+        subprocess.run(["mpg123", "-f %s" % (factor), "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
         os.remove(os.path.join(pad,"tracklijst.m3u"))
     except:
         pass
@@ -2437,7 +2474,8 @@ while loop == True:
             else:
                 su = streamsdict[s]
                 print(mpv)
-                subprocess.run(["mpv", "--volume=50", su])
+                volume = setvol(volume)
+                subprocess.run(["mpv", "--volume=%s" % volume, su])
     else:
         loopM = True
         while loopM == True:
@@ -2565,9 +2603,9 @@ while loop == True:
                                 exit()
                             elif tracksel in backlijst:
                                 break
-                            elif tracksel.lower() in manmpg123:
+                            elif tracksel in manmpg123:
                                 subprocess.run(["man", "mpg123"])
-                            elif tracksel.lower() in manmpv:
+                            elif tracksel in manmpv:
                                 subprocess.run(["man", "mpv"])
                             elif tracksel in helplijst:
                                 hellup()
