@@ -4,19 +4,20 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict,volume
-Versie = "1.21"
-Date = "2026-11-05"
+Versie = "1.23"
+Date = "2026-11-07"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
-colD = "\033[94m"
-colG = "\033[93m"
-colH = "\033[7m"
-colJ = "\033[92m"
-colN = "\033[91m"
-colR = "\033[0m"
-colS = "\033[95m"
-colT = "\033[96m"
-colW = "\033[33m"
+colD = "\033[94m" # Directory
+colG = "\033[93m" # Genre
+colH = "\033[7m"  # Help
+colJ = "\033[92m" # Ja
+colN = "\033[91m" # Nee
+colR = "\033[0m"  # RESET
+colS = "\033[95m" # Stream
+colT = "\033[96m" # Track
+colV = "\033[32m" # Volume
+colW = "\033[33m" # Willekeurig
 #MUSUITElogo="""
 # /____    ___                        __          _\
 #||____   ___  __  __  ___  __  __ (#)____   ___ __||
@@ -86,16 +87,16 @@ mpvNL = "Start afspelen met mpv\n"
 
 def setvol(oldvol):
     if lang == "CJ":
-        setvol = "ma haŋo hucoña hame huzi\"0\"zu\"100\" (hiqi %s):\n" % (oldvol)
+        setvol = "ma haŋo hucoñazi hame huzi\"0\"zu\"100\" (hiqi %s):\n" % (oldvol)
     elif lang == "EN":
-        setvol = "Set the volume to a scale of 0 to 100 (now %s):\n" % (oldvol)
+        setvol = "Set the starting volume to a scale of 0 to 100 (now %s):\n" % (oldvol)
     elif lang == "IT":
-        setvol = "Imposta il volume su una scala da 0 a 100 (ora %s):\n" % (oldvol)
+        setvol = "Imposta il volume di partenza su una scala da 0 a 100 (ora %s):\n" % (oldvol)
     else:
-        setvol = "Stel het volume in op een schaal van 0 tot 100 (nu %s):\n" % (oldvol)
+        setvol = "Stel het startvolume in op een schaal van 0 tot 100 (nu %s):\n" % (oldvol)
     loop = True
     while loop == True:
-        newvol = input(setvol)
+        newvol = input(colV+setvol+colR)
         try:
             if 0 <= int(newvol) <= 100:
                 with open("adjustables.py","r") as a:
@@ -105,7 +106,7 @@ def setvol(oldvol):
                         if r[:6] == "volume":
                             r = "volume = \"%s\"\n" % (newvol)
                         print(r, end = "", file = a)
-                    return int(newvol)
+                    return newvol
         except:
             if newvol == "":
                 return oldvol
@@ -838,6 +839,7 @@ def printmappenlijstmetsel(mappenlijst):
     return mappenlijstverkort
 
 def play(tracklijst):
+    vol = setvol(volume)
     if lang == "CJ":
         manmpg123 = manmpg123CJ
         manmpv = manmpvCJ
@@ -892,7 +894,8 @@ def play(tracklijst):
         neeja = neejaNL
     if len(tracklijst) == 0:
         return
-    random = "Z"
+    #random = "Z"
+    random = "--shuffle"
     if len(tracklijst) != 1:
         print(willekeurig)
         ja,index = cFNL([neeja,"A",0,1,"> ",helplijst+man+jalijst+neelijst+backlijst+quitlijst])
@@ -913,10 +916,11 @@ def play(tracklijst):
             for tr in tracklijst:
                 #print(colT+tr+colR, file=tl)
                 print(tr, file=tl)
-        print(mpg123)
-        vol = setvol(volume)
-        factor = int(vol/100*32768)
-        subprocess.run(["mpg123", "-f %s" % (factor), "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
+        #print(mpg123)
+        print(mpv)
+        #factor = int(vol/100*32768)
+        #subprocess.run(["mpg123", "-f %s" % (factor), "-vm%s" % (random), "-@", os.path.join(pad,"tracklijst.m3u")])
+        subprocess.run(["mpv", random, "--loop-playlist", "--volume=%s" % (vol), os.path.join(pad,"tracklijst.m3u")])
         os.remove(os.path.join(pad,"tracklijst.m3u"))
     except:
         pass
@@ -924,21 +928,35 @@ def play(tracklijst):
 def hellup():
     if lang == "CJ":
         helpteksten = [
+#                """hiʒu:                                                                           
+#"B"           : hazüi                                                           
+#"H"           : haca huda                                                       
+#"Q"           : hasüu                                                           
+#"hufu mpg123” : haca huda huʃapaxa"MPG123"                                      
+#"hufu mpv”    : haca huda huʃapaxa"MPV"                                         
+#                                                                                
+#hiʒizi huʃapaxa:                                                                
+#"L" : hame hucodo                                                               
+#                                                                                
+#hiʒiŋüi hupamepa:                                                               
+#">”           : hase                                                            
+#"<”           : hasüe                                                           
+#"*”           : hamepu                                                          
+#2,5,11,17,23  : hamepo hixi"CSV"                                                """,
                 """hiʒu:                                                                           
-"B"           : hazüi                                                           
-"H"           : haca huda                                                       
-"Q"           : hasüu                                                           
-"hufu mpg123” : haca huda huʃapaxa"MPG123"                                      
-"hufu mpv”    : haca huda huʃapaxa"MPV"                                         
+"B"          : hazüi                                                            
+"H"          : haca huda                                                        
+"Q"          : hasüu                                                            
+"hufu mpv”   : haca huda huʃapaxa"MPV"                                          
                                                                                 
 hiʒizi huʃapaxa:                                                                
 "L" : hame hucodo                                                               
                                                                                 
 hiʒiŋüi hupamepa:                                                               
-">”           : hase                                                            
-"<”           : hasüe                                                           
-"*”           : hamepu                                                          
-2,5,11,17,23  : hamepo hixi"CSV"                                                """,
+">”          : hase                                                             
+"<”          : hasüe                                                            
+"*”          : hamepu                                                           
+2,5,11,17,23 : hamepo hixi"CSV"                                                 """,
 #ZTI:Zin(                                                        ma
 #    WTI:ZNW(                                                    hu
 #        Activiteit:Actief(                                      ʃa
@@ -1099,7 +1117,8 @@ hiʒiŋüi hupamepa:
 #    )   )   )   )   )   )
 #)
 #ma haʒiŋa huwaʃapaxa"musuite"
-            "mo huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\" hoŋüi\"REPO\"poo hiŋi hu\"\'chooseFromNumberedList.py\'\" hoŋüi\"\'https://github.com/maestraccio/chooseFromNumberedList\'\" m haʃa huʃapaxa\"MUSUITE\". ma haʒiŋa huwaʃapaxa\"MUSUITE\".",
+            #"mo huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\" hoŋüi\"REPO\"poo hiŋi hu\"\'chooseFromNumberedList.py\'\" hoŋüi\"\'https://github.com/maestraccio/chooseFromNumberedList\'\" m haʃa huʃapaxa\"MUSUITE\". ma haʒiŋa huwaʃapaxa\"MUSUITE\".",
+            "mo huʃapaxa\"MPV\" hoŋüi\"REPO\"poo hiŋi hu\"\'chooseFromNumberedList.py\'\" hoŋüi\"\'https://github.com/maestraccio/chooseFromNumberedList\'\" m haʃa huʃapaxa\"MUSUITE\". ma haʒiŋa huwaʃapaxa\"MUSUITE\".",
 #ZTI:ZIN(                                                        ma
 #    WTI:WW(                                                     ha
 #        Verlangen:Eisen(                                        ku
@@ -1866,7 +1885,8 @@ hiʒiŋüi hupamepa:
 #    )
 #)
 #mu huʃapaxa hi"MPG123" m huwacoxapu haʃasecoli. 
-            "mo haʃa huʃapaxa\"MUSUITE\" m huku huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\". ma haŋoda huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\" hiʒi. me mo haʃawopa\"\'hufu mpg123\'\" mom hudasepo huʃapaxa\"MPG123\" mem mo haʃawopa\"\'hufu mpv\'\" mom hudasepo huʃapaxa\"MPV\". mu huʃapaxa hi\"MPG123\" m huwacoxapu haʃasecoli. ",
+            #"mo haʃa huʃapaxa\"MUSUITE\" m huku huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\". ma haŋoda huʃapaxa\"MPG123\" hiŋi huʃapaxa\"MPV\" hiʒi. me mo haʃawopa\"\'hufu mpg123\'\" mom hudasepo huʃapaxa\"MPG123\" mem mo haʃawopa\"\'hufu mpv\'\" mom hudasepo huʃapaxa\"MPV\". mu huʃapaxa hi\"MPG123\" m huwacoxapu haʃasecoli. ",
+            "mo haʃa huʃapaxa\"MUSUITE\" m huku huʃapaxa\"MPV\". ma haŋoda huʃapaxa\"MPV\" hiʒi. mo haʃawopa\"\'hufu mpv\'\" m hudasepo huʃapaxa\"MPV\".",
 #            "Enjoy your listening!"
 #ZTI:ZIN(                                                        ma
 #    WTI:PVNW:1(                                                 hee
@@ -1903,12 +1923,26 @@ hiʒiŋüi hupamepa:
         man = manmpg123CJ+manmpvCJ
     elif lang == "EN":
         helpteksten = [
+#        """Everywhere:                                                                     
+#"B”          : Back                                                             
+#"H”          : Help                                                             
+#"Q”          : Quit                                                             
+#"man mpg123” : or "woman mpg123": mpg123 manual                                 
+#"man mpv”    : or "woman mpv"   : mpv manual                                    
+#                                                                                
+#In main menu:                                                                   
+#"L”          : Language selection                                               
+#                                                                                
+#In selection lists:                                                             
+#">”          : Scroll forward                                                   
+#"<”          : Scroll backward                                                  
+#"*”          : Select all                                                       
+#2,5,11,17,23 : CSV-style multiple selections                                    """,
         """Everywhere:                                                                     
 "B”          : Back                                                             
 "H”          : Help                                                             
 "Q”          : Quit                                                             
-"man mpg123” : or "woman mpg123": mpg123 manual                                 
-"man mpv”    : or "woman mpv"   : mpv manual                                    
+"man mpv”    : or "woman mpv" : mpv manual                                      
                                                                                 
 In main menu:                                                                   
 "L”          : Language selection                                               
@@ -1919,7 +1953,8 @@ In selection lists:
 "*”          : Select all                                                       
 2,5,11,17,23 : CSV-style multiple selections                                    """,
             "With musuite, you can play your organized music collection and saved online streams. Press \"Enter\" to proceed with your choice, \"B\" to interrupt the current function, or \"Q\" to quit. To change the language, you can select \"L\" in the main menu.",
-            "musuite uses mpg123 and mpv, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
+            #"musuite uses mpg123 and mpv, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
+            "musuite uses mpv, available in most repositories, and \"chooseFromNumberedList.py\", which you can download from https://github.com/maestraccio/chooseFromNumberedList. Place it in the same directory as \"musuite.py\" and \"adjustables.py\".",
             "It is important, no, ESSENTIAL, that your organized music collection looks like this:",
             # print as-is [3]
             """\\MAIN_FOLDER\\GENRE\\ALBUM             \\TRACK                                     
@@ -1952,7 +1987,8 @@ In selection lists:
             "In the same file \"adjustables.py\", create a list of your favorite online streams, with a short description or the ICY-NAME.",
             "You have already understood that the file \"adjustables.py\" is important for the proper functioning of musuite. There are also a few other variables in it that you should better stay away from, or at least handle with great caution.",
             "Type your choice via the keyboard, or use the \"closing brackets\" (\")\", \"]\", \"}\", \">\": to move forward) and the \"opening brackets\" (\"(\", \"[\", \"{\", \"<\": to move backward). Press \"Enter\" to confirm your choice. There is no support for using a mouse or other pointer hardware in musuite. Some choice lists support multiple selections. In that case, enter the choice numbers or exact keys (case-sensitive), separated by commas, consecutively before pressing \"Enter\". For the genre selection, you can also quickly filter by using just the first letter or the first two letters of multiple genres you want to select at once.",
-            "For playback, the program calls \"mpg123\" or \"mpv\". Make sure these are installed. For their use, consult the official man pages with the command \"man mpg123\" or \"woman mpg123\" for help on \"mpg123\" or \"man mpv\" or \"woman mpv\" for help on \"mpv\". Remember that \"mpg123\" does not support all music file types. The name says it all.",
+            #"For playback, the program calls \"mpg123\" or \"mpv\". Make sure these are installed. For their use, consult the official man pages with the command \"man mpg123\" or \"woman mpg123\" for help on \"mpg123\" or \"man mpv\" or \"woman mpv\" for help on \"mpv\". Remember that \"mpg123\" does not support all music file types. The name says it all.",
+            "For playback, the program calls \"mpv\". Make sure it is installed. For its use, consult the official man pages with the command \"man mpv\" or \"woman mpv\".",
             "Enjoy your listening!"
             ]
         neelijst = neelijstEN
@@ -1963,21 +1999,35 @@ In selection lists:
         man = manmpg123EN+manmpvEN
     elif lang == "IT":
         helpteksten = [
+#            """Ovunque:                                                                        
+#"B”           : Indietro                                                        
+#"H”           : Aiuto                                                           
+#"Q”           : Esci                                                            
+#"uomo mpg123” : o "donna mpg123" : Manuale mpg123                               
+#"uomo mpv"    : o "donna mpv"    : Manuale mpv                                  
+#                                                                                
+#In menu principale:                                                             
+#"L”           : Selezione lingua                                                
+#                                                                                
+#In liste di selezione:                                                          
+#">”           : Scorri avanti                                                   
+#"<”           : Scorri indietro                                                 
+#"*”           : Seleziona tutto                                                 
+#2,5,11,17,23  : Selezione multipla in stile CSV                                 """,
             """Ovunque:                                                                        
-"B”           : Indietro                                                        
-"H”           : Aiuto                                                           
-"Q”           : Esci                                                            
-"uomo mpg123” : o "donna mpg123" : Manuale mpg123                               
-"uomo mpv"    : o "donna mpv"    : Manuale mpv                                  
+"B”          : Indietro                                                         
+"H”          : Aiuto                                                            
+"Q”          : Esci                                                             
+"uomo mpv"   : o "donna mpv"    : Manuale mpv                                   
                                                                                 
 In menu principale:                                                             
-"L”           : Selezione lingua                                                
+"L”          : Selezione lingua                                                 
                                                                                 
 In liste di selezione:                                                          
-">”           : Scorri avanti                                                   
-"<”           : Scorri indietro                                                 
-"*”           : Seleziona tutto                                                 
-2,5,11,17,23  : Selezione multipla in stile CSV                                 """,
+">”          : Scorri avanti                                                    
+"<”          : Scorri indietro                                                  
+"*”          : Seleziona tutto                                                  
+2,5,11,17,23 : Selezione multipla in stile CSV                                  """,
             "Con musuite puoi riprodurre la tua collezione musicale organizzata e gli stream online salvati. Premi \"Invio\" per procedere con la tua scelta, \"B\" per interrompere la funzione corrente o \"Q\" per uscire. Per cambiare la lingua, puoi selezionare \"L\" nel menu principale.",
             "musuite utilizza mpg123 e mpv, disponibile nella maggior parte dei repository, e \"chooseFromNumberedList.py\", che puoi scaricare da https://github.com/maestraccio/chooseFromNumberedList. Posizionalo nella stessa cartella di \"musuite.py\" e \"adjustables.py\".",
             "È importante, anzi ESSENZIALE, che la tua collezione musicale organizzata sia strutturata così:",
@@ -2012,7 +2062,8 @@ In liste di selezione:
             "Sempre nel file \"adjustables.py\", crea anche una lista dei tuoi stream online preferiti, con una breve descrizione o il nome ICY-NAME.",
             "Hai già capito che il file \"adjustables.py\" è importante per il corretto funzionamento di musuite. All'interno ci sono anche alcune altre variabili con cui è meglio non avere a che fare, o almeno con cui bisogna maneggiare con grande cautela.",
             "Digita la tua scelta tramite la tastiera, oppure utilizza le parentesi chiuse (\")\", \"]\", \"}\", \">\": per andare avanti) e le parentesi aperte (\"(\", \"[\", \"{\", \"<\": per andare indietro). Premi \"Enter\" per confermare la tua scelta. Non è supportato l'uso di un mouse o di altre periferiche di puntamento in musuite. Alcune liste di scelta supportano più scelte. In tal caso, inserisci i numeri delle scelte o le chiavi esatte (sensibili alle maiuscole), separate da virgole, consecutivamente prima di premere \"Enter\". Per la selezione dei generi, puoi anche filtrare rapidamente utilizzando solo la prima lettera o le prime due lettere di più generi che vuoi selezionare contemporaneamente.",
-            "Per la riproduzione, il programma richiama \"mpg123\" o \"mpv\". Assicurati che siano installati. Per il suo utilizzo, consulta le pagine man ufficiali con il comando \"man mpg123\" o \"donna mpg123\" per aiuto su \"mpg123\", o \"man mpv\" o \"donna mpv\" per aiuto su \"mpv\". Ricorda che \"mpg123\" non supporta tutti i formati di file musicali. Il nome dice già tutto.",
+            #"Per la riproduzione, il programma richiama \"mpg123\" o \"mpv\". Assicurati che siano installati. Per il suo utilizzo, consulta le pagine man ufficiali con il comando \"man mpg123\" o \"donna mpg123\" per aiuto su \"mpg123\", o \"man mpv\" o \"donna mpv\" per aiuto su \"mpv\". Ricorda che \"mpg123\" non supporta tutti i formati di file musicali. Il nome dice già tutto.",
+            "Per la riproduzione, il programma richiama \"mpv\". Assicurati che sia installato. Per il suo utilizzo, consulta le pagine man ufficiali con il comando \"man mpv\" o \"donna mpv\".",
             "Buon ascolto!"
             ]
         neelijst = neelijstIT
@@ -2023,11 +2074,25 @@ In liste di selezione:
         man = manmpg123IT+manmpvIT
     else:
         helpteksten = [
+#            """Overal:                                                                         
+#"B"          : Terug                                                            
+#"H"          : Help                                                             
+#"Q"          : Afsluiten                                                        
+#"man mpg123" : of "vrouw mpg123" : Handleiding mpg123                           
+#"man mpv"    : of "vrouw mpv"    : Handleiding mpv                              
+#                                                                                
+#In hoofdmenu:                                                                   
+#"L"          : Taalkeuze                                                        
+#                                                                                
+#In keuzelijsten:                                                                
+#">"          : Vooruit bladeren                                                 
+#"<"          : Achteruit bladeren                                               
+#"*"          : Alles selecteren                                                 
+#2,5,11,17,23 : Meerdere selecties in CSV-stijl                                  """,
             """Overal:                                                                         
 "B"          : Terug                                                            
 "H"          : Help                                                             
 "Q"          : Afsluiten                                                        
-"man mpg123" : of "vrouw mpg123" : Handleiding mpg123                           
 "man mpv"    : of "vrouw mpv"    : Handleiding mpv                              
                                                                                 
 In hoofdmenu:                                                                   
@@ -2039,7 +2104,8 @@ In keuzelijsten:
 "*"          : Alles selecteren                                                 
 2,5,11,17,23 : Meerdere selecties in CSV-stijl                                  """,
             "Met musuite kun je je georganiseerde muziekverzameling en verzamelde online streams afspelen. Druk op \"Enter\" om na je keuze door te gaan, \"B\" om de huidige functie te onderbreken of \"Q\" om te stoppen. Om de taal te wijzigen kun je in het hoofdmenu \"L\" kiezen.",
-            "musuite maakt gebruik van mpg123 en mpv, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
+            #"musuite maakt gebruik van mpg123 en mpv, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
+            "musuite maakt gebruik van mpv, beschikbaar in de meeste repo's, en van \"chooseFromNumberedList.py\", dat je kunt downloaden van https://github.com/maestraccio/chooseFromNumberedList. Plaats het in dezelfde map als \"musuite.py\" en \"adjustables.py\".",
             "Het is belangrijk, nee ESSENTIEEL dat je georganiseerde muziekverzameling er zo uitziet:",
             # print as-is [3]
             """\\ HOOFDMAP\\GENRE\\ALBUM              \\TRACK                                      
@@ -2072,7 +2138,8 @@ In keuzelijsten:
             "In dezelfde file \"adjustables.py\" maak je ook een lijst aan van je favoriete online streams, met een korte beschrijving of de ICY-NAME.",
             "Je hebt al begrepen dat het bestand \"adjustables.py\" belangrijk is voor de juiste werking van musuite. Er staan nog enkele andere variabelen in waar je beter vanaf kunt blijven, of tenminste met grote voorzichtigheid mee moet omgaan.",
             "Typ de optie van je keuze in via je toetsenbord, of gebruik de \"haakjes sluiten\" (\")\", \"]\", \"}\", \">\": vooruit) en de \"haakjes openen\" (\"(\", \"[\", \"{\", \"<\": achteruit) om er naartoe te bladeren. Druk op \"Enter\" om je keuze te bevestigen. Er is geen ondersteuning voor het gebruik van een muis of andere aanwijzerhardware in musuite. Sommige keuzelijsten ondersteunen meerdere keuzes. Voer in dat geval de keuzenummers of exacte keys (hoofdlettergevoelig) kommagescheiden achter elkaar in, voordat je op \"Enter\" drukt. Bij de genrekeuze kun je ook snel filteren op alleen de eerste letter of de eerste twee letters van meerdere genres die je tegelijk wilt selecteren.",
-            "Voor het afspelen wordt het programma \"mpg123\" of \"mpv\" aangeroepen. Zorg ervoor dat die geïnstalleerd zijn. Voor het gebruik ervan kun je de officiele manpages raadplegen met de opdracht \"man mpg123\" of \"vrouw mpg123\" voor hulp bij \"mpg123\" of \"man mpv\" of \"vrouw mpv\" voor hulp bij \"mpv\". Denk eraan dat \"mpg123\" niet alle muziekbestandstypen kan afspelen. De naam zegt genoeg.",
+            #"Voor het afspelen wordt het programma \"mpg123\" of \"mpv\" aangeroepen. Zorg ervoor dat die geïnstalleerd zijn. Voor het gebruik ervan kun je de officiele manpages raadplegen met de opdracht \"man mpg123\" of \"vrouw mpg123\" voor hulp bij \"mpg123\" of \"man mpv\" of \"vrouw mpv\" voor hulp bij \"mpv\". Denk eraan dat \"mpg123\" niet alle muziekbestandstypen kan afspelen. De naam zegt genoeg.",
+            "Voor het afspelen wordt het programma \"mpv\" aangeroepen. Zorg ervoor dat dat geïnstalleerd is. Voor het gebruik ervan kun je de officiele manpages raadplegen met de opdracht \"man mpv\" of \"vrouw mpv\".",
             "Veel luisterplezier!"
             ]
         neelijst = neelijstNL
