@@ -986,7 +986,7 @@ while loop == True:
         if padwaar == True:
             print()
             print(hoofdmenu)
-            v,k = cFD([mosdict,0,"M","> ",langlijst+helplijst+man+moslijst+backlijst+quitlijst])
+            v,k = cFD([mosdict,0,moslijst[0],"> ",langlijst+helplijst+man+moslijst+backlijst+quitlijst])
             if k.upper() in quitlijst:
                 exit()
             elif k.upper() in backlijst:
@@ -1022,7 +1022,7 @@ while loop == True:
     else:
         loopM = True
         while loopM == True:
-            v,k = cFD([gmtdict,0,"G","> ",helplijst+man+gmtlijst+backlijst+quitlijst])
+            v,k = cFD([gmtdict,0,gmtlijst[0],"> ",helplijst+man+gmtlijst+backlijst+quitlijst])
             if k.upper() in quitlijst:
                 exit()
             elif k.upper() in backlijst:
@@ -1112,7 +1112,7 @@ while loop == True:
                         wraptext = "Vuoi effettuare una ricerca con un termine specifico o scorrere la collezione?"
                     else:
                         wraptext = "Wil je zoeken met een zoekopdracht of scrollen door de verzameling?"
-                    v,k = cFD([zosdict,0,"S","> ",helplijst+man+zoslijst+backlijst+quitlijst])
+                    v,k = cFD([zosdict,0,zoslijst[0],"> ",helplijst+man+zoslijst+backlijst+quitlijst])
                     print(k)
                     if k in quitlijst:
                         exit()
