@@ -133,28 +133,22 @@ if picklang == "Y":
 
 def defgpad():
     if lang == "CJ":
-        manmpg123 = manmpg123CJ
         manmpv = manmpvCJ
-        man = manmpg123CJ+manmpvCJ
+        man = manmpvCJ
     elif lang == "EN":
-        manmpg123 = manmpg123EN
         manmpv = manmpvEN
-        man = manmpg123EN+manmpvEN
+        man = manmpvEN
     elif lang == "IT":
-        manmpg123 = manmpg123IT
         manmpv = manmpvIT
-        man = manmpg123IT+manmpvIT
+        man = manmpvIT
     else:
-        manmpg123 = manmpg123NL
         manmpv = manmpvNL
-        man = manmpg123NL+manmpvNL
+        man = manmpvNL
     optie,index = cFNL([genrelijstlang,"A",1,1,"> ",helplijst+man+backlijst+quitlijst])
     if optie in quitlijst:
         exit()
     elif optie in backlijst:
         return optie
-    elif optie in manmpg123:
-        subprocess.run(["man", "mpg123"])
     elif optie in manmpv:
         subprocess.run(["man", "mpv"])
     elif optie in helplijst:
@@ -436,49 +430,39 @@ def setvol(oldvol):
                 exit()
             elif newvol in backlijst:
                 return oldvol
-            elif newvol.lower() in manmpg123:
-                subprocess.run(["man", "mpg123"])
             elif newvol.lower() in manmpv:
                 subprocess.run(["man", "mpv"])
 
 def play(tracklijst):
     vol = setvol(volume)
     if lang == "CJ":
-        manmpg123 = manmpg123CJ
         manmpv = manmpvCJ
-        man = manmpg123CJ+manmpvCJ
+        man = manmpvCJ
         willekeurig = colW+"ma hixüe hamelamli"+colR
-        mpg123 = mpg123CJ
         mpv = mpvCJ
         neelijst = neelijstCJ
         jalijst = jalijstCJ
         neeja = neejaCJ
     elif lang == "EN":
-        manmpg123 = manmpg123EN
         manmpv = manmpvEN
-        man = manmpg123EN+manmpvEN
+        man = manmpvEN
         willekeurig = colW+"Random order?"+colR
-        mpg123 = mpg123EN
         mpv = mpvEN
         neelijst = neelijstEN
         jalijst = jalijstEN
         neeja = neejaEN
     elif lang == "IT":
-        manmpg123 = manmpg123IT
         manmpv = manmpvIT
-        man = manmpg123IT+manmpvIT
+        man = manmpvIT
         willekeurig = colW+"Ordine casuale?"+colR
-        mpg123 = mpg123IT
         mpv = mpvIT
         neelijst = neelijstIT
         jalijst = jalijstIT
         neeja = neejaIT
     else:
-        manmpg123 = manmpg123NL
         manmpv = manmpvNL
-        man = manmpg123NL+manmpvNL
+        man = manmpvNL
         willekeurig = colW+"Willekeurige volgorde?"+colR
-        mpg123 = mpg123NL
         mpv = mpvNL
         neelijst = neelijstNL
         jalijst = jalijstNL
@@ -495,8 +479,6 @@ def play(tracklijst):
             return
         elif ja.lower() in helplijst:
             hellup()
-        elif ja.lower() in manmpg123:
-            subprocess.run(["man", "mpg123"])
         elif ja.lower() in manmpv:
             subprocess.run(["man", "mpv"])
         if ja.lower() in neelijst:
@@ -645,7 +627,7 @@ In liste di selezione:
 "*”          : Seleziona tutto                                                  
 2,5,11,17,23 : Selezione multipla in stile CSV                                  """,
             "Con musuite puoi riprodurre la tua collezione musicale organizzata e gli stream online salvati. Premi \"Invio\" per procedere con la tua scelta, \"B\" per interrompere la funzione corrente o \"Q\" per uscire. Per cambiare la lingua, puoi selezionare \"L\" nel menu principale.",
-            "musuite utilizza mpg123 e mpv, disponibile nella maggior parte dei repository, e \"chooseFromNumberedList.py\", che puoi scaricare da https://github.com/maestraccio/chooseFromNumberedList. Posizionalo nella stessa cartella di \"musuite.py\" e \"adjustables.py\".",
+            "musuite utilizza mpv, disponibile nella maggior parte dei repository, e \"chooseFromNumberedList.py\", che puoi scaricare da https://github.com/maestraccio/chooseFromNumberedList. Posizionalo nella stessa cartella di \"musuite.py\" e \"adjustables.py\".",
             "È importante, anzi ESSENZIALE, che la tua collezione musicale organizzata sia strutturata così:",
             # print as-is [3]
             """\\CARTELLA_PRINCIPALE \\GENERE\\ALBUM              \\TRACCIA                        
