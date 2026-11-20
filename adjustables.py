@@ -55,6 +55,7 @@ streamsdict = {
         "Soulradioclassics":"https://soulradioclassics.stream.laut.fm/soulradioclassics",
         "The Bugcast":"http://stream.otherside.network:8904/listen.mp3"
         }
+laststream = "Just Jazz"
 # Here, the language is set. The best way is to set this with  the setlang
 # function in the program. Valid options are currently "CJ","NL", "EN" and "IT".
 lang = "CJ"
@@ -66,4 +67,4 @@ picklang = "Y"
 showhelp = "Y"
 # Set volume level between "0" and "100" as a percentage of the main controller
 # volume
-volume = "30"
+volume = "50"

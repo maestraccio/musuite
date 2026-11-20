@@ -4,8 +4,8 @@ from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
 from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict,volume
-Versie = "1.24"
-Date = "2026-11-08"
+Versie = "1.25"
+Date = "2026-11-21"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
 colD = "\033[94m" # Directory
@@ -1005,7 +1005,14 @@ while loop == True:
     if k.upper() == moslijst[1].upper():
         loopS = True
         while loopS == True:
-            s,index = cFNL([streamslijst,"A",1,1,"> ",helplijst+man+backlijst+quitlijst])
+            with open("adjustables.py","r") as a:
+                regels = a.readlines()
+                for r in regels:
+                    if r[:10] == "laststream":
+                        laststream = r[14:-2]
+            print(laststream)
+            ls = streamslijst.index(laststream)+1
+            s,index = cFNL([streamslijst,"A",1,ls,"> ",helplijst+man+backlijst+quitlijst])
             if s in quitlijst:
                 exit()
             elif s in backlijst:
@@ -1016,6 +1023,13 @@ while loop == True:
                 hellup()
             else:
                 su = streamsdict[s]
+                with open("adjustables.py","r") as a:
+                    regels = a.readlines()
+                with open("adjustables.py","w") as a:
+                    for r in regels:
+                        if r[:10] == "laststream":
+                            r = "laststream = \"%s\"\n" % (s)
+                        print(r, end = "", file = a)
                 print(mpv)
                 volume = setvol(volume)
                 subprocess.run(["mpv", "--volume=%s" % volume, su])
