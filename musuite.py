@@ -3,8 +3,8 @@ import subprocess, os, sys, random, textwrap
 from time import sleep
 from chooseFromNumberedList import chooseFromNumberedList as cFNL
 from chooseFromNumberedList import chooseFromDictionary as cFD
-from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict,volume
-Versie = "1.25"
+from adjustables import lang,picklang,showhelp,pad,genredict,streamsdict,laststream,volume
+Versie = "1.26"
 Date = "2026-11-21"
 hier = os.path.dirname(os.path.realpath(__file__))
 os.chdir(hier)
@@ -400,6 +400,20 @@ def printmappenlijstmetsel(mappenlijst):
                 mappenlijstverkort.append(mapp)
     print()
     return mappenlijstverkort
+
+def setstream(laststream):
+    if laststream in streamslijst:
+        with open("adjustables.py","r") as a:
+            regels = a.readlines()
+        with open("adjustables.py","w") as a:
+            for r in regels:
+                if r[:10] == "laststream":
+                    r = "laststream = \"%s\"\n" % (laststream)
+                print(r, end = "", file = a)
+            return laststream
+    else:
+        laststream = streamslijst[0]
+        return laststream
 
 def setvol(oldvol):
     if lang == "CJ":
@@ -1005,13 +1019,11 @@ while loop == True:
     if k.upper() == moslijst[1].upper():
         loopS = True
         while loopS == True:
-            with open("adjustables.py","r") as a:
-                regels = a.readlines()
-                for r in regels:
-                    if r[:10] == "laststream":
-                        laststream = r[14:-2]
-            print(laststream)
-            ls = streamslijst.index(laststream)+1
+            try:
+                lastream = setstream(s)
+            except:
+                lastream = setstream(laststream)
+            ls = streamslijst.index(lastream)+1
             s,index = cFNL([streamslijst,"A",1,ls,"> ",helplijst+man+backlijst+quitlijst])
             if s in quitlijst:
                 exit()
@@ -1023,13 +1035,6 @@ while loop == True:
                 hellup()
             else:
                 su = streamsdict[s]
-                with open("adjustables.py","r") as a:
-                    regels = a.readlines()
-                with open("adjustables.py","w") as a:
-                    for r in regels:
-                        if r[:10] == "laststream":
-                            r = "laststream = \"%s\"\n" % (s)
-                        print(r, end = "", file = a)
                 print(mpv)
                 volume = setvol(volume)
                 subprocess.run(["mpv", "--volume=%s" % volume, su])
